@@ -1,0 +1,40 @@
+body{
+  font-family: $fontFamily;
+  color: var(--fontColor);
+}
+
+.basicTextMedium {
+  font-size: 13px;
+  font-weight: $fontWeightMedium;
+  line-height: 23px;
+}
+.basicTextBold {
+  font-size: 12px;
+  font-weight: $fontWeightBold;
+  line-height: 15px;
+}
+
+.heading-xl {
+  font-weight: $fontWeightBold;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.heading-l{
+  font-weight: $fontWeightBold;
+  font-size: 18px;
+  line-height: 23px;
+}
+
+.heading-m{
+  font-weight: $fontWeightBold;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+.heading-s{
+  font-weight: $fontWeightBold;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2.4px;
+}

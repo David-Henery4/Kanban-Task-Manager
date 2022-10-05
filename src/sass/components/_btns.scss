@@ -1,0 +1,36 @@
+
+.btn-lrg{
+  width: 255px;
+  height: 48px;
+  border-radius: 20px;
+}
+
+.btn-sml{
+  width: 255px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.btn-primary-color{
+  color: $white;
+  background-color: $colorPrimary;
+  &:hover{
+    background-color: $colorPrimaryShade;
+  }
+}
+
+.btn-secondary-color{
+  color: $colorPrimary;
+  background-color: var(--btnSecondary);
+  &:hover{
+    background-color: var(--btnSecondaryHover);
+  }
+}
+
+.btn-destructive-color{
+  color: $white;
+  background-color: $red;
+  &:hover{
+    background-color: $redHover;
+  }
+}

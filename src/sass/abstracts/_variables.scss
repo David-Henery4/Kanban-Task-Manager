@@ -1,0 +1,44 @@
+
+// COLOURS
+
+
+// **LIGHT**
+.lightMode{
+  --backgroundColor: #F4F7FD;
+  --itemColor: #ffffff;
+  //
+  --btnSecondary: rgba(99,95,199, .10);
+  --btnSecondaryHover: rgba(99,95,199, .25);
+  --fontColor:#000112;
+  --linesColor: #3E3F4E;
+}
+
+// **DARK**
+.darkMode{
+  --backgroundColor: #20212C;
+  --itemColor: #2B2C37;
+  //
+  --btnSecondary: #ffff;
+  --btnSecondaryHover: #ffff;
+  --fontColor:#FFFFFF;
+  --linesColor: #E4EBFA;
+}
+
+// NON-THEME-COLORS
+$nonActiveFontColor: #828FA3;
+$colorPrimary: #635FC7;
+$colorPrimaryShade: #A8A4FF;
+$red: #EA5555;
+$redHover: #FF9898;
+$linesLight: #E4EBFA;
+$darkGrey: #2B2C37;
+$lightGrey: #F4F7FD;
+$veryDarkGrey: #20212C;
+$linesDark: #3E3F4E;
+$black: #000112;
+$white: #FFFFFF;
+
+// Font-family
+$fontFamily: 'Plus Jakarta Sans', sans-serif;
+$fontWeightBold: 700;
+$fontWeightMedium: 500;
