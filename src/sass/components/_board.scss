@@ -1,0 +1,20 @@
+
+.board{
+  background-color: var(--backgroundColor);
+  min-width: 100%;
+  min-height: 100vh;
+  overflow: auto;
+  gap: 24px;
+  padding: 24px 16px;
+  &-empty{
+    // padding: 0 16px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    gap: 25px;
+    &__heading{
+      color: $nonActiveFontColor;
+    }
+  }
+}
+

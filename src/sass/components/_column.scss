@@ -1,0 +1,46 @@
+.column{
+  @include flex-cen-cen;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  &-heading-section{
+    width: 100%;
+    gap: 12px;
+    justify-content: flex-start;
+    &__icon{
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      background-color: $colorPrimary;
+    }
+    &__title, 
+    &__tasks-quantity{
+      color: $nonActiveFontColor;
+    }
+    &__title{
+      
+    }
+    &__tasks-quantity{
+      position: relative;
+      right: 6px;
+    }
+  }
+  //
+  &-task{
+    background-color: var(--itemColor);
+    border-radius: 8px;
+    width: 280px;
+    min-height: 88px;
+    padding: 23px 16px;
+    @include flex-cen-cen;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    &__title{
+      
+    }
+    &__status{
+      color: $nonActiveFontColor;
+    }
+  }
+}

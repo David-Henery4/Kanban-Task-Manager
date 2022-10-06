@@ -2,13 +2,17 @@
 .btn-lrg{
   width: 255px;
   height: 48px;
+  font-family: $fontFamily;
   border-radius: 20px;
+  border: none;
 }
 
 .btn-sml{
   width: 255px;
   height: 40px;
+  font-family: $fontFamily;
   border-radius: 20px;
+  border: none;
 }
 
 .btn-primary-color{
@@ -33,4 +37,15 @@
   &:hover{
     background-color: $redHover;
   }
+}
+
+.new-col-btn{
+  width: 174px;
+  height: 48px;
+  font-family: $fontFamily;
+  border-radius: 24px;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }

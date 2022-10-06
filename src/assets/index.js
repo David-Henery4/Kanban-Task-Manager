@@ -3,6 +3,7 @@ import {ReactComponent as DownArrow} from "../assets/icon-chevron-down.svg";
 import {ReactComponent as Cross} from "../assets/icon-cross.svg";
 import {ReactComponent as AddTaskMobile} from "../assets/icon-add-task-mobile.svg";
 import {ReactComponent as EditDeleteIcon} from "../assets/icon-vertical-ellipsis.svg";
+import {ReactComponent as BoardIcon} from "../assets/icon-board.svg";
 
 
 export{
@@ -11,4 +12,5 @@ export{
   Cross,
   AddTaskMobile,
   EditDeleteIcon,
+  BoardIcon,
 }
