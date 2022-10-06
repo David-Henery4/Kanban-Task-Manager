@@ -1,0 +1,88 @@
+.view-task {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  max-width: 480px;
+  border-radius: 6px;
+  background-color: var(--itemColor);
+  padding: 24px 24px 32px;
+  @include flex-cen-cen;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 24px;
+  &-desc-container {
+    display: grid;
+    gap: 24px;
+  }
+  &__title {
+  }
+  &__text {
+    color: $nonActiveFontColor;
+  }
+  //
+  &-subtasks {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    &-container {
+      @include flex-cen-cen;
+      width: 100%;
+      flex-direction: column;
+      gap: 8px;
+    }
+    &__status {
+      font-weight: $fontWeightBold;
+      font-size: 12px;
+    }
+  }
+  //
+  &-subtask {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    background-color: var(--backgroundColor);
+    padding: 13px 8px 13px 13px;
+    border-radius: 4px;
+    //
+    &-checkbox {
+      height: 16px;
+      width: 16px;
+      border-radius: 2px;
+      background-color: $colorPrimary;
+      display: grid;
+      place-items: center;
+      &__icon {
+      }
+    }
+    //
+    &__text {
+      font-size: 12px;
+      font-weight: $fontWeightBold;
+      text-decoration: line-through;
+    }
+  }
+  //
+  &-overall-status {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    &__title {
+      font-size: 12px;
+      font-weight: $fontWeightBold;
+    }
+    &-select {
+      width: 100%;
+      padding: 8px 16px;
+    }
+    &__text {
+    }
+    &__icon {
+    }
+  }
+}

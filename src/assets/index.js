@@ -4,6 +4,7 @@ import {ReactComponent as Cross} from "../assets/icon-cross.svg";
 import {ReactComponent as AddTaskMobile} from "../assets/icon-add-task-mobile.svg";
 import {ReactComponent as EditDeleteIcon} from "../assets/icon-vertical-ellipsis.svg";
 import {ReactComponent as BoardIcon} from "../assets/icon-board.svg";
+import {ReactComponent as TickMark} from "../assets/icon-check.svg";
 
 
 export{
@@ -13,4 +14,5 @@ export{
   AddTaskMobile,
   EditDeleteIcon,
   BoardIcon,
+  TickMark,
 }

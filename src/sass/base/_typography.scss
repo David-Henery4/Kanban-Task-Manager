@@ -3,12 +3,12 @@ body{
   color: var(--fontColor);
 }
 
-.basicTextMedium {
+.basicTextMedium { // bodylarge
   font-size: 13px;
   font-weight: $fontWeightMedium;
   line-height: 23px;
 }
-.basicTextBold {
+.basicTextBold { // bodyMedium
   font-size: 12px;
   font-weight: $fontWeightBold;
   line-height: 15px;
