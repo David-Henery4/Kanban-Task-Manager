@@ -1,0 +1,95 @@
+.add-task{
+  position: absolute;
+  @include absolute-center-pos;
+  @include flex-cen-cen;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 24px;
+  width: 95%;
+  max-width: 480px;
+  background-color: var(--itemColor);
+  padding: 24px;
+  border-radius: 6px;
+  // MODAL HEADING
+  &__heading{
+    
+  }
+  // FORM SECTIONS
+  &-form{
+    width: 100%;
+    @include flex-cen-cen;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    //
+    &-title{
+    width: 100%;
+      &__title{
+
+      }
+      &__input{
+        
+      }
+    }
+    //
+    &-desc{
+    width: 100%;
+      &__title{
+        
+      }
+      &__input{
+        resize: none;
+        min-height: 112px;
+        text-align: left;
+      }
+    }
+    //
+    &-subtasks{
+    width: 100%;
+    display: grid;
+    gap: 12px;
+      &__title{
+        
+      }
+      &-task{
+      width: 100%;
+      // @include flex-cen-cen;
+      display: grid;
+      grid-template-columns: 1fr 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+        &__input{
+          
+        }
+        &__icon{
+          height: 15px;
+          width: 15px;
+        }
+      }
+      &__add-subtask-btn{
+        width: 100%;
+      }
+    }
+    //
+    &-status{
+    width: 100%;
+      &__title{
+        
+      }
+      &__label{
+        
+      }
+      &-select{
+        
+        &__option{
+          
+        }
+      }
+    }
+  }
+  // TASK/FORM SUBMIT BUTTON
+  &__submit-btn{
+    width: 100%;
+  }
+}

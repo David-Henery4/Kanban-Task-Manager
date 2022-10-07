@@ -1,6 +1,6 @@
 import React from "react";
 import { EmptyBoard, Column } from "../components";
-import {ViewTask} from "../components/modal-components"
+import {ViewTask, AddTask} from "../components/modal-components"
 import { AddTaskMobile, BoardIcon } from "../assets";
 
 //**WILL BE ADDED CONDITIONALY TO Board**/
@@ -12,8 +12,9 @@ import { AddTaskMobile, BoardIcon } from "../assets";
 const Board = () => {
   return (
     <main className="board flex-start-start">
-      <ViewTask/>
+      {/* <ViewTask/> */}
       {/* <EmptyBoard/> */}
+      <AddTask/>
       <Column/>
       {/**/}
       <Column/>
