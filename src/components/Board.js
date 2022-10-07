@@ -16,6 +16,7 @@ const Board = () => {
       {/* <EmptyBoard/> */}
       {/* <AddTask/> */}
       {/* <AddBoard/> */}
+      {/* <Delete/> */}
       <Column/>
       {/**/}
       <Column/>
