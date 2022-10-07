@@ -79,6 +79,8 @@
     &-select {
       width: 100%;
       padding: 8px 16px;
+      border: 1px solid $inputOutline;
+      justify-content: space-between;
     }
     &__text {
     }

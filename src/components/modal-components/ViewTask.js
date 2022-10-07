@@ -48,8 +48,10 @@ const ViewTask = () => {
       <div className="view-task-overall-status">
         <h5 className="view-task-overall-status__title">Current Status</h5>
         {/* MIGHT CHANGE TO INPUT SELECT */}
-        <div className="view-task-overall-status-select">
-          <p className="view-task-overall-status__text">Doing</p>
+        <div className="view-task-overall-status-select flex-cen-cen">
+          <p className="view-task-overall-status__text basicTextMedium">
+            Doing
+          </p>
           <DownArrow className="view-task-overall-status__icon" />
         </div>
       </div>
