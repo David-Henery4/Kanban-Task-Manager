@@ -7,21 +7,19 @@ const AddTask = () => {
       <h4 className="add-task__heading heading-l">Add New Task</h4>
       <form name="add-todo" className="add-task-form">
         {/* Title Input */}
-        <fieldset className="add-task-form-title field-set-remove-border">
-          <legend className="add-task-form-title__title input-heading">
-            Title
-          </legend>
+        <div className="add-task-form-title field-set-remove-border">
+          <h5 className="add-task-form-title__title input-heading">Title</h5>
           <input
             className="add-task-form-title__input input-style-basic"
             type="text"
             placeholder="e.g Take coffee break"
           />
-        </fieldset>
+        </div>
         {/* Description Input */}
-        <fieldset className="add-task-form-desc field-set-remove-border">
-          <legend className="add-task-form-desc__title input-heading">
+        <div className="add-task-form-desc field-set-remove-border">
+          <h5 className="add-task-form-desc__title input-heading">
             Description
-          </legend>
+          </h5>
           <textarea
             className="add-task-form-desc__input input-style-basic"
             name=""
@@ -30,38 +28,38 @@ const AddTask = () => {
             15 minute break will  recharge the batteries 
             a little."
           ></textarea>
-        </fieldset>
+        </div>
         {/* SUBTASK INPUT */}
-        <fieldset className="add-task-form-subtasks field-set-remove-border">
-          <legend className="add-task-form-subtasks__title input-heading">
+        <div className="add-task-form-subtasks field-set-remove-border">
+          <h5 className="add-task-form-subtasks__title input-heading">
             Subtask
-          </legend>
-          <div className="add-task-form-subtasks-task">
-            <input
-              className="add-task-form-subtasks-task__input input-style-basic"
-              type="text"
-              placeholder="e.g Make Coffee"
-            />
-            <Cross className="add-task-form-subtasks-task__icon" />
+          </h5>
+          <div className="add-task-form-subtasks-inputs">
+            <div className="add-task-form-subtasks-task">
+              <input
+                className="add-task-form-subtasks-task__input input-style-basic"
+                type="text"
+                placeholder="e.g Make Coffee"
+              />
+              <Cross className="add-task-form-subtasks-task__icon" />
+            </div>
+            <div className="add-task-form-subtasks-task">
+              <input
+                className="add-task-form-subtasks-task__input input-style-basic"
+                type="text"
+                placeholder="e.g Drink coffee & smile"
+              />
+              <Cross className="add-task-form-subtasks-task__icon" />
+            </div>
+            <button className="add-task-form-subtasks__add-subtask-btn btn-sml btn-secondary-color">
+              Add New Subtask
+            </button>
           </div>
-          <div className="add-task-form-subtasks-task">
-            <input
-              className="add-task-form-subtasks-task__input input-style-basic"
-              type="text"
-              placeholder="e.g Drink coffee & smile"
-            />
-            <Cross className="add-task-form-subtasks-task__icon" />
-          </div>
-          <button className="add-task-form-subtasks__add-subtask-btn btn-sml btn-secondary-color">
-            Add New Subtask
-          </button>
-        </fieldset>
+        </div>
         {/* STATUS INPUT */}
-        <fieldset className="add-task-form-status field-set-remove-border">
+        <div className="add-task-form-status field-set-remove-border">
           {/* Might not use select/might use plain div & p & take text value */}
-          <legend className="add-task-form-status__title input-heading">
-            Status
-          </legend>
+          <h5 className="add-task-form-status__title input-heading">Status</h5>
           <select
             className="add-task-form-status-select input-style-basic"
             name="status"
@@ -86,7 +84,7 @@ const AddTask = () => {
               Done
             </option>
           </select>
-        </fieldset>
+        </div>
       </form>
       {/* SUBMIT BTN */}
       <button

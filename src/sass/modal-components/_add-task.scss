@@ -1,4 +1,4 @@
-.add-task{
+.add-task {
   position: absolute;
   @include absolute-center-pos;
   @include flex-cen-cen;
@@ -11,85 +11,85 @@
   padding: 24px;
   border-radius: 6px;
   // MODAL HEADING
-  &__heading{
-    
+  &__heading {
   }
   // FORM SECTIONS
-  &-form{
+  &-form {
     width: 100%;
     @include flex-cen-cen;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
     //
-    &-title{
-    width: 100%;
-      &__title{
-
+    &-title {
+      width: 100%;
+      display: grid;
+      gap: 8px;
+      &__title {
       }
-      &__input{
-        
+      &__input {
       }
     }
     //
-    &-desc{
-    width: 100%;
-      &__title{
-        
+    &-desc {
+      width: 100%;
+      display: grid;
+      gap: 8px;
+      &__title {
       }
-      &__input{
+      &__input {
         resize: none;
         min-height: 112px;
         text-align: left;
       }
     }
     //
-    &-subtasks{
-    width: 100%;
-    display: grid;
-    gap: 12px;
-      &__title{
-        
-      }
-      &-task{
+    &-subtasks {
       width: 100%;
-      // @include flex-cen-cen;
       display: grid;
-      grid-template-columns: 1fr 16px;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
-        &__input{
-          
+      gap: 8px;
+      &__title {
+      }
+      &-inputs {
+        display: grid;
+        gap: 12px;
+      }
+      &-task {
+        width: 100%;
+        // @include flex-cen-cen;
+        display: grid;
+        grid-template-columns: 1fr 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        &__input {
         }
-        &__icon{
+        &__icon {
           height: 15px;
           width: 15px;
         }
       }
-      &__add-subtask-btn{
+      &__add-subtask-btn {
         width: 100%;
       }
     }
     //
-    &-status{
-    width: 100%;
-      &__title{
-        
+    &-status {
+      width: 100%;
+      display: grid;
+      gap: 8px;
+      &__title {
       }
-      &__label{
-        
+      &__label {
       }
-      &-select{
-        
-        &__option{
-          
+      &-select {
+        &__option {
         }
       }
     }
   }
   // TASK/FORM SUBMIT BUTTON
-  &__submit-btn{
+  &__submit-btn {
     width: 100%;
   }
 }
