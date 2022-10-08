@@ -5,6 +5,8 @@ import {ReactComponent as AddTaskMobile} from "../assets/icon-add-task-mobile.sv
 import {ReactComponent as EditDeleteIcon} from "../assets/icon-vertical-ellipsis.svg";
 import {ReactComponent as BoardIcon} from "../assets/icon-board.svg";
 import {ReactComponent as TickMark} from "../assets/icon-check.svg";
+import {ReactComponent as DarkIcon} from "../assets/icon-dark-theme.svg";
+import {ReactComponent as LightIcon} from "../assets/icon-light-theme.svg";
 
 
 export{
@@ -15,4 +17,6 @@ export{
   EditDeleteIcon,
   BoardIcon,
   TickMark,
+  DarkIcon,
+  LightIcon,
 }

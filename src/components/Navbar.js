@@ -1,9 +1,11 @@
 import React from 'react'
+import {MobileNav} from "../components/modal-components";
 import {MobileLogo, DownArrow, AddTaskMobile, EditDeleteIcon} from "../assets";
 
 const Navbar = () => {
   return (
     <nav className="navbar">
+      <MobileNav/>
       <div className="navbar-left">
       <MobileLogo className="navbar__logo" />
       <h1 className="navbar__board-name heading-l">Platform Launch</h1>

@@ -1,6 +1,6 @@
 import React from "react";
 import { EmptyBoard, Column } from "../components";
-import {ViewTask, AddTask, AddBoard, Delete} from "../components/modal-components"
+import {ViewTask, AddTask, AddBoard, Delete, MobileNav} from "../components/modal-components"
 import { AddTaskMobile, BoardIcon } from "../assets";
 
 //**WILL BE ADDED CONDITIONALY TO Board**/
