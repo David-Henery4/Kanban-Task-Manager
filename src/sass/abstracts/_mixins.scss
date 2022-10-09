@@ -12,3 +12,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+@mixin respond ($breakpoint) {
+  @if $breakpoint == tab {
+    @media (min-width: 48em) {
+      @content
+    }
+  };
+}

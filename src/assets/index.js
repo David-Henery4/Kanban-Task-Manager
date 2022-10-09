@@ -7,6 +7,8 @@ import {ReactComponent as BoardIcon} from "../assets/icon-board.svg";
 import {ReactComponent as TickMark} from "../assets/icon-check.svg";
 import {ReactComponent as DarkIcon} from "../assets/icon-dark-theme.svg";
 import {ReactComponent as LightIcon} from "../assets/icon-light-theme.svg";
+import {ReactComponent as LogoLight} from "../assets/logo-light.svg";
+import {ReactComponent as LogoDark} from "../assets/logo-dark.svg";
 
 
 export{
@@ -19,4 +21,6 @@ export{
   TickMark,
   DarkIcon,
   LightIcon,
+  LogoDark,
+  LogoLight
 }

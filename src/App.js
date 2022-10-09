@@ -1,17 +1,18 @@
 import { useEffect } from "react";
-import {Navbar, Board} from "./components";
+import { Navbar, Board, Sidebar } from "./components";
 
 function App() {
   //
   useEffect(() => {
     // ONLY TEMP TILL PROPER THEME SETUP
     document.documentElement.className = "darkMode";
-  },[])
+  }, []);
   //
   return (
     <div className="App">
-      <Navbar/>
-      <Board/>
+      <Navbar />
+      {/* <Sidebar/> */}
+      <Board />
     </div>
   );
 }

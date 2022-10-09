@@ -4,6 +4,7 @@ import EmptyBoard from "./EmptyBoard";
 import ColumnHeading from "./ColumnHeading";
 import ColumnTaskBox from "./ColumnTaskBox";
 import Column from "./Column";
+import Sidebar from "./Sidebar";
 
 export {
   Navbar,
@@ -12,4 +13,5 @@ export {
   ColumnHeading,
   ColumnTaskBox,
   Column,
+  Sidebar,
 }
