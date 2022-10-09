@@ -39,6 +39,9 @@
       border-right: 1px solid var(--linesColor);
       display: grid;
       place-items: center;
+      // "none" is temp
+      // will be added on sidebar conditional
+      display: none; // temp
     }
   }
   &__logo--tab {

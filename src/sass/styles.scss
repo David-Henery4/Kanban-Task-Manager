@@ -1,5 +1,6 @@
 @import "./abstracts/variables";
 @import "./abstracts/mixins";
+@import "./layouts/overall";
 @import "./base/base";
 @import "./base/typography";
 @import "./base/utilities";
@@ -9,6 +10,8 @@
 @import "./components/board";
 @import "./components/column";
 @import "./components/sidebar";
+@import "./components/board-section";
+@import "./components/theme-toggle";
 @import "./modal-components/view-task";
 @import "./modal-components/add-task";
 @import "./modal-components/add-board";

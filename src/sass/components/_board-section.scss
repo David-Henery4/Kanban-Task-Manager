@@ -1,0 +1,45 @@
+.board-container {
+  grid-row: 2/4;
+  grid-column: 1/3;
+  &-header {
+    display: grid;
+    grid-template-columns: 24px;
+    &__title {
+      grid-column: 2/3;
+      color: $nonActiveFontColor;
+      margin-bottom: 19px;
+    }
+  }
+  &-board {
+    @include flex-cen-cen;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 14px 0;
+    // background-color: $colorPrimary;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    //
+    display: grid;
+    grid-template-columns: 24px;
+    //
+    &__icon {
+      grid-column: 2/3;
+      margin-right: 12px;
+    }
+    &__name {
+      grid-column: 3/4;
+    }
+    &__btn {
+      background-color: transparent;
+      color: $white;
+      border: none;
+      color: $colorPrimary;
+      font-family: $fontFamily;
+      display: inline-flex;
+      grid-column: 3/4;
+    }
+    &__icon--plus {
+      grid-column: 3/4;
+    }
+  }
+}

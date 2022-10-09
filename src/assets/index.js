@@ -9,9 +9,11 @@ import {ReactComponent as DarkIcon} from "../assets/icon-dark-theme.svg";
 import {ReactComponent as LightIcon} from "../assets/icon-light-theme.svg";
 import {ReactComponent as LogoLight} from "../assets/logo-light.svg";
 import {ReactComponent as LogoDark} from "../assets/logo-dark.svg";
+import {ReactComponent as HideSidebarIcon} from "../assets/icon-hide-sidebar.svg";
+import {ReactComponent as ShowSidebarIcon} from "../assets/icon-show-sidebar.svg";
 
 
-export{
+export {
   MobileLogo,
   DownArrow,
   Cross,
@@ -22,5 +24,7 @@ export{
   DarkIcon,
   LightIcon,
   LogoDark,
-  LogoLight
-}
+  LogoLight,
+  HideSidebarIcon,
+  ShowSidebarIcon
+};

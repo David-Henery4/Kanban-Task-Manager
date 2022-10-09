@@ -9,10 +9,12 @@ function App() {
   }, []);
   //
   return (
-    <div className="App">
-      <Navbar />
-      {/* <Sidebar/> */}
-      <Board />
+    <div className="App overall-layout">
+      <Sidebar/>
+      <div className="main-content-layout">
+        <Navbar />
+        <Board />
+      </div>
     </div>
   );
 }
