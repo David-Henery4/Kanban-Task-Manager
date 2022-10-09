@@ -10,6 +10,9 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  @include respond (lap){
+    min-width: 300px;
+  }
   &__logo{
     grid-column: 2/-1;
   }
@@ -24,7 +27,10 @@
     @include flex-cen-cen;
     flex-direction: column;
     align-items: flex-start;
-    gap: 30px;
+    gap: 22px;
+    @include respond (lap){
+      padding: 0 24px;
+    }
   }
   &-hide-sidebar{
     padding: 0 10px;
@@ -32,6 +38,9 @@
     justify-content: flex-start;
     gap: 10px;
     color: $nonActiveFontColor;
+    @include respond (lap){
+      padding: 0 8px;
+    }
     &__icon{
       
     }

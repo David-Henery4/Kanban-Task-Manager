@@ -10,6 +10,9 @@
   @include respond(tab) {
     height: 80px;
   }
+  @include respond(lap) {
+    height: 97px;
+  }
   &-left {
     height: 100%;
     @include flex-cen-cen;
@@ -56,6 +59,11 @@
   &__board-name {
     @include respond(tab) {
       font-size: 20px;
+    }
+    @include respond(lap) {
+      font-weight: $fontWeightBold;
+      font-size: 24px;
+      line-height: 30px;
     }
   }
   //

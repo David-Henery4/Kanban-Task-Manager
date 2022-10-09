@@ -13,9 +13,16 @@
   transform: translate(-50%, -50%);
 }
 
+// MIXIN MEDIA QUERIES
+
 @mixin respond ($breakpoint) {
   @if $breakpoint == tab {
-    @media (min-width: 48em) {
+    @media (min-width: 48em) { //min 768px
+      @content
+    }
+  };
+  @if $breakpoint == lap {
+    @media (min-width: 64em) { //min 1024px
       @content
     }
   };
