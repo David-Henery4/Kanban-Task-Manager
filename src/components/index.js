@@ -6,6 +6,8 @@ import ColumnTaskBox from "./ColumnTaskBox";
 import Column from "./Column";
 import Sidebar from "./Sidebar";
 import NewColumn from "./NewColumn";
+import ShowSidebarBtn from "./ShowSidebarBtn";
+import Overlay from "./Overlay";
 
 export {
   Navbar,
@@ -16,4 +18,6 @@ export {
   Column,
   Sidebar,
   NewColumn,
+  ShowSidebarBtn,
+  Overlay,
 }

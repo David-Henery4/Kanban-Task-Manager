@@ -1,5 +1,5 @@
 import React from "react";
-import { EmptyBoard, Column, NewColumn } from "../components";
+import { EmptyBoard, Column, NewColumn, ShowSidebarBtn } from "../components";
 import {ViewTask, AddTask, AddBoard, Delete, MobileNav} from "../components/modal-components"
 import { AddTaskMobile, BoardIcon, ShowSidebarIcon } from "../assets";
 
@@ -24,9 +24,7 @@ const Board = () => {
         {/**/}
         <NewColumn />
       </div>
-      <div className="show-sidebar">
-        <ShowSidebarIcon className="show-sidebar__icon" />
-      </div>
+      <ShowSidebarBtn/>
     </main>
   );
 };

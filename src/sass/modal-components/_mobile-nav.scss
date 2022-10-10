@@ -7,7 +7,7 @@
   max-width: 480px;
   border-radius: 8px;
   padding: 16px 0;
-  display: grid;
+  display: none;
   grid-template-columns: 24px 1fr 24px;
   row-gap: 17.5px;
   &__title {
@@ -24,4 +24,11 @@
 
 .active-board{
   background-color: $colorPrimary;
+}
+
+.mob-nav-active{
+  display: grid;
+  @include respond (tab){
+    display: none;
+  }
 }

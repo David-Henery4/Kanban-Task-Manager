@@ -48,8 +48,10 @@
 }
 
 .sidebar-active{
-  min-width: 261px;
   transition: all ease-in-out .5s ;
+  @include respond (tab){
+    min-width: 261px;
+  }
   @include respond (lap){
     min-width: 300px;
   }

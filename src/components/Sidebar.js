@@ -1,9 +1,14 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {closeSidebar} from "../features/sidebar/sidebarSlice";
 import { LogoLight, BoardIcon, AddTaskMobile, DarkIcon, LightIcon, HideSidebarIcon } from "../assets";
 
 const Sidebar = () => {
+  const { isSidebarOpen } = useSelector((store) => store.sidebar);
+  const dispatch = useDispatch()
+  //
   return (
-    <aside className="sidebar">
+    <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
       <div className="sidebar-top">
         <LogoLight className="sidebar__logo" />
         <div className="board-container">
@@ -48,7 +53,7 @@ const Sidebar = () => {
           <div className="mob-nav-toggle">TOGGLE</div>
           <LightIcon />
         </div>
-        <div className="sidebar-hide-sidebar">
+        <div className="sidebar-hide-sidebar" onClick={() => dispatch(closeSidebar())}>
           <HideSidebarIcon className="sidebar-hide-sidebar__icon" />
           <p className="sidebar-hide-sidebar__text heading-m">Hide Sidebar</p>
         </div>

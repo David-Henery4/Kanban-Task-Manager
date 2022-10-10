@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { BoardIcon, AddTaskMobile, LightIcon, DarkIcon } from "../../assets";
 
 const MobileNav = () => {
+  const {isSidebarOpen} = useSelector((store) => store.sidebar)
+  // mob-nav-active
   return (
-    <div className="mob-nav">
+    <div className={isSidebarOpen ? "mob-nav-active mob-nav" : "mob-nav"}>
       <h4 className="mob-nav__title heading-s">ALL BOARDS (4)</h4>
       <div className="board-container">
         <div className="board-container-board active-board">
