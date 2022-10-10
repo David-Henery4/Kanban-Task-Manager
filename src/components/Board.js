@@ -1,5 +1,5 @@
 import React from "react";
-import { EmptyBoard, Column } from "../components";
+import { EmptyBoard, Column, NewColumn } from "../components";
 import {ViewTask, AddTask, AddBoard, Delete, MobileNav} from "../components/modal-components"
 import { AddTaskMobile, BoardIcon } from "../assets";
 
@@ -20,6 +20,8 @@ const Board = () => {
       <Column/>
       {/**/}
       <Column/>
+      {/**/}
+      <NewColumn/>
     </main>
   );
 };

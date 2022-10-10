@@ -1,0 +1,17 @@
+.new-column{
+  margin-top: 35px;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, $shadedColor, $shadedColorTwo);
+  // opacity: 15%;
+  min-width: 280px;
+  height: calc(100% - 35px);
+  @include flex-cen-cen;
+  flex-direction: column;
+  &__btn{
+    @include flex-cen-cen;
+    background-color: transparent;
+    border: none;
+    gap: 3px;
+    color: $nonActiveFontColor;
+  }
+}

@@ -2,11 +2,18 @@
 .board{
   position: relative;
   background-color: var(--backgroundColor);
-  min-width: 100%;
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  // height: calc(100vh - 64px);
   overflow: auto;
   gap: 24px;
   padding: 24px 16px;
+  // @include respond (tab){
+  //   height: calc(100vh - 80px);
+  // }
+  // @include respond (lap){
+  //   height: calc(100vh - 97px);
+  // }
   &-empty{
     // padding: 0 16px;
     text-align: center;

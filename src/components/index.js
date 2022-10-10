@@ -5,6 +5,7 @@ import ColumnHeading from "./ColumnHeading";
 import ColumnTaskBox from "./ColumnTaskBox";
 import Column from "./Column";
 import Sidebar from "./Sidebar";
+import NewColumn from "./NewColumn";
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   ColumnTaskBox,
   Column,
   Sidebar,
+  NewColumn,
 }
