@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Navbar, Board, Sidebar } from "./components";
+import {ShowSidebarIcon} from "./assets";
 
 function App() {
   //

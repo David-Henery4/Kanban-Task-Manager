@@ -1,7 +1,7 @@
 import React from "react";
 import { EmptyBoard, Column, NewColumn } from "../components";
 import {ViewTask, AddTask, AddBoard, Delete, MobileNav} from "../components/modal-components"
-import { AddTaskMobile, BoardIcon } from "../assets";
+import { AddTaskMobile, BoardIcon, ShowSidebarIcon } from "../assets";
 
 //**WILL BE ADDED CONDITIONALY TO Board**/
 // EMPTY-STATE = .flex-cen-cen;
@@ -11,17 +11,22 @@ import { AddTaskMobile, BoardIcon } from "../assets";
 
 const Board = () => {
   return (
-    <main className="board flex-start-start">
-      {/* <ViewTask/> */}
-      {/* <EmptyBoard/> */}
-      {/* <AddTask/> */}
-      {/* <AddBoard/> */}
-      {/* <Delete/> */}
-      <Column/>
-      {/**/}
-      <Column/>
-      {/**/}
-      <NewColumn/>
+    <main className="board">
+      <div className="board-content flex-start-start">
+        {/* <ViewTask/> */}
+        {/* <EmptyBoard/> */}
+        {/* <AddTask/> */}
+        {/* <AddBoard/> */}
+        {/* <Delete/> */}
+        <Column />
+        {/**/}
+        <Column />
+        {/**/}
+        <NewColumn />
+      </div>
+      <div className="show-sidebar">
+        <ShowSidebarIcon className="show-sidebar__icon" />
+      </div>
     </main>
   );
 };

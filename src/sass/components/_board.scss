@@ -3,17 +3,21 @@
   position: relative;
   background-color: var(--backgroundColor);
   width: 100%;
-  height: 100vh;
-  // height: calc(100vh - 64px);
-  overflow: auto;
-  gap: 24px;
+  // height: 100vh;
+  min-height: calc(100vh - 64px);
   padding: 24px 16px;
-  // @include respond (tab){
-  //   height: calc(100vh - 80px);
-  // }
-  // @include respond (lap){
-  //   height: calc(100vh - 97px);
-  // }
+  display: grid;
+  row-gap: 15px;
+  @include respond (tab){
+    min-height: calc(100vh - 80px);
+  }
+  @include respond (lap){
+    min-height: calc(100vh - 97px);
+  }
+  &-content{
+    overflow: auto;
+    gap: 24px;
+  }
   &-empty{
     // padding: 0 16px;
     text-align: center;

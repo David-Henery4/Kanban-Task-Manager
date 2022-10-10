@@ -1,0 +1,17 @@
+.show-sidebar{
+  height: 48px;
+  width: 56px;
+  background-color: $colorPrimary;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  display: none;
+  place-items: center;
+  position: relative;
+  right: 16px;
+  @include respond (tab){
+    display: grid;
+  }
+  &__icon{
+    
+  }
+}
