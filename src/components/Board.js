@@ -13,10 +13,10 @@ const Board = () => {
   return (
     <main className="board">
       <div className="board-content flex-start-start">
-        {/* <ViewTask/> */}
+        <ViewTask/>
         {/* <EmptyBoard/> */}
-        {/* <AddTask/> */}
-        {/* <AddBoard/> */}
+        <AddTask/>
+        <AddBoard/>
         {/* <Delete/> */}
         <Column />
         {/**/}

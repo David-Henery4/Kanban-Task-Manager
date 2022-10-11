@@ -10,6 +10,7 @@
   background-color: var(--itemColor);
   padding: 24px;
   border-radius: 6px;
+  display: none;
   // MODAL HEADING
   &__heading {
   }
@@ -92,4 +93,8 @@
   &__submit-btn {
     width: 100%;
   }
+}
+
+.add-task-active{
+  display: flex;
 }

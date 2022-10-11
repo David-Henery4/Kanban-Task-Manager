@@ -1,10 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { openAddNewBoardModal } from "../../features/modals/modals.Slice";
+import { closeSidebar } from "../../features/sidebar/sidebarSlice";
 import { BoardIcon, AddTaskMobile, LightIcon, DarkIcon } from "../../assets";
 
 const MobileNav = () => {
   const {isSidebarOpen} = useSelector((store) => store.sidebar)
-  // mob-nav-active
+  const dispatch = useDispatch()
+  //
+  const handleNewBoardClick = () => {
+    dispatch(openAddNewBoardModal())
+    dispatch(closeSidebar())
+  }
+  //
   return (
     <div className={isSidebarOpen ? "mob-nav-active mob-nav" : "mob-nav"}>
       <h4 className="mob-nav__title heading-s">ALL BOARDS (4)</h4>
@@ -29,7 +37,7 @@ const MobileNav = () => {
         </div>
         <div className="board-container-board">
           <BoardIcon className="board-container-board__icon" />
-          <button className="board-container-board__btn heading-m">
+          <button className="board-container-board__btn heading-m" onClick={handleNewBoardClick}>
             <span>
               <AddTaskMobile className="board-container-board__icon" />
             </span>

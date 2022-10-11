@@ -1,10 +1,21 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Cross } from "../../assets";
 
-const AddBoard = () => {
+const AddBoard = ({isEditActive}) => {
+  const { isAddNewBoardActive, isEditBoardActive } = useSelector(
+    (store) => store.modals
+  );
+  // new-board-active
   return (
-    <div className="new-board">
-      <h4 className="heading-l">Add New Board</h4>
+    <div
+      className={
+        isAddNewBoardActive ? "new-board new-board-active" : "new-board"
+      }
+    >
+      <h4 className="heading-l">
+        {isEditBoardActive ? "Edit Board" : "Add New Board"}
+      </h4>
       <form className="new-board-form">
         <div className="new-board-form-name">
           <label htmlFor="board-name" className="input-heading">
@@ -46,7 +57,7 @@ const AddBoard = () => {
         </div>
       </form>
       <button className="btn-sml btn-primary-color new-board__btn">
-        Create New Borad
+        {isEditBoardActive ? "Save Changes" : "Create New Borad"}
       </button>
     </div>
   );

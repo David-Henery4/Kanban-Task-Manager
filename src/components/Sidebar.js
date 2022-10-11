@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {closeSidebar} from "../features/sidebar/sidebarSlice";
+import { openAddNewBoardModal } from "../features/modals/modals.Slice";
+import { openOverlay } from "../features/overlay/overlaySlice";
 import { LogoLight, BoardIcon, AddTaskMobile, DarkIcon, LightIcon, HideSidebarIcon } from "../assets";
 
 const Sidebar = () => {
@@ -37,7 +39,11 @@ const Sidebar = () => {
           </div>
           <div className="board-container-board">
             <BoardIcon className="board-container-board__icon" />
-            <button className="board-container-board__btn heading-m">
+            <button className="board-container-board__btn heading-m" onClick={() => {
+              dispatch(openAddNewBoardModal())
+              dispatch(closeSidebar());
+              dispatch(openOverlay());
+              }}>
               <span>
                 <AddTaskMobile className="board-container-board__icon" />
               </span>

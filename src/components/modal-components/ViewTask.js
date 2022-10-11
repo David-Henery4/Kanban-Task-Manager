@@ -1,14 +1,27 @@
-import React from "react";
-import { TickMark, DownArrow } from "../../assets";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { EditDelete } from "../modal-components";
+import { TickMark, DownArrow, EditDeleteIcon } from "../../assets";
 
 const ViewTask = () => {
+  const [isTaskView, setIsTaskView] = useState(false)
+  const { isViewTaskActive } = useSelector((store) => store.modals);
+  // view-task-active
   return (
-    <div className="view-task">
+    <div
+      className={isViewTaskActive ? "view-task-active view-task" : "view-task"}
+    >
       <div className="view-task-desc-container">
-        <h4 className="view-task__title heading-l">
-          Research pricing points of various competitors and trial different
-          business models
-        </h4>
+        <div className="view-task-heading">
+          <h4 className="view-task__title heading-l">
+            Research pricing points of various competitors and trial different
+            business models
+          </h4>
+          <div className="view-task-heading__icon">
+            <EditDeleteIcon onClick={() => setIsTaskView(!isTaskView)} />
+          </div>
+          {isTaskView && <EditDelete isViewTaskActive={isViewTaskActive} />}
+        </div>
         <p className="view-task__text basicTextMedium">
           We know what we're planning to build for version one. Now we need to
           finalise the first pricing model we'll use. Keep iterating the

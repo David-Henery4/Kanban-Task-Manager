@@ -9,6 +9,7 @@
   padding: 24px;
   background-color: var(--itemColor);
   border-radius: 6px;
+  display: none;
   &-form{
     @include flex-cen-cen;
     width: 100%;
@@ -46,4 +47,8 @@
   &__btn{
     width: 100%;
   }
+}
+
+.new-board-active{
+  display: flex;
 }

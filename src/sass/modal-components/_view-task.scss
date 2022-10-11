@@ -9,9 +9,18 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 24px;
+  display: none;
   &-desc-container {
     display: grid;
     gap: 24px;
+  }
+  &-heading{
+    @include flex-cen-cen;
+    &__icon{
+      width: 15%;
+      display: flex;
+      justify-content: flex-end;
+    }
   }
   &__title {
   }
@@ -83,4 +92,8 @@
     &__icon {
     }
   }
+}
+
+.view-task-active{
+  display: flex;
 }

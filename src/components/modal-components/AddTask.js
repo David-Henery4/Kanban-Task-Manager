@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Cross } from "../../assets";
 
 const AddTask = () => {
+  const { isAddNewTaskActive } = useSelector((store) => store.modals);
+  // add-task-active
   return (
-    <div className="add-task">
+    <div className={isAddNewTaskActive ? "add-task add-task-active": "add-task"}>
       <h4 className="add-task__heading heading-l">Add New Task</h4>
       <form name="add-todo" className="add-task-form">
         {/* Title Input */}

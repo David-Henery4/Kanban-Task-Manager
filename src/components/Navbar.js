@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {openSidebar} from "../features/sidebar/sidebarSlice";
-import { MobileNav } from "../components/modal-components";
+import { openNewTaskModal, openNavbarEditDelete} from "../features/modals/modals.Slice";
+import {openOverlay} from "../features/overlay/overlaySlice";
+import { MobileNav, EditDelete } from "../components/modal-components";
 import {
   MobileLogo,
   DownArrow,
@@ -13,11 +15,22 @@ import {
 
 const Navbar = () => {
   const {isSidebarOpen} = useSelector((store) => store.sidebar)
+  const { isNavbarEditDeleteActive } = useSelector((store) => store.modals);
   const dispatch = useDispatch()
+  //
+  const openAddTask = () => {
+    dispatch(openNewTaskModal())
+    dispatch(openOverlay());
+  }
+  //
+  const handleDropdownClick = () => {
+    dispatch(openSidebar());
+    dispatch(openOverlay())
+  }
   // remove-nav-logo
   return (
     <nav className="navbar">
-      <MobileNav/>
+      <MobileNav />
       <div className="navbar-left">
         <MobileLogo className="navbar__logo" />
         <div
@@ -30,14 +43,21 @@ const Navbar = () => {
           <LogoLight className="navbar__logo--tab" />
         </div>
         <h1 className="navbar__board-name heading-l">Platform Launch</h1>
-        <DownArrow className="navbar__drop-down-icon" onClick={() => dispatch(openSidebar())}/>
+        <DownArrow
+          className="navbar__drop-down-icon"
+          onClick={handleDropdownClick}
+        />
       </div>
       <div className="navbar-right">
-        <div className="navbar-add-task">
+        <div className="navbar-add-task" onClick={openAddTask}>
           <AddTaskMobile className="navbar-add-task__icon" />
           <p className="navbar-add-task__text heading-m">Add new task</p>
         </div>
-        <EditDeleteIcon className="navbar__edit-delete-icon" />
+        <EditDeleteIcon
+          className="navbar__edit-delete-icon"
+          onClick={() => dispatch(openNavbarEditDelete())}
+        />
+        {isNavbarEditDeleteActive && <EditDelete />}
       </div>
     </nav>
   );

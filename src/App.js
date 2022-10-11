@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navbar, Board, Sidebar } from "./components";
+import { Navbar, Board, Sidebar, Overlay } from "./components";
 import {ShowSidebarIcon} from "./assets";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   //
   return (
     <div className="App overall-layout">
+      <Overlay/>
       <Sidebar/>
       <div className="main-content-layout">
         <Navbar />
