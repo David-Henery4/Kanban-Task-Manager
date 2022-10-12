@@ -3,12 +3,17 @@ import { useDispatch } from "react-redux";
 import {
   openAddNewBoardModal,
   openNavbarEditDelete,
+  openNewTaskModal,
   openDeleteModal,
   closeViewTaskModal,
   openViewTaskEditDelete,
   closeEditDeleteModals,
 } from "../../features/modals/modalsSlice";
-import {activateEditBoard} from "../../features/edit-delete-modes/modesSlice";
+import {
+  activateEditBoard,
+  activateDeleteTask,
+  activateEditTask
+} from "../../features/edit-delete-modes/modesSlice";
 import { openOverlay } from "../../features/overlay/overlaySlice";
 
 const EditDelete = ({ isViewTaskActive = false }) => {
@@ -16,7 +21,7 @@ const EditDelete = ({ isViewTaskActive = false }) => {
   const dispatch = useDispatch();
   //
   const handleEditBoardClick = () => {
-    if (isViewTaskActive === false) {
+    if (!isViewTaskActive) {
       dispatch(openAddNewBoardModal());
       dispatch(openOverlay());
       dispatch(openNavbarEditDelete());
@@ -24,9 +29,19 @@ const EditDelete = ({ isViewTaskActive = false }) => {
     }
   };
   //
+  const handleEditTaskClick = () => {
+    if (isViewTaskActive){
+      dispatch(activateEditTask())
+      dispatch(openNewTaskModal())
+    }
+  }
+  //
   const handleDeleteClick = () => {
+    if (isViewTaskActive){
+      dispatch(activateDeleteTask())
+      dispatch(closeViewTaskModal());
+    }
     dispatch(openDeleteModal());
-    dispatch(closeViewTaskModal());
     dispatch(openOverlay());
     dispatch(closeEditDeleteModals());
   };
@@ -35,7 +50,10 @@ const EditDelete = ({ isViewTaskActive = false }) => {
     <div className="delete-edit">
       <button
         className="delete-edit__edit-btn del-edit-btn basicTextMedium"
-        onClick={handleEditBoardClick}
+        onClick={() => {
+          handleEditBoardClick()
+          handleEditTaskClick()
+        }}
       >
         {isViewTaskActive ? "Edit Task" : "Edit Board"}
       </button>

@@ -8,7 +8,7 @@ import {
   closeDeleteModal,
   closeEditDeleteModals,
 } from "../features/modals/modalsSlice";
-import {deActivateEditBoard} from "../features/edit-delete-modes/modesSlice";
+import {deActivateEditBoard, deActivateDeleteTask, deActivateEditTask} from "../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../features/overlay/overlaySlice";
 
 const Overlay = () => {
@@ -23,6 +23,8 @@ const Overlay = () => {
     dispatch(closeViewTaskModal());
     dispatch(closeAddNewBoardModal());
     dispatch(deActivateEditBoard());
+    dispatch(deActivateDeleteTask())
+    dispatch(deActivateEditTask())
     dispatch(closeEditDeleteModals());
   };
   //

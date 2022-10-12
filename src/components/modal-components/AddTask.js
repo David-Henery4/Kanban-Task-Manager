@@ -4,10 +4,15 @@ import { Cross } from "../../assets";
 
 const AddTask = () => {
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
+  const { isEditTaskActive } = useSelector((store) => store.modes);
   // add-task-active
   return (
-    <div className={isAddNewTaskActive ? "add-task add-task-active": "add-task"}>
-      <h4 className="add-task__heading heading-l">Add New Task</h4>
+    <div
+      className={isAddNewTaskActive ? "add-task add-task-active" : "add-task"}
+    >
+      <h4 className="add-task__heading heading-l">
+        {isEditTaskActive ? "Edit Task" : "Add New Task"}
+      </h4>
       <form name="add-todo" className="add-task-form">
         {/* Title Input */}
         <div className="add-task-form-title field-set-remove-border">
@@ -94,7 +99,7 @@ const AddTask = () => {
         form="add-todo"
         className="add-task__submit-btn btn-sml btn-primary-color"
       >
-        Create Task
+        {isEditTaskActive ? "Saves Changes" : "Create Task"}
       </button>
     </div>
   );
