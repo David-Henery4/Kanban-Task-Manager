@@ -1,13 +1,20 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {closeSidebar} from "../features/sidebar/sidebarSlice";
-import { openAddNewBoardModal } from "../features/modals/modals.Slice";
+import { closeSidebar } from "../features/sidebar/sidebarSlice";
+import { openAddNewBoardModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
-import { LogoLight, BoardIcon, AddTaskMobile, DarkIcon, LightIcon, HideSidebarIcon } from "../assets";
+import {
+  LogoLight,
+  BoardIcon,
+  AddTaskMobile,
+  DarkIcon,
+  LightIcon,
+  HideSidebarIcon,
+} from "../assets";
 
 const Sidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //
   return (
     <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
@@ -39,11 +46,14 @@ const Sidebar = () => {
           </div>
           <div className="board-container-board">
             <BoardIcon className="board-container-board__icon" />
-            <button className="board-container-board__btn heading-m" onClick={() => {
-              dispatch(openAddNewBoardModal())
-              dispatch(closeSidebar());
-              dispatch(openOverlay());
-              }}>
+            <button
+              className="board-container-board__btn heading-m"
+              onClick={() => {
+                dispatch(openAddNewBoardModal());
+                dispatch(closeSidebar());
+                dispatch(openOverlay());
+              }}
+            >
               <span>
                 <AddTaskMobile className="board-container-board__icon" />
               </span>
@@ -59,7 +69,10 @@ const Sidebar = () => {
           <div className="mob-nav-toggle">TOGGLE</div>
           <LightIcon />
         </div>
-        <div className="sidebar-hide-sidebar" onClick={() => dispatch(closeSidebar())}>
+        <div
+          className="sidebar-hide-sidebar"
+          onClick={() => dispatch(closeSidebar())}
+        >
           <HideSidebarIcon className="sidebar-hide-sidebar__icon" />
           <p className="sidebar-hide-sidebar__text heading-m">Hide Sidebar</p>
         </div>

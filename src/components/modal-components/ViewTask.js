@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { openViewTaskEditDelete } from "../../features/modals/modalsSlice";
 import { EditDelete } from "../modal-components";
 import { TickMark, DownArrow, EditDeleteIcon } from "../../assets";
 
 const ViewTask = () => {
-  const [isTaskView, setIsTaskView] = useState(false)
-  const { isViewTaskActive } = useSelector((store) => store.modals);
+  const dispatch = useDispatch();
+  // const [isTaskView, setIsTaskView] = useState(true)
+  const { isViewTaskActive, isViewTaskEditDeleteActive } = useSelector(
+    (store) => store.modals
+  );
   // view-task-active
   return (
     <div
@@ -18,9 +22,13 @@ const ViewTask = () => {
             business models
           </h4>
           <div className="view-task-heading__icon">
-            <EditDeleteIcon onClick={() => setIsTaskView(!isTaskView)} />
+            <EditDeleteIcon
+              onClick={() => dispatch(openViewTaskEditDelete())}
+            />
           </div>
-          {isTaskView && <EditDelete isViewTaskActive={isViewTaskActive} />}
+          {isViewTaskEditDeleteActive && (
+            <EditDelete isViewTaskActive={isViewTaskActive} />
+          )}
         </div>
         <p className="view-task__text basicTextMedium">
           We know what we're planning to build for version one. Now we need to

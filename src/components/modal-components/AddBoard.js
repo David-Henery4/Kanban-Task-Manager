@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Cross } from "../../assets";
 
-const AddBoard = ({isEditActive}) => {
-  const { isAddNewBoardActive, isEditBoardActive } = useSelector(
+const AddBoard = () => {
+  const { isAddNewBoardActive } = useSelector(
     (store) => store.modals
   );
+  const {isEditBoardActive} = useSelector((store) => store.modes)
   // new-board-active
   return (
     <div

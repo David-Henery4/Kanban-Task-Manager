@@ -9,6 +9,7 @@
   padding: 24px;
   border-radius: 6px;
   background-color: var(--itemColor);
+  display: none;
   &__title{
     color: $red;
   }
@@ -23,4 +24,8 @@
       width: 100%;
     }
   }
+}
+
+.delete-active{
+  display: flex;
 }

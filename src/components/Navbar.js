@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {openSidebar} from "../features/sidebar/sidebarSlice";
-import { openNewTaskModal, openNavbarEditDelete} from "../features/modals/modals.Slice";
-import {openOverlay} from "../features/overlay/overlaySlice";
+import { openSidebar } from "../features/sidebar/sidebarSlice";
+import {
+  openNewTaskModal,
+  openNavbarEditDelete,
+} from "../features/modals/modalsSlice";
+import { openOverlay } from "../features/overlay/overlaySlice";
 import { MobileNav, EditDelete } from "../components/modal-components";
 import {
   MobileLogo,
@@ -14,19 +17,19 @@ import {
 } from "../assets";
 
 const Navbar = () => {
-  const {isSidebarOpen} = useSelector((store) => store.sidebar)
+  const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const { isNavbarEditDeleteActive } = useSelector((store) => store.modals);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //
   const openAddTask = () => {
-    dispatch(openNewTaskModal())
+    dispatch(openNewTaskModal());
     dispatch(openOverlay());
-  }
+  };
   //
   const handleDropdownClick = () => {
     dispatch(openSidebar());
-    dispatch(openOverlay())
-  }
+    dispatch(openOverlay());
+  };
   // remove-nav-logo
   return (
     <nav className="navbar">
