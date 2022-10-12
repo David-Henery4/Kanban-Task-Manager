@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeSidebar } from "../features/sidebar/sidebarSlice";
 import { openAddNewBoardModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
+import { changeActiveBoard } from "../features/data/dataSlice";
 import {
   LogoLight,
   BoardIcon,
@@ -13,8 +14,13 @@ import {
 } from "../assets";
 
 const Sidebar = () => {
+  const { overallData } = useSelector((store) => store.data);
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const dispatch = useDispatch();
+  //
+  const handleBoardSwitch = (i) => {
+    dispatch(changeActiveBoard(i))
+  }
   //
   return (
     <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
@@ -26,24 +32,18 @@ const Sidebar = () => {
               ALL BOARDS (4)
             </h4>
           </div>
-          <div className="board-container-board active-board">
-            <BoardIcon className="board-container-board__icon" />
-            <p className="board-container-board__name heading-m">
-              Platform Launch
-            </p>
-          </div>
-          <div className="board-container-board">
-            <BoardIcon className="board-container-board__icon" />
-            <p className="board-container-board__name heading-m">
-              Platform Launch
-            </p>
-          </div>
-          <div className="board-container-board">
-            <BoardIcon className="board-container-board__icon" />
-            <p className="board-container-board__name heading-m">
-              Platform Launch
-            </p>
-          </div>
+          {overallData.map((board, i) => {
+            const {name, id} = board
+            // active board will have "active-board"
+            return (
+              <div className="board-container-board" key={id} onClick={() => handleBoardSwitch(i)}>
+                <BoardIcon className="board-container-board__icon" />
+                <p className="board-container-board__name heading-m">
+                  {name}
+                </p>
+              </div>
+            );
+          })}
           <div className="board-container-board">
             <BoardIcon className="board-container-board__icon" />
             <button

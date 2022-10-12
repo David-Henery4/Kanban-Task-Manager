@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 20px;
+  min-width: 280px; // just added
   &-heading-section{
     width: 100%;
     gap: 12px;
