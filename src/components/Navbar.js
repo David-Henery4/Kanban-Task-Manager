@@ -19,6 +19,7 @@ import {
 const Navbar = () => {
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const { isNavbarEditDeleteActive } = useSelector((store) => store.modals);
+  const { activeBoardData } = useSelector((store) => store.data);
   const dispatch = useDispatch();
   //
   const openAddTask = () => {
@@ -45,7 +46,7 @@ const Navbar = () => {
         >
           <LogoLight className="navbar__logo--tab" />
         </div>
-        <h1 className="navbar__board-name heading-l">Platform Launch</h1>
+        <h1 className="navbar__board-name heading-l">{activeBoardData.name}</h1>
         <DownArrow
           className="navbar__drop-down-icon"
           onClick={handleDropdownClick}

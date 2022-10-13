@@ -8,7 +8,6 @@ import { BoardIcon, AddTaskMobile, LightIcon, DarkIcon } from "../../assets";
 const MobileNav = () => {
   const { overallData } = useSelector((store) => store.data);
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
-  const { activeBoardIndex } = useSelector((store) => store.data);
   const dispatch = useDispatch();
   //
   const handleNewBoardClick = () => {

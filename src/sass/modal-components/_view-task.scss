@@ -13,9 +13,11 @@
   &-desc-container {
     display: grid;
     gap: 24px;
+    width: 100%
   }
   &-heading{
     @include flex-cen-cen;
+    justify-content: space-between;
     &__icon{
       width: 15%;
       display: flex;
@@ -59,7 +61,9 @@
       height: 16px;
       width: 16px;
       border-radius: 2px;
-      background-color: $colorPrimary;
+      // background-color: $colorPrimary;
+      background-color: var(--itemColor);
+      border: 1px solid rgba($nonActiveFontColor, .25);
       display: grid;
       place-items: center;
       &__icon {
@@ -69,7 +73,7 @@
     &__text {
       font-size: 12px;
       font-weight: $fontWeightBold;
-      text-decoration: line-through;
+      // text-decoration: line-through;
     }
   }
   //
@@ -97,3 +101,12 @@
 .view-task-active{
   display: flex;
 }
+
+.checkbox-completed{
+  background-color: $colorPrimary;
+  border: none;
+}
+// .checkbox-not-completed{
+//   background-color: var(--itemColor);
+//   border: 1px solid rgba($nonActiveFontColor, .25);
+// }

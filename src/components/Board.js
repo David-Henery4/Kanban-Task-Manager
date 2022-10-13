@@ -31,6 +31,7 @@ const Board = () => {
         <AddBoard/>
         <Delete/>
         {activeColumns.map((col, i) => {
+          // console.log(col)
           return <Column key={i} {...col}/>;
         })}
         

@@ -6,21 +6,18 @@ import { TickMark, DownArrow, EditDeleteIcon } from "../../assets";
 
 const ViewTask = () => {
   const dispatch = useDispatch();
-  // const [isTaskView, setIsTaskView] = useState(true)
+  const { selectedTask } = useSelector((store) => store.data);
   const { isViewTaskActive, isViewTaskEditDeleteActive } = useSelector(
     (store) => store.modals
   );
-  // view-task-active
+  //
   return (
     <div
       className={isViewTaskActive ? "view-task-active view-task" : "view-task"}
     >
       <div className="view-task-desc-container">
         <div className="view-task-heading">
-          <h4 className="view-task__title heading-l">
-            Research pricing points of various competitors and trial different
-            business models
-          </h4>
+          <h4 className="view-task__title heading-l">{selectedTask.title}</h4>
           <div className="view-task-heading__icon">
             <EditDeleteIcon
               onClick={() => dispatch(openViewTaskEditDelete())}
@@ -31,39 +28,39 @@ const ViewTask = () => {
           )}
         </div>
         <p className="view-task__text basicTextMedium">
-          We know what we're planning to build for version one. Now we need to
-          finalise the first pricing model we'll use. Keep iterating the
-          subtasks until we have a coherent proposition.
+          {selectedTask.description}
         </p>
       </div>
       <div className="view-task-subtasks">
-        <h5 className="view-task-subtasks__status">Subtasks (2 of 3)</h5>
-        {/* SUBTASK #1 */}
+        <h5 className="view-task-subtasks__status">
+          Subtasks ({selectedTask.subTaskCompleted && selectedTask.subTaskCompleted.length} of {selectedTask.subtasks && selectedTask.subtasks.length})
+        </h5>
+        {/* SUBTASKS */}
         <div className="view-task-subtasks-container">
-          <div className="view-task-subtask">
-            <div className="view-task-subtask-checkbox">
-              <TickMark className="view-task-subtask-checkbox__icon" />
-            </div>
-            <p className="view-task-subtask__text">
-              Research competitor pricing and business models
-            </p>
-          </div>
-          {/* SUBTASK #2 */}
-          <div className="view-task-subtask">
-            <div className="view-task-subtask-checkbox">
-              <TickMark className="view-task-subtask-checkbox__icon" />
-            </div>
-            <p className="view-task-subtask__text">
-              Outline a business model that works for our solution
-            </p>
-          </div>
-          {/* SUBTASK #3 */}
-          <div className="view-task-subtask">
-            <div className="view-task-subtask-checkbox">
-              <TickMark className="view-task-subtask-checkbox__icon" />
-            </div>
-            <p className="view-task-subtask__text">Surveying and testing</p>
-          </div>
+          {selectedTask.subtasks && selectedTask.subtasks.map((sub,i) => {
+            console.log(sub)
+            return (
+              <div className="view-task-subtask" key={i}>
+                <div
+                  className={
+                    sub.isCompleted
+                      ? "view-task-subtask-checkbox checkbox-completed"
+                      : "view-task-subtask-checkbox"
+                  }
+                >
+                  {sub.isCompleted && (
+                    <TickMark className="view-task-subtask-checkbox__icon" />
+                  )}
+                </div>
+                <p
+                  className="view-task-subtask__text"
+                  style={{ textDecoration: sub.isCompleted && "line-through" }}
+                >
+                  {sub.title}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="view-task-overall-status">
@@ -71,7 +68,7 @@ const ViewTask = () => {
         {/* MIGHT CHANGE TO INPUT SELECT */}
         <div className="view-task-overall-status-select flex-cen-cen">
           <p className="view-task-overall-status__text basicTextMedium">
-            Doing
+            {selectedTask.status}
           </p>
           <DownArrow className="view-task-overall-status__icon" />
         </div>

@@ -8,7 +8,6 @@ const Column = ({name,tasks}) => {
     <div className="column">
       <ColumnHeading name={name} quantity={tasks.length}/>
       {tasks.map((task, i) => {
-        // console.log(task)
         return <ColumnTaskBox key={i} {...task}/>;
       })}
     </div>

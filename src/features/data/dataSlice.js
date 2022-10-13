@@ -2,24 +2,29 @@ import { createSlice } from "@reduxjs/toolkit";
 import InitialTaskData from "../../data.json";
 
 const initialState = {
-  overallData : InitialTaskData.boards,
+  overallData: InitialTaskData.boards,
   activeBoardIndex: 0,
-  activeBoardData: {}
-}
+  activeBoardData: {},
+  selectedTask: {},
+};
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
-  reducers:{
-    changeActiveBoard: (state, {payload}) => {
-      state.activeBoardIndex = payload
+  reducers: {
+    changeActiveBoard: (state, { payload }) => {
+      state.activeBoardIndex = payload;
     },
-    setActiveBoardData: (state, {payload}) => {
-      state.activeBoardData = payload
-    }
-  }
-})
+    setActiveBoardData: (state, { payload }) => {
+      state.activeBoardData = payload;
+    },
+    selectTask: (state, { payload }) => {
+      state.selectedTask = payload
+    },
+  },
+});
 
-export const {changeActiveBoard,setActiveBoardData} = dataSlice.actions;
+export const { changeActiveBoard, setActiveBoardData, selectTask } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;
