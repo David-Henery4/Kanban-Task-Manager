@@ -13,13 +13,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 const Board = () => {
   const dispatch = useDispatch()
-  const [activeColumns, setActiveColumns] = useState([])
-  const {overallData, activeBoardIndex} = useSelector((store) => store.data)
+  const { overallData, activeBoardIndex, activeBoardColumns, activeBoardData } = useSelector(
+    (store) => store.data
+  );
   //
   useEffect(() => {
-    const {columns} = overallData[activeBoardIndex]
     dispatch(setActiveBoardData(overallData[activeBoardIndex]))
-    setActiveColumns(columns)
   }, [overallData,activeBoardIndex])
   //
   return (
@@ -30,7 +29,7 @@ const Board = () => {
         <AddTask/>
         <AddBoard/>
         <Delete/>
-        {activeColumns.map((col, i) => {
+        {activeBoardColumns.map((col, i) => {
           // console.log(col)
           return <Column key={i} {...col}/>;
         })}

@@ -4,14 +4,24 @@ import { openViewTaskModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
 import {selectTask} from "../features/data/dataSlice";
 
-const ColumnTaskBox = ({ title, subtasks, status, description }) => {
-  // const {title,} = task 
+const ColumnTaskBox = ({
+  title,
+  subtasks,
+  status,
+  description,
+  name
+}) => {
+  // const {title,} = task
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
   const dispatch = useDispatch();
+  //
   const handleViewTask = () => {
+    let columnName = name
     dispatch(openViewTaskModal());
     dispatch(openOverlay());
-    dispatch(selectTask({title,subtasks,status,description,subTaskCompleted}));
+    dispatch(
+      selectTask({ title, subtasks, status, description, subTaskCompleted, columnName })
+    );
   };
   //
   useEffect(() => {
