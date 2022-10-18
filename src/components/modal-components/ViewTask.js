@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openViewTaskEditDelete } from "../../features/modals/modalsSlice";
 import { EditDelete } from "../modal-components";
-import {toggleSubTaskStatus} from "../../features/data/dataSlice";
+import {
+  toggleSubTaskStatus,
+  updateSubTaskCompletedQuantity,
+} from "../../features/data/dataSlice";
 import { TickMark, DownArrow, EditDeleteIcon } from "../../assets";
 
 const ViewTask = () => {
+  const [subTaskCompletedNumber, setSubTaskCompletedNumber] = useState(0);
+  const [subTaskAmount, setSubTaskAmount] = useState(0);
   const dispatch = useDispatch();
-  const { selectedTask, selectedSubTasks } = useSelector((store) => store.data);
+  const { selectedTask, selectedSubTasks, activeBoardData } = useSelector(
+    (store) => store.data
+  );
   const { isViewTaskActive, isViewTaskEditDeleteActive } = useSelector(
     (store) => store.modals
   );
   //
-  const handleSubTaskCheckboxToggle = (sub,i) => {
-    // console.log(sub)
-    // console.log(i)
-    // console.log(selectedTask)
-    dispatch(toggleSubTaskStatus({sub, i}))
-  }
+  const handleSubTaskCheckboxToggle = (sub, i) => {
+    dispatch(toggleSubTaskStatus({ sub, i }));
+  };
+  //
+  useEffect(() => {
+    let curTasks;
+    if (Object.entries(activeBoardData).length > 0) {
+      const update = activeBoardData.columns.find((col) => {
+        return col.name === selectedTask.columnName;
+      });
+      curTasks = update;
+    }
+    if (curTasks) {
+      const currrentTask = curTasks.tasks.find((t) => {
+        return t.title === selectedTask.title;
+      });
+      setSubTaskAmount(currrentTask.subtasks.length);
+      const completedTasks = [];
+      currrentTask.subtasks.forEach((task) => {
+        if (task.isCompleted) {
+          completedTasks.push(task);
+        }
+      });
+      setSubTaskCompletedNumber(completedTasks.length)
+    }
+  }, [activeBoardData, selectedTask]);
   //
   return (
     <div
@@ -41,35 +68,40 @@ const ViewTask = () => {
       </div>
       <div className="view-task-subtasks">
         <h5 className="view-task-subtasks__status">
-          Subtasks ({selectedTask.subTaskCompleted && selectedTask.subTaskCompleted.length} of {selectedSubTasks && selectedSubTasks.length})
+          Subtasks (
+          {subTaskCompletedNumber}{" "}
+          of {subTaskAmount})
         </h5>
         {/* SUBTASKS */}
         <div className="view-task-subtasks-container">
-          {selectedSubTasks && selectedSubTasks.map((sub,i) => {
-            // console.log(sub)
-            return (
-              <div className="view-task-subtask" key={i}>
-                <div
-                  className={
-                    sub.isCompleted
-                      ? "view-task-subtask-checkbox checkbox-completed"
-                      : "view-task-subtask-checkbox"
-                  }
-                onClick={() => handleSubTaskCheckboxToggle(sub,i)}
-                >
-                  {sub.isCompleted && (
-                    <TickMark className="view-task-subtask-checkbox__icon" />
-                  )}
+          {selectedTask.subtasks &&
+            selectedTask.subtasks.map((sub, i) => {
+              // console.log(sub)
+              return (
+                <div className="view-task-subtask" key={i}>
+                  <div
+                    className={
+                      sub.isCompleted
+                        ? "view-task-subtask-checkbox checkbox-completed"
+                        : "view-task-subtask-checkbox"
+                    }
+                    onClick={() => handleSubTaskCheckboxToggle(sub, i)}
+                  >
+                    {sub.isCompleted && (
+                      <TickMark className="view-task-subtask-checkbox__icon" />
+                    )}
+                  </div>
+                  <p
+                    className="view-task-subtask__text"
+                    style={{
+                      textDecoration: sub.isCompleted && "line-through",
+                    }}
+                  >
+                    {sub.title}
+                  </p>
                 </div>
-                <p
-                  className="view-task-subtask__text"
-                  style={{ textDecoration: sub.isCompleted && "line-through" }}
-                >
-                  {sub.title}
-                </p>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
       <div className="view-task-overall-status">

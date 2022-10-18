@@ -17,6 +17,8 @@ const Board = () => {
     (store) => store.data
   );
   //
+  // console.log(activeBoardData.columns)
+  //
   useEffect(() => {
     dispatch(setActiveBoardData(overallData[activeBoardIndex]))
   }, [overallData,activeBoardIndex])
@@ -24,20 +26,20 @@ const Board = () => {
   return (
     <main className="board">
       <div className="board-content flex-start-start">
-        <ViewTask/>
+        <ViewTask />
         {/* <EmptyBoard/> */}
-        <AddTask/>
-        <AddBoard/>
-        <Delete/>
-        {activeBoardColumns.map((col, i) => {
+        <AddTask />
+        <AddBoard />
+        <Delete />
+        {activeBoardData.columns && activeBoardData.columns.map((col, i) => {
           // console.log(col)
-          return <Column key={i} {...col}/>;
+          return <Column key={i} {...col} />;
         })}
-        
+
         {/**/}
         <NewColumn />
       </div>
-      <ShowSidebarBtn/>
+      <ShowSidebarBtn />
     </main>
   );
 };
