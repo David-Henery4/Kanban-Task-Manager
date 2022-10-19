@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addNewTask } from "../../features/data/dataSlice";
 import { Cross } from "../../assets";
 
 const AddTask = () => {
   const [task, setTask] = useState({
     title: "",
     description: "",
-    status: "",
+    status: "todo",
     subtasks: [
       {
         title: "",
@@ -15,32 +16,33 @@ const AddTask = () => {
     ]
   })
   //
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [subtasks, setSubtasks] = useState([]);
-  const [status, setStatus] = useState("");
-  const [numberOfSubtaskInputs, setNumberOfSubtaskInputs] = useState(2);
-  //
+  const dispatch = useDispatch()
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
   const { isEditTaskActive } = useSelector((store) => store.modes);
   //
-  const handleEditInputs = () => {};
+  const handleEditSubmit = () => {};
   //
-  const handleNewInputs = () => {
+  const handleNewSubmit = () => {
     // might add id's
-    const newTask = {
-      title,
-      description,
-      status,
-    };
+    dispatch(addNewTask(task))
   };
   //
-  const handleArrayOfInputs = (e) => {
-    const subtask = {
-      title: "",
-      isCompleted: false
-    }
-    setSubtasks(...subtasks, subtask)
+  const handleSubtasksValueChange = (i) => (e) => {
+    const newSubtasks = task.subtasks.map((s,ind) => {
+      if (i !== ind) return s
+      return {...s, title: e.target.value}
+    })
+    setTask({...task, subtasks: newSubtasks})
+  }
+  //
+  const handleRemoveSubtask = (i) => {
+    const newSubtasks = task.subtasks.filter((_,tInd) => i !== tInd)
+    setTask({...task, subtasks: newSubtasks})
+  }
+  //
+  const handleAddSubtask = (e) => {
+    e.preventDefault()
+    setTask({...task, subtasks: [...task.subtasks, {title: "", isCompleted: false}]})
   }
   //
   return (
@@ -60,8 +62,8 @@ const AddTask = () => {
             className="add-task-form-title__input input-style-basic"
             type="text"
             placeholder="e.g Take coffee break"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={task.title}
+            onChange={(e) => setTask({...task, title: e.target.value})}
           />
         </div>
         {/* Description Input */}
@@ -76,6 +78,8 @@ const AddTask = () => {
             placeholder="It's always good to take a break. This 
             15 minute break will  recharge the batteries 
             a little."
+            value={task.description}
+            onChange={(e) => setTask({...task, description: e.target.value})}
           ></textarea>
         </div>
         {/* SUBTASK INPUT */}
@@ -84,29 +88,25 @@ const AddTask = () => {
             Subtask
           </h5>
           <div className="add-task-form-subtasks-inputs">
-            {/* <div className="add-task-form-subtasks-task">
-              <input
-                name="subtask"
-                className="add-task-form-subtasks-task__input input-style-basic"
-                type="text"
-                placeholder="e.g Make Coffee"
-              />
-              <Cross className="add-task-form-subtasks-task__icon" />
-            </div> */}
-            {
-            Array.from({ length: numberOfSubtaskInputs }, (_, i) => (
-              <div className="add-task-form-subtasks-task" key={i}>
-                <input
-                  id={`subtask-${i}`}
-                  name={`subtask-${i}`}
-                  className="add-task-form-subtasks-task__input input-style-basic"
-                  type="text"
-                  placeholder="e.g Make Coffee"
-                />
-                <Cross className="add-task-form-subtasks-task__icon" />
-              </div>
-            ))}
-            <button className="add-task-form-subtasks__add-subtask-btn btn-sml btn-secondary-color">
+            {task.subtasks.map((t, i) => {
+              return (
+                <div className="add-task-form-subtasks-task" key={i}>
+                  <input
+                    name="subtask"
+                    className="add-task-form-subtasks-task__input input-style-basic"
+                    type="text"
+                    placeholder="e.g Make Coffee"
+                    value={t.title}
+                    onChange={handleSubtasksValueChange(i)}
+                  />
+                  <Cross className="add-task-form-subtasks-task__icon" onClick={() => handleRemoveSubtask(i)}/>
+                </div>
+              );
+            })}
+            <button
+              className="add-task-form-subtasks__add-subtask-btn btn-sml btn-secondary-color"
+              onClick={(e) => handleAddSubtask(e)}
+            >
               Add New Subtask
             </button>
           </div>
@@ -119,10 +119,12 @@ const AddTask = () => {
             className="add-task-form-status-select input-style-basic"
             name="status"
             id="status"
+            value={task.status}
+            onChange={(e) => setTask({...task, status: e.target.value})}
           >
             <option
               className="add-task-form-status-select__option"
-              value="doing"
+              value="todo"
             >
               Todo
             </option>
@@ -147,10 +149,10 @@ const AddTask = () => {
         className="add-task__submit-btn btn-sml btn-primary-color"
         onClick={() => {
           if (isEditTaskActive) {
-            handleEditInputs();
+            handleEditSubmit();
           }
           if (!isEditTaskActive) {
-            handleNewInputs();
+            handleNewSubmit();
           }
         }}
       >

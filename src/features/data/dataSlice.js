@@ -12,6 +12,9 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    addNewTask: (state, {payload}) => {
+      console.log(payload)
+    },
     changeActiveBoard: (state, { payload }) => {
       state.activeBoardIndex = payload;
     },
@@ -53,6 +56,7 @@ export const {
   setActiveBoardData,
   selectTask,
   toggleSubTaskStatus,
+  addNewTask
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
