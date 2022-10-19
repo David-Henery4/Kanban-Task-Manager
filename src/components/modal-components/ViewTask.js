@@ -12,7 +12,7 @@ const ViewTask = () => {
   const [subTaskCompletedNumber, setSubTaskCompletedNumber] = useState(0);
   const [subTaskAmount, setSubTaskAmount] = useState(0);
   const dispatch = useDispatch();
-  const { selectedTask, selectedSubTasks, activeBoardData } = useSelector(
+  const { selectedTask,  activeBoardData } = useSelector(
     (store) => store.data
   );
   const { isViewTaskActive, isViewTaskEditDeleteActive } = useSelector(

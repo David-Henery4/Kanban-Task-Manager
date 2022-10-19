@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Cross } from "../../assets";
 
 const AddTask = () => {
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    status: "",
+    subtasks: [
+      {
+        title: "",
+        isCompleted: false,
+      }
+    ]
+  })
+  //
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [subtasks, setSubtasks] = useState([]);
+  const [status, setStatus] = useState("");
+  const [numberOfSubtaskInputs, setNumberOfSubtaskInputs] = useState(2);
+  //
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
   const { isEditTaskActive } = useSelector((store) => store.modes);
-  // add-task-active
+  //
+  const handleEditInputs = () => {};
+  //
+  const handleNewInputs = () => {
+    // might add id's
+    const newTask = {
+      title,
+      description,
+      status,
+    };
+  };
+  //
+  const handleArrayOfInputs = (e) => {
+    const subtask = {
+      title: "",
+      isCompleted: false
+    }
+    setSubtasks(...subtasks, subtask)
+  }
+  //
   return (
     <div
       className={isAddNewTaskActive ? "add-task add-task-active" : "add-task"}
@@ -18,9 +55,13 @@ const AddTask = () => {
         <div className="add-task-form-title field-set-remove-border">
           <h5 className="add-task-form-title__title input-heading">Title</h5>
           <input
+            name="title"
+            id="title"
             className="add-task-form-title__input input-style-basic"
             type="text"
             placeholder="e.g Take coffee break"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         {/* Description Input */}
@@ -30,8 +71,8 @@ const AddTask = () => {
           </h5>
           <textarea
             className="add-task-form-desc__input input-style-basic"
-            name=""
-            id=""
+            name="description"
+            id="description"
             placeholder="It's always good to take a break. This 
             15 minute break will  recharge the batteries 
             a little."
@@ -43,22 +84,28 @@ const AddTask = () => {
             Subtask
           </h5>
           <div className="add-task-form-subtasks-inputs">
-            <div className="add-task-form-subtasks-task">
+            {/* <div className="add-task-form-subtasks-task">
               <input
+                name="subtask"
                 className="add-task-form-subtasks-task__input input-style-basic"
                 type="text"
                 placeholder="e.g Make Coffee"
               />
               <Cross className="add-task-form-subtasks-task__icon" />
-            </div>
-            <div className="add-task-form-subtasks-task">
-              <input
-                className="add-task-form-subtasks-task__input input-style-basic"
-                type="text"
-                placeholder="e.g Drink coffee & smile"
-              />
-              <Cross className="add-task-form-subtasks-task__icon" />
-            </div>
+            </div> */}
+            {
+            Array.from({ length: numberOfSubtaskInputs }, (_, i) => (
+              <div className="add-task-form-subtasks-task" key={i}>
+                <input
+                  id={`subtask-${i}`}
+                  name={`subtask-${i}`}
+                  className="add-task-form-subtasks-task__input input-style-basic"
+                  type="text"
+                  placeholder="e.g Make Coffee"
+                />
+                <Cross className="add-task-form-subtasks-task__icon" />
+              </div>
+            ))}
             <button className="add-task-form-subtasks__add-subtask-btn btn-sml btn-secondary-color">
               Add New Subtask
             </button>
@@ -98,6 +145,14 @@ const AddTask = () => {
       <button
         form="add-todo"
         className="add-task__submit-btn btn-sml btn-primary-color"
+        onClick={() => {
+          if (isEditTaskActive) {
+            handleEditInputs();
+          }
+          if (!isEditTaskActive) {
+            handleNewInputs();
+          }
+        }}
       >
         {isEditTaskActive ? "Saves Changes" : "Create Task"}
       </button>
