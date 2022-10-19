@@ -31,18 +31,22 @@ const ViewTask = () => {
       });
       curTasks = update;
     }
+    let task;
     if (curTasks) {
       const currrentTask = curTasks.tasks.find((t) => {
         return t.title === selectedTask.title;
       });
-      setSubTaskAmount(currrentTask.subtasks.length);
+      task = currrentTask
+    }
+    if (task) {
+      setSubTaskAmount(task.subtasks.length);
       const completedTasks = [];
-      currrentTask.subtasks.forEach((task) => {
+      task.subtasks.forEach((task) => {
         if (task.isCompleted) {
           completedTasks.push(task);
         }
       });
-      setSubTaskCompletedNumber(completedTasks.length)
+      setSubTaskCompletedNumber(completedTasks.length);
     }
   }, [activeBoardData, selectedTask]);
   //
@@ -68,9 +72,7 @@ const ViewTask = () => {
       </div>
       <div className="view-task-subtasks">
         <h5 className="view-task-subtasks__status">
-          Subtasks (
-          {subTaskCompletedNumber}{" "}
-          of {subTaskAmount})
+          Subtasks ({subTaskCompletedNumber} of {subTaskAmount})
         </h5>
         {/* SUBTASKS */}
         <div className="view-task-subtasks-container">
