@@ -12,6 +12,15 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    deleteTask: (state, {payload}) => {
+      const updatedTasks = state.overallData[state.activeBoardIndex].columns.find((col) => {
+        return col.id === state.selectedTask.colId
+      }).tasks.filter(task => task.id !== state.selectedTask.id)
+      //
+      state.overallData[state.activeBoardIndex].columns.find((col) => {
+        return col.id === state.selectedTask.colId;
+      }).tasks = updatedTasks;
+    },
     addNewTask: (state, {payload}) => {
       const activeCol = state.overallData[state.activeBoardIndex].columns.find((col) => {
         return col.name === payload.status
@@ -62,7 +71,8 @@ export const {
   setActiveBoardData,
   selectTask,
   toggleSubTaskStatus,
-  addNewTask
+  addNewTask,
+  deleteTask,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
