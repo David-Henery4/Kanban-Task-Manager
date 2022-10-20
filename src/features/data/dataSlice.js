@@ -25,11 +25,11 @@ const dataSlice = createSlice({
       state.selectedTask = payload;
     },
     toggleSubTaskStatus: (state, { payload }) => {
-      const { sub, i } = payload;
-      state.selectedTask.subtasks.find((st, stIndex) => {
-        return stIndex === i;
-      }).isCompleted = !state.selectedTask.subtasks.find((st, stIndex) => {
-        return stIndex === i;
+      const { sub} = payload;
+      state.selectedTask.subtasks.find((st) => { 
+        return st.id === sub.id;
+      }).isCompleted = !state.selectedTask.subtasks.find((st) => {
+        return st.id === sub.id;
       }).isCompleted;
       //
       state.overallData
@@ -37,15 +37,16 @@ const dataSlice = createSlice({
           return b.id === state.activeBoardData.id;
         })
         .columns.find((col) => {
-          return col.name === state.selectedTask.columnName;
+          return col.id === state.selectedTask.colId;
         })
         .tasks.find((task) => {
-          return task.title === state.selectedTask.title;
+          // was on title
+          return task.id === state.selectedTask.id;
         })
-        .subtasks.find((st, stIndex) => {
-          return stIndex === i;
-        }).isCompleted = state.selectedTask.subtasks.find((st, stIndex) => {
-        return stIndex === i;
+        .subtasks.find((st) => {
+          return st.id === sub.id;
+        }).isCompleted = state.selectedTask.subtasks.find((st) => {
+        return st.id === sub.id;
       }).isCompleted;
     },
   },

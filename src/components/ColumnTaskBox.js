@@ -9,8 +9,11 @@ const ColumnTaskBox = ({
   subtasks,
   status,
   description,
-  name
+  name,
+  colId,
+  id,
 }) => {
+  // console.log(id)
   // const {title,} = task
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
   const dispatch = useDispatch();
@@ -20,7 +23,7 @@ const ColumnTaskBox = ({
     dispatch(openViewTaskModal());
     dispatch(openOverlay());
     dispatch(
-      selectTask({ title, subtasks, status, description, subTaskCompleted, columnName })
+      selectTask({ title, subtasks, status, description, subTaskCompleted, columnName, id, colId })
     );
   };
   //

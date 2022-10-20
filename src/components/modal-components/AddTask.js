@@ -1,36 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewTask } from "../../features/data/dataSlice";
+import { closeNewTaskModal } from "../../features/modals/modalsSlice";
+import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { Cross } from "../../assets";
 
 const AddTask = () => {
+  const dispatch = useDispatch()
+  const {activeBoardData} = useSelector((store) => store.data);
+  const { isAddNewTaskActive } = useSelector((store) => store.modals);
+  const { isEditTaskActive } = useSelector((store) => store.modes);
+  //
   const [task, setTask] = useState({
+    id: +new Date(),
     title: "",
     description: "",
-    status: "todo",
+    status: "",
     subtasks: [
       {
         title: "",
         isCompleted: false,
-      }
-    ]
-  })
+      },
+    ],
+  });
   //
-  const dispatch = useDispatch()
-  const { isAddNewTaskActive } = useSelector((store) => store.modals);
-  const { isEditTaskActive } = useSelector((store) => store.modes);
+  const resetInputs = () => {}
   //
-  const handleEditSubmit = () => {};
+  const handleEditSubmit = () => {}
   //
   const handleNewSubmit = () => {
-    // might add id's
     dispatch(addNewTask(task))
   };
   //
   const handleSubtasksValueChange = (i) => (e) => {
     const newSubtasks = task.subtasks.map((s,ind) => {
       if (i !== ind) return s
-      return {...s, title: e.target.value}
+      return {...s, title: e.target.value, id: +new Date() + i}
     })
     setTask({...task, subtasks: newSubtasks})
   }
@@ -44,6 +49,12 @@ const AddTask = () => {
     e.preventDefault()
     setTask({...task, subtasks: [...task.subtasks, {title: "", isCompleted: false}]})
   }
+  //
+  useEffect(() => {
+    if (activeBoardData.columns) {
+      setTask({...task, status: activeBoardData.columns[0].name})
+    }
+  }, [activeBoardData.columns]);
   //
   return (
     <div
@@ -63,7 +74,7 @@ const AddTask = () => {
             type="text"
             placeholder="e.g Take coffee break"
             value={task.title}
-            onChange={(e) => setTask({...task, title: e.target.value})}
+            onChange={(e) => setTask({ ...task, title: e.target.value })}
           />
         </div>
         {/* Description Input */}
@@ -79,7 +90,7 @@ const AddTask = () => {
             15 minute break will  recharge the batteries 
             a little."
             value={task.description}
-            onChange={(e) => setTask({...task, description: e.target.value})}
+            onChange={(e) => setTask({ ...task, description: e.target.value })}
           ></textarea>
         </div>
         {/* SUBTASK INPUT */}
@@ -99,7 +110,10 @@ const AddTask = () => {
                     value={t.title}
                     onChange={handleSubtasksValueChange(i)}
                   />
-                  <Cross className="add-task-form-subtasks-task__icon" onClick={() => handleRemoveSubtask(i)}/>
+                  <Cross
+                    className="add-task-form-subtasks-task__icon"
+                    onClick={() => handleRemoveSubtask(i)}
+                  />
                 </div>
               );
             })}
@@ -120,26 +134,20 @@ const AddTask = () => {
             name="status"
             id="status"
             value={task.status}
-            onChange={(e) => setTask({...task, status: e.target.value})}
+            onChange={(e) => setTask({ ...task, status: e.target.value })}
           >
-            <option
-              className="add-task-form-status-select__option"
-              value="todo"
-            >
-              Todo
-            </option>
-            <option
-              className="add-task-form-status-select__option"
-              value="doing"
-            >
-              Doing
-            </option>
-            <option
-              className="add-task-form-status-select__option"
-              value="done"
-            >
-              Done
-            </option>
+            {activeBoardData.columns &&
+              activeBoardData.columns.map((col,i) => {
+                return (
+                  <option
+                    className="add-task-form-status-select__option"
+                    value={col.name}
+                    key={i}
+                  >
+                    {col.name}
+                  </option>
+                );
+              })}
           </select>
         </div>
       </form>
