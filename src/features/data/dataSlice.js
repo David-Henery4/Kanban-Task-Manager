@@ -13,7 +13,12 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     addNewTask: (state, {payload}) => {
-      console.log(payload)
+      const activeCol = state.overallData[state.activeBoardIndex].columns.find((col) => {
+        return col.name === payload.status
+      });
+      state.overallData[state.activeBoardIndex].columns.find((col) => {
+        return col.name === payload.status;
+      }).tasks = [...activeCol.tasks, payload]
     },
     changeActiveBoard: (state, { payload }) => {
       state.activeBoardIndex = payload;

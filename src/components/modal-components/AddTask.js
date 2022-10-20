@@ -24,7 +24,11 @@ const AddTask = () => {
     ],
   });
   //
-  const resetInputs = () => {}
+  const resetInputs = () => {
+    setTask((oldTask) => {
+      
+    })
+  }
   //
   const handleEditSubmit = () => {}
   //
@@ -156,7 +160,10 @@ const AddTask = () => {
         form="add-todo"
         className="add-task__submit-btn btn-sml btn-primary-color"
         onClick={() => {
+          dispatch(closeNewTaskModal())
+          dispatch(closeOverlay())
           if (isEditTaskActive) {
+            // turn edit off when submiting from edit mode.
             handleEditSubmit();
           }
           if (!isEditTaskActive) {
