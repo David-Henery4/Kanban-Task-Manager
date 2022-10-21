@@ -6,28 +6,60 @@ const initialState = {
   activeBoardIndex: 0,
   activeBoardData: {},
   selectedTask: {},
+  emptyTaskInputValues: {
+    id: +new Date(),
+    title: "",
+    description: "",
+    status: "",
+    subtasks: [
+      {
+        title: "",
+        isCompleted: false,
+      },
+    ],
+  },
 };
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    deleteTask: (state, {payload}) => {
-      const updatedTasks = state.overallData[state.activeBoardIndex].columns.find((col) => {
-        return col.id === state.selectedTask.colId
-      }).tasks.filter(task => task.id !== state.selectedTask.id)
+    resetTaskInputValues: (state, { payload }) => {
+      state.emptyTaskInputValues = {
+        id: +new Date(),
+        title: "",
+        description: "",
+        status: state.activeBoardData.columns && state.activeBoardData.columns[0].name,
+        subtasks: [
+          {
+            title: "",
+            isCompleted: false,
+          },
+        ],
+      };
+    },
+    editTask: (state, { payload }) => {},
+    deleteTask: (state, { payload }) => {
+      const updatedTasks = state.overallData[state.activeBoardIndex].columns
+        .find((col) => {
+          return col.id === state.selectedTask.colId;
+        })
+        .tasks.filter((task) => task.id !== state.selectedTask.id);
       //
       state.overallData[state.activeBoardIndex].columns.find((col) => {
         return col.id === state.selectedTask.colId;
       }).tasks = updatedTasks;
     },
-    addNewTask: (state, {payload}) => {
-      const activeCol = state.overallData[state.activeBoardIndex].columns.find((col) => {
-        return col.name === payload.status
-      });
+    addNewTask: (state, { payload }) => {
+      console.log(payload)
+      const activeCol = state.overallData[state.activeBoardIndex].columns.find(
+        (col) => {
+          return col.name === payload.status;
+        }
+      );
       state.overallData[state.activeBoardIndex].columns.find((col) => {
         return col.name === payload.status;
-      }).tasks = [...activeCol.tasks, payload]
+      }).tasks = [...activeCol.tasks, payload];
     },
     changeActiveBoard: (state, { payload }) => {
       state.activeBoardIndex = payload;
@@ -39,8 +71,8 @@ const dataSlice = createSlice({
       state.selectedTask = payload;
     },
     toggleSubTaskStatus: (state, { payload }) => {
-      const { sub} = payload;
-      state.selectedTask.subtasks.find((st) => { 
+      const { sub } = payload;
+      state.selectedTask.subtasks.find((st) => {
         return st.id === sub.id;
       }).isCompleted = !state.selectedTask.subtasks.find((st) => {
         return st.id === sub.id;
@@ -73,6 +105,8 @@ export const {
   toggleSubTaskStatus,
   addNewTask,
   deleteTask,
+  resetTaskInputValues,
+  editTask,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

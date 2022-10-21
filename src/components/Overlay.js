@@ -10,6 +10,7 @@ import {
 } from "../features/modals/modalsSlice";
 import {deActivateEditBoard, deActivateDeleteTask, deActivateEditTask} from "../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../features/overlay/overlaySlice";
+import { resetTaskInputValues } from "../features/data/dataSlice";
 
 const Overlay = () => {
   const { isOverlayActive } = useSelector((store) => store.overlay);
@@ -26,6 +27,7 @@ const Overlay = () => {
     dispatch(deActivateDeleteTask())
     dispatch(deActivateEditTask())
     dispatch(closeEditDeleteModals());
+    dispatch(resetTaskInputValues());
   };
   //
   return (

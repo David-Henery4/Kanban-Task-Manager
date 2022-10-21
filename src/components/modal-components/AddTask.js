@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewTask } from "../../features/data/dataSlice";
-import { closeNewTaskModal } from "../../features/modals/modalsSlice";
+import { addNewTask , resetTaskInputValues} from "../../features/data/dataSlice";
+import { closeNewTaskModal, closeViewTaskModal, closeEditDeleteModals } from "../../features/modals/modalsSlice";
+import { deActivateEditTask } from "../../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { Cross } from "../../assets";
 
 const AddTask = () => {
-  const dispatch = useDispatch()
-  const {activeBoardData} = useSelector((store) => store.data);
+  const dispatch = useDispatch();
+  const { activeBoardData, selectedTask, emptyTaskInputValues } = useSelector(
+    (store) => store.data
+  );
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
   const { isEditTaskActive } = useSelector((store) => store.modes);
   //
@@ -24,39 +27,81 @@ const AddTask = () => {
     ],
   });
   //
-  const resetInputs = () => {
-    setTask((oldTask) => {
-      
-    })
+  const resetEmptyTaskInputValues = () => {
+    setTask({
+      id: +new Date(),
+      title: "",
+      description: "",
+      status: activeBoardData.columns && activeBoardData.columns[0].name,
+      subtasks: [
+        {
+          title: "",
+          isCompleted: false,
+        },
+      ],
+    });
   }
   //
-  const handleEditSubmit = () => {}
+  const setEditTaskValues = () => {
+    setTask({
+      id: +new Date(),
+      title: selectedTask.title,
+      description: selectedTask.description,
+      status: selectedTask.status,
+      subtasks: selectedTask.subtasks,
+    });
+  };
+  //
+  const handleEditSubmit = () => {
+    // resetEmptyTaskInputValues()
+    // setTask({ ...task, status: activeBoardData.columns[0].name });
+    dispatch(resetTaskInputValues())
+  };
   //
   const handleNewSubmit = () => {
-    dispatch(addNewTask(task))
+    dispatch(addNewTask(task));
+    // resetEmptyTaskInputValues(); // works here
+    // dispatch(resetTaskInputValues()); // doesn't work here
   };
   //
   const handleSubtasksValueChange = (i) => (e) => {
-    const newSubtasks = task.subtasks.map((s,ind) => {
-      if (i !== ind) return s
-      return {...s, title: e.target.value, id: +new Date() + i}
-    })
-    setTask({...task, subtasks: newSubtasks})
-  }
+    const newSubtasks = task.subtasks.map((s, ind) => {
+      if (i !== ind) return s;
+      return { ...s, title: e.target.value, id: +new Date() + i };
+    });
+    setTask({ ...task, subtasks: newSubtasks });
+  };
   //
   const handleRemoveSubtask = (i) => {
-    const newSubtasks = task.subtasks.filter((_,tInd) => i !== tInd)
-    setTask({...task, subtasks: newSubtasks})
-  }
+    const newSubtasks = task.subtasks.filter((_, tInd) => i !== tInd);
+    setTask({ ...task, subtasks: newSubtasks });
+  };
   //
   const handleAddSubtask = (e) => {
-    e.preventDefault()
-    setTask({...task, subtasks: [...task.subtasks, {title: "", isCompleted: false}]})
-  }
+    e.preventDefault();
+    setTask({
+      ...task,
+      subtasks: [...task.subtasks, { title: "", isCompleted: false }],
+    });
+  };
+  //
+  useEffect(() => {
+    setTask(emptyTaskInputValues)
+  }, [emptyTaskInputValues])
+  //
+  useEffect(() => {
+    if (isEditTaskActive) {
+      setEditTaskValues();
+      // NEED TO RESET VALUES IN CERTAIN PLACES
+    }
+  }, [isEditTaskActive]);
   //
   useEffect(() => {
     if (activeBoardData.columns) {
-      setTask({...task, status: activeBoardData.columns[0].name})
+      setTask({ ...task, status: activeBoardData.columns[0].name });
+      // to clear inputs when adding new task (might not need!)
+      // might! have to change
+      dispatch(resetTaskInputValues());
     }
   }, [activeBoardData.columns]);
   //
@@ -141,7 +186,7 @@ const AddTask = () => {
             onChange={(e) => setTask({ ...task, status: e.target.value })}
           >
             {activeBoardData.columns &&
-              activeBoardData.columns.map((col,i) => {
+              activeBoardData.columns.map((col, i) => {
                 return (
                   <option
                     className="add-task-form-status-select__option"
@@ -160,11 +205,14 @@ const AddTask = () => {
         form="add-todo"
         className="add-task__submit-btn btn-sml btn-primary-color"
         onClick={() => {
-          dispatch(closeNewTaskModal())
-          dispatch(closeOverlay())
+          dispatch(closeNewTaskModal());
+          dispatch(closeOverlay());
           if (isEditTaskActive) {
             // turn edit off when submiting from edit mode.
             handleEditSubmit();
+            dispatch(closeEditDeleteModals())
+            dispatch(closeViewTaskModal())
+            dispatch(deActivateEditTask())
           }
           if (!isEditTaskActive) {
             handleNewSubmit();
