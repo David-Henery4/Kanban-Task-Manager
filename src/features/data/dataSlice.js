@@ -29,7 +29,9 @@ const dataSlice = createSlice({
         id: +new Date(),
         title: "",
         description: "",
-        status: state.activeBoardData.columns && state.activeBoardData.columns[0].name,
+        status:
+          state.activeBoardData.columns &&
+          state.activeBoardData.columns[0].name,
         subtasks: [
           {
             title: "",
@@ -38,7 +40,23 @@ const dataSlice = createSlice({
         ],
       };
     },
-    editTask: (state, { payload }) => {},
+    editTask: (state, { payload }) => {
+      const update = state.overallData[state.activeBoardIndex].columns
+        .find((col) => {
+          return col.id === state.selectedTask.colId;
+        })
+        .tasks.map((task) => {
+          if (task.id === payload.id) {
+            task = payload;
+            return task;
+          }
+          return task;
+        });
+      //
+      state.overallData[state.activeBoardIndex].columns.find((col) => {
+        return col.id === state.selectedTask.colId;
+      }).tasks = update
+    },
     deleteTask: (state, { payload }) => {
       const updatedTasks = state.overallData[state.activeBoardIndex].columns
         .find((col) => {
@@ -51,7 +69,6 @@ const dataSlice = createSlice({
       }).tasks = updatedTasks;
     },
     addNewTask: (state, { payload }) => {
-      console.log(payload)
       const activeCol = state.overallData[state.activeBoardIndex].columns.find(
         (col) => {
           return col.name === payload.status;

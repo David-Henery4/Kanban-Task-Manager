@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewTask , resetTaskInputValues} from "../../features/data/dataSlice";
+import { addNewTask , resetTaskInputValues, editTask} from "../../features/data/dataSlice";
 import { closeNewTaskModal, closeViewTaskModal, closeEditDeleteModals } from "../../features/modals/modalsSlice";
 import { deActivateEditTask } from "../../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
@@ -28,23 +28,23 @@ const AddTask = () => {
   });
   //
   const resetEmptyTaskInputValues = () => {
-    setTask({
-      id: +new Date(),
-      title: "",
-      description: "",
-      status: activeBoardData.columns && activeBoardData.columns[0].name,
-      subtasks: [
-        {
-          title: "",
-          isCompleted: false,
-        },
-      ],
-    });
+    // setTask({
+    //   id: +new Date(),
+    //   title: "",
+    //   description: "",
+    //   status: activeBoardData.columns && activeBoardData.columns[0].name,
+    //   subtasks: [
+    //     {
+    //       title: "",
+    //       isCompleted: false,
+    //     },
+    //   ],
+    // });
   }
   //
   const setEditTaskValues = () => {
     setTask({
-      id: +new Date(),
+      id: selectedTask.id,
       title: selectedTask.title,
       description: selectedTask.description,
       status: selectedTask.status,
@@ -53,8 +53,8 @@ const AddTask = () => {
   };
   //
   const handleEditSubmit = () => {
+    dispatch(editTask(task))
     // resetEmptyTaskInputValues()
-    // setTask({ ...task, status: activeBoardData.columns[0].name });
     dispatch(resetTaskInputValues())
   };
   //
