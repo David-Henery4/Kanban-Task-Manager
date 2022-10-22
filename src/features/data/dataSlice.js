@@ -24,6 +24,16 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    addNewBoard: (state, {payload}) => {
+      const newBoards = [...state.overallData, payload]
+      state.overallData = newBoards
+    },
+    editBoard: (state, {payload}) => {
+      
+    },
+    deleteBoard: (state, {payload}) => {
+      
+    },
     resetTaskInputValues: (state, { payload }) => {
       state.emptyTaskInputValues = {
         id: +new Date(),
@@ -124,6 +134,9 @@ export const {
   deleteTask,
   resetTaskInputValues,
   editTask,
+  addNewBoard,
+  deleteBoard,
+  editBoard
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

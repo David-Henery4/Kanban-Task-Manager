@@ -27,14 +27,18 @@ const Board = () => {
     <main className="board">
       <div className="board-content flex-start-start">
         <ViewTask />
-        {/* <EmptyBoard/> */}
+        {activeBoardData.columns && activeBoardData.columns.length <= 0 && (
+          <EmptyBoard />
+        )}
         <AddTask />
         <AddBoard />
         <Delete />
-        {activeBoardData.columns && activeBoardData.columns.map((col, i) => {
-          // console.log(col)
-          return <Column key={i} {...col} />;
-        })}
+        {activeBoardData.columns &&
+          activeBoardData.columns.length > 0 &&
+          activeBoardData.columns.map((col, i) => {
+            // console.log(col)
+            return <Column key={i} {...col} />;
+          })}
 
         {/**/}
         <NewColumn />

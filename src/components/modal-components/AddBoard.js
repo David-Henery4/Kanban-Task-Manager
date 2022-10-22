@@ -1,13 +1,84 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Cross } from "../../assets";
+import { addNewBoard, deleteBoard, editBoard } from "../../features/data/dataSlice";
 
 const AddBoard = () => {
-  const { isAddNewBoardActive } = useSelector(
-    (store) => store.modals
-  );
-  const {isEditBoardActive} = useSelector((store) => store.modes)
+  const [boardValues, setBoardValues] = useState({
+    id: +new Date(),
+    name: "",
+    columns: [
+      {
+        id: +new Date(),
+        name: "",
+        tasks: [],
+      },
+    ],
+  });
+  const dispatch = useDispatch()
+  const { activeBoardData } = useSelector((store) => store.data);
+  const { isAddNewBoardActive } = useSelector((store) => store.modals);
+  const { isEditBoardActive } = useSelector((store) => store.modes);
   // new-board-active
+  // **Board Functions**
+  const resetBoardValues = () => {
+    setBoardValues({
+      id: +new Date(),
+      name: "",
+      columns: [
+        {
+          id: +new Date(),
+          name: "",
+          tasks: [],
+        },
+      ],
+    });
+  }
+  //
+  const editBoard = () => {
+    setBoardValues({
+      id: activeBoardData.id,
+      name: activeBoardData.name,
+      columns: activeBoardData.columns,
+    })
+  };
+  //
+  const submitNewBoard = () => {
+    dispatch(addNewBoard(boardValues))
+  };
+  //
+  const handleBoardNameChange = (e) => {
+    setBoardValues({...boardValues, name: e.target.value})
+  }
+  // **Column Functions**
+  const handleAddNewColumn = (e) => {
+    e.preventDefault()
+    setBoardValues({
+      ...boardValues,
+      columns: [
+        ...boardValues.columns,
+        {
+          id: +new Date(),
+          name: "",
+          tasks: [],
+        },
+      ],
+    });
+  };
+  //
+  const handleRemoveColumn = (id) => {
+    const updatedColumns = boardValues.columns.filter((col) => col.id !== id);
+    setBoardValues({ ...boardValues, columns: updatedColumns });
+  };
+  //
+  const handleColumnValueChange = (i) => (e) => {
+    const newBoardValue = boardValues.columns.map((col, index) => {
+      if (i !== index) return col;
+      return { ...col, name: e.target.value };
+    });
+    setBoardValues({ ...boardValues, columns: newBoardValue });
+  };
+  //
   return (
     <div
       className={
@@ -28,6 +99,8 @@ const AddBoard = () => {
             id="board-name"
             className="input-style-basic"
             placeholder="e.g Web Design"
+            value={boardValues.name}
+            onChange={(e) => handleBoardNameChange(e)}
           />
         </div>
         <div className="new-board-form-columns">
@@ -35,29 +108,30 @@ const AddBoard = () => {
             Board Columns
           </label>
           <div className="new-board-form-columns-inputs-wrap">
-            <div className="new-board-form-columns-input">
-              <input
-                type="text"
-                className="input-style-basic"
-                placeholder="e.g Todo"
-              />
-              <Cross />
-            </div>
-            <div className="new-board-form-columns-input">
-              <input
-                type="text"
-                className="input-style-basic"
-                placeholder="e.g Doing"
-              />
-              <Cross />
-            </div>
-            <button className="btn-sml btn-secondary-color new-board-form-columns__btn">
+            {boardValues.columns.map((col, i) => {
+              return (
+                <div className="new-board-form-columns-input" key={i}>
+                  <input
+                    type="text"
+                    className="input-style-basic"
+                    placeholder="e.g Todo"
+                    value={col.name}
+                    onChange={handleColumnValueChange(i)}
+                  />
+                  <Cross onClick={() => handleRemoveColumn(col.id)} />
+                </div>
+              );
+            })}
+            <button
+              className="btn-sml btn-secondary-color new-board-form-columns__btn"
+              onClick={(e) => handleAddNewColumn(e)}
+            >
               Add New Column
             </button>
           </div>
         </div>
       </form>
-      <button className="btn-sml btn-primary-color new-board__btn">
+      <button className="btn-sml btn-primary-color new-board__btn" onClick={submitNewBoard}>
         {isEditBoardActive ? "Save Changes" : "Create New Borad"}
       </button>
     </div>
