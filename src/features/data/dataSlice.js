@@ -28,11 +28,16 @@ const dataSlice = createSlice({
       const newBoards = [...state.overallData, payload]
       state.overallData = newBoards
     },
-    editBoard: (state, {payload}) => {
-      console.log(payload)
-    },
     deleteBoard: (state, {payload}) => {
-      console.log(payload)
+      const updatedBoards = state.overallData.filter((board) => board.id !== state.activeBoardData.id)
+      state.overallData = updatedBoards
+    },
+    editBoard: (state, {payload}) => {
+      const updatedBoards = state.overallData.map(board => {
+        if (board.id !== payload.id) return board
+        return board = payload
+      })
+      state.overallData = updatedBoards
     },
     resetTaskInputValues: (state, { payload }) => {
       state.emptyTaskInputValues = {
@@ -135,8 +140,8 @@ export const {
   resetTaskInputValues,
   editTask,
   addNewBoard,
-  deleteBoard,
   editBoard,
+  deleteBoard,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

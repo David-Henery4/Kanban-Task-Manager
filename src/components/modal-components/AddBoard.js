@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Cross } from "../../assets";
-import { addNewBoard, deleteBoard, editBoard } from "../../features/data/dataSlice";
+import {addNewBoard, deleteBoard, editBoard } from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { deActivateEditBoard } from "../../features/edit-delete-modes/modesSlice";
+
+// ** ALSO HAVE TO RESET BOARD VALUES
+// & TURN OFF EDIT MODE ON THE OVERLAY CLICK!!**
 
 const AddBoard = () => {
   const [boardValues, setBoardValues] = useState({
@@ -43,11 +46,12 @@ const AddBoard = () => {
   };
   //
   const submitEditedBoard = () => {
-    dispatch(deleteBoard(boardValues))
-    console.log(boardValues)
+    dispatch(editBoard(boardValues))
+    // dispatch(deleteBoard(boardValues))
+    // console.log(boardValues)
   }
   //
-  const editBoard = () => {
+  const setEditBoardValues = () => {
     setBoardValues({
       id: activeBoardData.id,
       name: activeBoardData.name,
@@ -89,7 +93,7 @@ const AddBoard = () => {
   //
   useEffect(() => {
     if(isEditBoardActive){
-      editBoard()
+      setEditBoardValues()
     }
   }, [isEditBoardActive])
   //
