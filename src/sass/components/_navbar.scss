@@ -91,6 +91,7 @@
     &__icon {
     }
     &__text {
+      color: var(--fontColor);
       display: none;
       @include respond(tab) {
         display: flex;

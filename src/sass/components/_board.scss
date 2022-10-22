@@ -30,3 +30,10 @@
   }
 }
 
+.no-active-board{
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.empty-board-placement{
+  grid-row: 1/-1;
+}

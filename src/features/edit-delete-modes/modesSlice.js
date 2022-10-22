@@ -3,8 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isEditBoardActive: false,
   isDeleteBoardActive: false,
+  //
   isEditTaskActive: false,
   isDeleteTaskActive: false,
+  //
+  isBoardDataEmpty: false,
 };
 
 const modesSlice = createSlice({
@@ -39,9 +42,16 @@ const modesSlice = createSlice({
     deActivateEditBoard: (state) => {
       state.isEditBoardActive = false;
     },
+    // NO BOARD DATA MODE
+    activateNoBoardDataMode: (state) => {
+      state.isBoardDataEmpty = true;
+    },
+    deActivateNoBoardDataMode: (state) => {
+      state.isBoardDataEmpty = false;
+    }
   },
 });
 
-export const { activateEditBoard, deActivateEditBoard, activateDeleteBoard, activateDeleteTask, activateEditTask, deActivateDeleteBoard, deActivateDeleteTask, deActivateEditTask } = modesSlice.actions;
+export const { activateEditBoard, deActivateEditBoard, activateDeleteBoard, activateDeleteTask, activateEditTask, deActivateDeleteBoard, deActivateDeleteTask, deActivateEditTask, activateNoBoardDataMode, deActivateNoBoardDataMode } = modesSlice.actions;
 
 export default modesSlice.reducer;

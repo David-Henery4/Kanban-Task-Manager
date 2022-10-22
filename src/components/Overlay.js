@@ -15,6 +15,7 @@ import { resetTaskInputValues } from "../features/data/dataSlice";
 const Overlay = () => {
   const { isOverlayActive } = useSelector((store) => store.overlay);
   const dispatch = useDispatch();
+  // isBoardDataEmpty (MIGHT HAVE TO CHECK FOR THIS ON SOME CALLS)
   //
   const handleOverlay = () => {
     dispatch(closeSidebar());
@@ -24,8 +25,8 @@ const Overlay = () => {
     dispatch(closeViewTaskModal());
     dispatch(closeAddNewBoardModal());
     dispatch(deActivateEditBoard());
-    dispatch(deActivateDeleteTask())
-    dispatch(deActivateEditTask())
+    dispatch(deActivateDeleteTask());
+    dispatch(deActivateEditTask());
     dispatch(closeEditDeleteModals());
     dispatch(resetTaskInputValues());
   };

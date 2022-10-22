@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Cross } from "../../assets";
-import {addNewBoard, deleteBoard, editBoard } from "../../features/data/dataSlice";
+import {addNewBoard, editBoard } from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { deActivateEditBoard } from "../../features/edit-delete-modes/modesSlice";

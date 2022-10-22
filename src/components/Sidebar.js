@@ -29,6 +29,7 @@ const Sidebar = () => {
         <div className="board-container">
           <div className="board-container-header">
             <h4 className="board-container-header__title heading-s">
+              {/* NEED DYNAMIC BOARD NUMBER */}
               ALL BOARDS (4)
             </h4>
           </div>
