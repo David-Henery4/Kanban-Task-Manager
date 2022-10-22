@@ -13,11 +13,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 const Board = () => {
   const dispatch = useDispatch()
-  const { overallData, activeBoardIndex, activeBoardColumns, activeBoardData } = useSelector(
-    (store) => store.data
-  );
+  // did have "activeBoardColumns"
+  const { overallData, activeBoardIndex, activeBoardData } = useSelector((store) => store.data);
   //
-  // console.log(activeBoardData.columns)
+  useEffect(() => {
+    
+  }, [activeBoardData])
   //
   useEffect(() => {
     dispatch(setActiveBoardData(overallData[activeBoardIndex]))

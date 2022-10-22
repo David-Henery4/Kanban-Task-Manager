@@ -46,7 +46,7 @@ const Navbar = () => {
         >
           <LogoLight className="navbar__logo--tab" />
         </div>
-        <h1 className="navbar__board-name heading-l">{activeBoardData.name}</h1>
+        <h1 className="navbar__board-name heading-l">{activeBoardData ? activeBoardData.name : "Task Manager"}</h1>
         <DownArrow
           className="navbar__drop-down-icon"
           onClick={handleDropdownClick}
