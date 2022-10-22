@@ -29,10 +29,10 @@ const dataSlice = createSlice({
       state.overallData = newBoards
     },
     editBoard: (state, {payload}) => {
-      
+      console.log(payload)
     },
     deleteBoard: (state, {payload}) => {
-      
+      console.log(payload)
     },
     resetTaskInputValues: (state, { payload }) => {
       state.emptyTaskInputValues = {
@@ -136,7 +136,7 @@ export const {
   editTask,
   addNewBoard,
   deleteBoard,
-  editBoard
+  editBoard,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

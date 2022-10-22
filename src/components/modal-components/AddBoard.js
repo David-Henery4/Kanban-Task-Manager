@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Cross } from "../../assets";
 import { addNewBoard, deleteBoard, editBoard } from "../../features/data/dataSlice";
+import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
+import { closeOverlay } from "../../features/overlay/overlaySlice";
+import { deActivateEditBoard } from "../../features/edit-delete-modes/modesSlice";
 
 const AddBoard = () => {
   const [boardValues, setBoardValues] = useState({
@@ -35,16 +38,21 @@ const AddBoard = () => {
     });
   }
   //
+  const submitNewBoard = () => {
+    dispatch(addNewBoard(boardValues))
+  };
+  //
+  const submitEditedBoard = () => {
+    dispatch(deleteBoard(boardValues))
+    console.log(boardValues)
+  }
+  //
   const editBoard = () => {
     setBoardValues({
       id: activeBoardData.id,
       name: activeBoardData.name,
       columns: activeBoardData.columns,
     })
-  };
-  //
-  const submitNewBoard = () => {
-    dispatch(addNewBoard(boardValues))
   };
   //
   const handleBoardNameChange = (e) => {
@@ -78,6 +86,12 @@ const AddBoard = () => {
     });
     setBoardValues({ ...boardValues, columns: newBoardValue });
   };
+  //
+  useEffect(() => {
+    if(isEditBoardActive){
+      editBoard()
+    }
+  }, [isEditBoardActive])
   //
   return (
     <div
@@ -131,7 +145,18 @@ const AddBoard = () => {
           </div>
         </div>
       </form>
-      <button className="btn-sml btn-primary-color new-board__btn" onClick={submitNewBoard}>
+      <button className="btn-sml btn-primary-color new-board__btn" onClick={() => {
+        resetBoardValues()
+        dispatch(closeAddNewBoardModal())
+        dispatch(closeOverlay())
+        if (isEditBoardActive) {
+          submitEditedBoard()
+          dispatch(deActivateEditBoard())
+        }
+        if (!isEditBoardActive) {
+          submitNewBoard()
+        }
+      }}>
         {isEditBoardActive ? "Save Changes" : "Create New Borad"}
       </button>
     </div>
