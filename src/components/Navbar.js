@@ -67,7 +67,11 @@ const Navbar = () => {
         </div>
         <EditDeleteIcon
           className="navbar__edit-delete-icon"
-          onClick={() => dispatch(openNavbarEditDelete())}
+          onClick={() =>  {
+            if (!isBoardDataEmpty){
+              dispatch(openNavbarEditDelete())
+            }}
+          }
         />
         {isNavbarEditDeleteActive && <EditDelete />}
       </div>

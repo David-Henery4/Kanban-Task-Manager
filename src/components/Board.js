@@ -21,6 +21,7 @@ import {
 //****//
 
 const Board = () => {
+  const [isColumnsEmpty, setIsColumnsEmpty] = useState(false)
   const dispatch = useDispatch();
   // did have "activeBoardColumns"
   const { overallData, activeBoardIndex, activeBoardData } = useSelector(
@@ -41,11 +42,22 @@ const Board = () => {
     dispatch(setActiveBoardData(overallData[activeBoardIndex]));
   }, [overallData, activeBoardIndex]);
   //
+  useEffect(() => {
+    if (activeBoardData && activeBoardData.columns){
+      const areThereCols = activeBoardData.columns.length <= 0;
+      setIsColumnsEmpty(areThereCols)
+    }
+  }, [activeBoardData])
+  //
   return (
-    <main className={isBoardDataEmpty ? "board no-active-board" : "board"}>
+    <main
+      className={
+        isBoardDataEmpty || isColumnsEmpty ? "board no-active-board" : "board"
+      }
+    >
       <div
         className={
-          isBoardDataEmpty
+          isBoardDataEmpty || isColumnsEmpty
             ? "board-content flex-cen-cen empty-board-placement"
             : "board-content flex-start-start"
         }

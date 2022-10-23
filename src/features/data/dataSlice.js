@@ -84,6 +84,7 @@ const dataSlice = createSlice({
       }).tasks = updatedTasks;
     },
     addNewTask: (state, { payload }) => {
+      console.log(payload)
       const activeCol = state.overallData[state.activeBoardIndex].columns.find(
         (col) => {
           return col.name === payload.status;

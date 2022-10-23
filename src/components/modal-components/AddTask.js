@@ -60,6 +60,7 @@ const AddTask = () => {
   //
   const handleNewSubmit = () => {
     dispatch(addNewTask(task));
+    console.log(task)
     // resetEmptyTaskInputValues(); // works here
     // dispatch(resetTaskInputValues()); // doesn't work here
   };
@@ -97,11 +98,15 @@ const AddTask = () => {
   }, [isEditTaskActive]);
   //
   useEffect(() => {
+    // activeBoardData.columns > 0;
     if (activeBoardData.columns) {
-      setTask({ ...task, status: activeBoardData.columns[0].name });
+      if (activeBoardData.columns.length > 0){
+        setTask({ ...task, status: activeBoardData.columns[0].name });
+        dispatch(resetTaskInputValues());
+        
+      }
       // to clear inputs when adding new task (might not need!)
       // might! have to change
-      dispatch(resetTaskInputValues());
     }
   }, [activeBoardData.columns]);
   //

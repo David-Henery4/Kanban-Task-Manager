@@ -1,6 +1,7 @@
 import React from "react";
 import { openAddNewBoardModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
+import { activateEditBoard } from "../features/edit-delete-modes/modesSlice";
 import { AddTaskMobile } from "../assets";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -17,6 +18,10 @@ const EmptyBoard = () => {
         dispatch(openOverlay())
         if (isBoardDataEmpty) {
           dispatch(openAddNewBoardModal())
+        }
+        if (!isBoardDataEmpty){
+          dispatch(openAddNewBoardModal());
+          dispatch(activateEditBoard())
         }
       }}>
         {isBoardDataEmpty ? (
