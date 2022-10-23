@@ -10,8 +10,11 @@ import {
 } from "../features/modals/modalsSlice";
 import {deActivateEditBoard, deActivateDeleteTask, deActivateEditTask} from "../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../features/overlay/overlaySlice";
-import { resetTaskInputValues } from "../features/data/dataSlice";
-
+import {
+  resetTaskInputValues,
+  resetBoardInputValues,
+} from "../features/data/dataSlice";
+//
 const Overlay = () => {
   const { activeBoardData } = useSelector((store) => store.data);
   const { isOverlayActive } = useSelector((store) => store.overlay);
@@ -33,9 +36,10 @@ const Overlay = () => {
     dispatch(deActivateDeleteTask());
     dispatch(deActivateEditTask());
     dispatch(closeEditDeleteModals());
-    if (!isBoardDataEmpty) {
+    if (!isBoardDataEmpty && activeBoardData.columns.length > 0) {
+      dispatch(resetBoardInputValues());
       dispatch(resetTaskInputValues());
-    //   console.log("triggered");
+      //   console.log("triggered");
     }
   };
   //

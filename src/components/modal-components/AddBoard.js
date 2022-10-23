@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Cross } from "../../assets";
-import {addNewBoard, editBoard } from "../../features/data/dataSlice";
+import {
+  addNewBoard,
+  editBoard,
+  resetBoardInputValues,
+} from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { deActivateEditBoard } from "../../features/edit-delete-modes/modesSlice";
@@ -22,7 +26,9 @@ const AddBoard = () => {
     ],
   });
   const dispatch = useDispatch()
-  const { activeBoardData } = useSelector((store) => store.data);
+  const { activeBoardData, emptyBoardInputValues } = useSelector(
+    (store) => store.data
+  );
   const { isAddNewBoardActive } = useSelector((store) => store.modals);
   const { isEditBoardActive } = useSelector((store) => store.modes);
   // new-board-active
@@ -97,6 +103,11 @@ const AddBoard = () => {
     }
   }, [isEditBoardActive])
   //
+  useEffect(() => {
+    setBoardValues(emptyBoardInputValues)
+    // resetBoardInputValues
+  }, [emptyBoardInputValues])
+  //
   return (
     <div
       className={
@@ -150,7 +161,8 @@ const AddBoard = () => {
         </div>
       </form>
       <button className="btn-sml btn-primary-color new-board__btn" onClick={() => {
-        resetBoardValues()
+        // resetBoardValues()
+        dispatch(resetBoardInputValues())
         dispatch(closeAddNewBoardModal())
         dispatch(closeOverlay())
         if (isEditBoardActive) {

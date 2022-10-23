@@ -18,26 +18,52 @@ const initialState = {
       },
     ],
   },
+  emptyBoardInputValues: {
+    id: +new Date(),
+    name: "",
+    columns: [
+      {
+        id: +new Date(),
+        name: "",
+        tasks: [],
+      },
+    ],
+  },
 };
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    addNewBoard: (state, {payload}) => {
-      const newBoards = [...state.overallData, payload]
-      state.overallData = newBoards
+    resetBoardInputValues: (state, { payload }) => {
+      state.emptyBoardInputValues = {
+        id: +new Date(),
+        name: "",
+        columns: [
+          {
+            id: +new Date(),
+            name: "",
+            tasks: [],
+          },
+        ],
+      };
     },
-    deleteBoard: (state, {payload}) => {
-      const updatedBoards = state.overallData.filter((board) => board.id !== state.activeBoardData.id)
-      state.overallData = updatedBoards
+    addNewBoard: (state, { payload }) => {
+      const newBoards = [...state.overallData, payload];
+      state.overallData = newBoards;
     },
-    editBoard: (state, {payload}) => {
-      const updatedBoards = state.overallData.map(board => {
-        if (board.id !== payload.id) return board
-        return board = payload
-      })
-      state.overallData = updatedBoards
+    deleteBoard: (state, { payload }) => {
+      const updatedBoards = state.overallData.filter(
+        (board) => board.id !== state.activeBoardData.id
+      );
+      state.overallData = updatedBoards;
+    },
+    editBoard: (state, { payload }) => {
+      const updatedBoards = state.overallData.map((board) => {
+        if (board.id !== payload.id) return board;
+        return (board = payload);
+      });
+      state.overallData = updatedBoards;
     },
     resetTaskInputValues: (state, { payload }) => {
       state.emptyTaskInputValues = {
@@ -70,7 +96,7 @@ const dataSlice = createSlice({
       //
       state.overallData[state.activeBoardIndex].columns.find((col) => {
         return col.id === state.selectedTask.colId;
-      }).tasks = update
+      }).tasks = update;
     },
     deleteTask: (state, { payload }) => {
       const updatedTasks = state.overallData[state.activeBoardIndex].columns
@@ -84,7 +110,7 @@ const dataSlice = createSlice({
       }).tasks = updatedTasks;
     },
     addNewTask: (state, { payload }) => {
-      console.log(payload)
+      console.log(payload);
       const activeCol = state.overallData[state.activeBoardIndex].columns.find(
         (col) => {
           return col.name === payload.status;
@@ -143,6 +169,7 @@ export const {
   addNewBoard,
   editBoard,
   deleteBoard,
+  resetBoardInputValues,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
