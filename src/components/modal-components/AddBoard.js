@@ -53,8 +53,6 @@ const AddBoard = () => {
   //
   const submitEditedBoard = () => {
     dispatch(editBoard(boardValues))
-    // dispatch(deleteBoard(boardValues))
-    // console.log(boardValues)
   }
   //
   const setEditBoardValues = () => {

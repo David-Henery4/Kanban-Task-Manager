@@ -79,7 +79,6 @@ const Board = () => {
           activeBoardData.columns &&
           activeBoardData.columns.length > 0 &&
           activeBoardData.columns.map((col, i) => {
-            // console.log(col)
             return <Column key={i} {...col} />;
           })}
         {activeBoardData &&

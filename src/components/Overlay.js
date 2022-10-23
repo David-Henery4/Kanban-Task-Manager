@@ -20,10 +20,6 @@ const Overlay = () => {
   const { isOverlayActive } = useSelector((store) => store.overlay);
   const { isBoardDataEmpty } = useSelector((store) => store.modes);
   const dispatch = useDispatch();
-  // isBoardDataEmpty (MIGHT HAVE TO CHECK FOR THIS ON SOME CALLS)
-  // REMINDER WILL HAVE TO CHECK FOR COL LENGTH ON
-  // RESET TASKVALUES
-  // || activeBoardData.columns.length > 0
   //
   const handleOverlay = () => {
     dispatch(closeSidebar());
@@ -39,7 +35,6 @@ const Overlay = () => {
     if (!isBoardDataEmpty && activeBoardData.columns.length > 0) {
       dispatch(resetBoardInputValues());
       dispatch(resetTaskInputValues());
-      //   console.log("triggered");
     }
   };
   //

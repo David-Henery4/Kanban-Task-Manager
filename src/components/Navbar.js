@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openSidebar } from "../features/sidebar/sidebarSlice";
 import {
@@ -17,9 +17,10 @@ import {
 } from "../assets";
 
 const Navbar = () => {
+  const [isThereNoColumns, setIsThereNoColumns] = useState(false)
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const { isNavbarEditDeleteActive } = useSelector((store) => store.modals);
-  const { activeBoardData } = useSelector((store) => store.data);
+  const { activeBoardData, overallData } = useSelector((store) => store.data);
   const { isBoardDataEmpty } = useSelector((store) => store.modes); 
   const dispatch = useDispatch();
   //
@@ -32,6 +33,13 @@ const Navbar = () => {
     dispatch(openSidebar());
     dispatch(openOverlay());
   };
+  //
+  useEffect(() => {
+    if (activeBoardData && activeBoardData.columns){
+      const cols =  activeBoardData.columns.length <= 0
+      setIsThereNoColumns(cols)
+    }
+  }, [activeBoardData])
   // remove-nav-logo
   return (
     <nav className="navbar">
@@ -60,7 +68,7 @@ const Navbar = () => {
           <AddTaskMobile className="navbar-add-task__icon" />
           <button
             className="navbar-add-task__text heading-m del-edit-btn"
-            disabled={isBoardDataEmpty ? true : false}
+            disabled={(isBoardDataEmpty || isThereNoColumns) ? true : false}
           >
             Add new task
           </button>

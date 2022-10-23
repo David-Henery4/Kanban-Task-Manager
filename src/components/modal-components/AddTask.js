@@ -8,9 +8,8 @@ import { Cross } from "../../assets";
 
 const AddTask = () => {
   const dispatch = useDispatch();
-  const { activeBoardData, selectedTask, emptyTaskInputValues } = useSelector(
-    (store) => store.data
-  );
+  const { activeBoardData, selectedTask, emptyTaskInputValues, overallData } =
+    useSelector((store) => store.data);
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
   const { isEditTaskActive } = useSelector((store) => store.modes);
   //
@@ -60,7 +59,6 @@ const AddTask = () => {
   //
   const handleNewSubmit = () => {
     dispatch(addNewTask(task));
-    console.log(task)
     // resetEmptyTaskInputValues(); // works here
     // dispatch(resetTaskInputValues()); // doesn't work here
   };

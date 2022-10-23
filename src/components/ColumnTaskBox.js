@@ -13,8 +13,6 @@ const ColumnTaskBox = ({
   colId,
   id,
 }) => {
-  // console.log(id)
-  // const {title,} = task
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
   const dispatch = useDispatch();
   //
