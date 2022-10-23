@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../features/theme/themeSlice";
 import { closeSidebar } from "../features/sidebar/sidebarSlice";
 import { openAddNewBoardModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
@@ -14,13 +15,14 @@ import {
 } from "../assets";
 
 const Sidebar = () => {
+  const { isLightMode } = useSelector((store) => store.theme);
   const { overallData } = useSelector((store) => store.data);
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const dispatch = useDispatch();
   //
   const handleBoardSwitch = (i) => {
-    dispatch(changeActiveBoard(i))
-  }
+    dispatch(changeActiveBoard(i));
+  };
   //
   return (
     <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
@@ -69,7 +71,19 @@ const Sidebar = () => {
       <div className="sidebar-bottom">
         <div className="theme-toggle">
           <LightIcon />
-          <div className="mob-nav-toggle theme-toggle-switch"></div>
+          <div
+            className="mob-nav-toggle theme-toggle-switch"
+            onClick={() => dispatch(toggleTheme())}
+          >
+            {/* switch-light-mode-active */}
+            <div
+              className={
+                isLightMode
+                  ? "theme-toggle-switch__ball switch-light-mode-active"
+                  : "theme-toggle-switch__ball"
+              }
+            ></div>
+          </div>
           <DarkIcon />
         </div>
         <div

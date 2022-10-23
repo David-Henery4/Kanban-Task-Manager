@@ -11,7 +11,7 @@
     background-color: $colorPrimary;
     border-radius: 12px;
     position: relative;
-    &::after{
+    &__ball{
       content: "";
       background-color: $white;
       border-radius: 50%;
