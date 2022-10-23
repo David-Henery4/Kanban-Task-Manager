@@ -30,18 +30,20 @@ const Sidebar = () => {
           <div className="board-container-header">
             <h4 className="board-container-header__title heading-s">
               {/* NEED DYNAMIC BOARD NUMBER */}
-              ALL BOARDS (4)
+              ALL BOARDS ({overallData && overallData.length})
             </h4>
           </div>
           {overallData.map((board, i) => {
-            const {name, id} = board
+            const { name, id } = board;
             // active board will have "active-board"
             return (
-              <div className="board-container-board" key={id} onClick={() => handleBoardSwitch(i)}>
+              <div
+                className="board-container-board"
+                key={id}
+                onClick={() => handleBoardSwitch(i)}
+              >
                 <BoardIcon className="board-container-board__icon" />
-                <p className="board-container-board__name heading-m">
-                  {name}
-                </p>
+                <p className="board-container-board__name heading-m">{name}</p>
               </div>
             );
           })}
@@ -66,9 +68,9 @@ const Sidebar = () => {
       {/***/}
       <div className="sidebar-bottom">
         <div className="theme-toggle">
-          <DarkIcon />
-          <div className="mob-nav-toggle">TOGGLE</div>
           <LightIcon />
+          <div className="mob-nav-toggle theme-toggle-switch"></div>
+          <DarkIcon />
         </div>
         <div
           className="sidebar-hide-sidebar"

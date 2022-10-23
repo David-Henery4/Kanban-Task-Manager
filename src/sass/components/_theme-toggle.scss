@@ -6,6 +6,27 @@
   padding: 14px;
   border-radius: 6px;
   &-switch{
-    
+    width: 50px;
+    height: 20px;
+    background-color: $colorPrimary;
+    border-radius: 12px;
+    position: relative;
+    &::after{
+      content: "";
+      background-color: $white;
+      border-radius: 50%;
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      top: 50%;
+      left: 80%; // 80% to 20%
+      transition: .4s all;
+      transform: translate(-50%, -50%);
+    }
   }
+}
+
+.switch-light-mode-active{
+  left: 20%;
+  transition: .4s all;
 }
