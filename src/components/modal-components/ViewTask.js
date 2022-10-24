@@ -12,7 +12,7 @@ const ViewTask = () => {
   const [subTaskCompletedNumber, setSubTaskCompletedNumber] = useState(0);
   const [subTaskAmount, setSubTaskAmount] = useState(0);
   const dispatch = useDispatch();
-  const { selectedTask,  activeBoardData } = useSelector(
+  const { selectedTask,  activeBoardData, overallData } = useSelector(
     (store) => store.data
   );
   const { isViewTaskActive, isViewTaskEditDeleteActive } = useSelector(
@@ -24,9 +24,10 @@ const ViewTask = () => {
   };
   //
   useEffect(() => {
-    let curTasks;
-    if (Object.entries(activeBoardData).length > 0) {
-      const update = activeBoardData.columns.find((col) => {
+    if (overallData){
+      let curTasks;
+      if (Object.entries(activeBoardData).length > 0) {
+        const update = activeBoardData.columns.find((col) => {
         return col.name === selectedTask.columnName;
       });
       curTasks = update;
@@ -48,7 +49,8 @@ const ViewTask = () => {
       });
       setSubTaskCompletedNumber(completedTasks.length);
     }
-  }, [activeBoardData, selectedTask]);
+  }
+  }, [activeBoardData, selectedTask, overallData]);
   //
   return (
     <div

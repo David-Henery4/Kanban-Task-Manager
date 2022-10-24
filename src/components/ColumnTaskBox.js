@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { openViewTaskModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
-import { selectTask } from "../features/data/dataSlice";
+import { selectTask, shuffleCols } from "../features/data/dataSlice";
 
 const ColumnTaskBox = ({
   title,
@@ -17,20 +17,13 @@ const ColumnTaskBox = ({
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
   const dispatch = useDispatch();
   //
-  const dragItem = useRef();
-  const dragOverItem = useRef();
+  // const dragItem = useRef();
+  // const dragOverItem = useRef();
   //
-  const dragStart = (e, pos) => {
-    dragItem.current = pos;
-    console.log(e.target.innerHTML);
-  };
-  //
-  const dragEnter = (e, pos) => {
-    dragOverItem.current = pos;
-    console.log(e.target.innerHTML);
-  };
-  //
-  
+  // const onDragStart = (ev,id) => {
+  //   console.log("dragstart", id)
+  //   ev.dataTransfer("id", id);
+  // }
   //
   const handleViewTask = () => {
     let columnName = name;
@@ -65,8 +58,10 @@ const ColumnTaskBox = ({
       className="column-task"
       onClick={handleViewTask}
       draggable
-      onDragStart={(e) => dragStart(e, index)}
-      onDragEnter={(e) => dragEnter(e, index)}
+      onDragStart={(e) => {
+        console.log("dragstart", id);
+        e.dataTransfer.setData("id", id)
+      }}
     >
       <h3 className="column-task__title heading-m">{title}</h3>
       <p className="column-task__status basicTextMedium">

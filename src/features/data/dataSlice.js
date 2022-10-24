@@ -6,6 +6,7 @@ const initialState = {
   activeBoardIndex: 0,
   activeBoardData: {},
   selectedTask: {},
+  checkValues: [],
   emptyTaskInputValues: {
     id: +new Date(),
     title: "",
@@ -35,6 +36,29 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    handleDropInfo: (state, {payload}) => {
+      const {e,colName} = payload
+      console.log(e,colName)
+      const id = e.dataTransfer.getData("id")
+      console.log(+id)
+      const newCols = state.overallData[state.activeBoardIndex].columns.map((col) => {
+        const newTasks = col.tasks.filter((task) => {
+          if(task.id === +id){
+            task.status = colName
+          }
+          return task
+        })
+        return {...col, tasks: newTasks}
+      })
+      console.log(newCols)
+      state.checkValues = newCols
+      state.overallData[state.activeBoardIndex].columns = newCols
+      //
+      // state.activeBoardData[state.activeBoardIndex].columns = [
+      //   ...state.activeBoardData[state.activeBoardIndex].columns,
+      //   newTasks
+      // ]
+    },
     resetBoardInputValues: (state, { payload }) => {
       state.emptyBoardInputValues = {
         id: +new Date(),
@@ -169,6 +193,7 @@ export const {
   editBoard,
   deleteBoard,
   resetBoardInputValues,
+  handleDropInfo
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

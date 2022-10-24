@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import dataReducer from "./features/data/dataSlice";
 import sidebarReducer from "./features/sidebar/sidebarSlice";
 import themeReducer from "./features/theme/themeSlice";
@@ -15,4 +15,9 @@ export const store = configureStore({
     modals: modalsReducer,
     modes: modesReducer,
   },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: false
+    })
+  }
 });
