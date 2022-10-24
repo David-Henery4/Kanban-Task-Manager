@@ -9,7 +9,7 @@ const Column = ({name,tasks,id}) => {
     <div className="column">
       <ColumnHeading name={name} quantity={tasks.length}/>
       {tasks.map((task, i) => {
-        return <ColumnTaskBox key={i} {...task} name={name} colId={id}/>;
+        return <ColumnTaskBox key={i} {...task} name={name} colId={id} index={i}/>;
       })}
     </div>
   );

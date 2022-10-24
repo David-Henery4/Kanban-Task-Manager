@@ -24,6 +24,8 @@ const Sidebar = () => {
     dispatch(changeActiveBoard(i));
   };
   //
+  const switchingThemes = () => {};
+  //
   return (
     <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
       <div className="sidebar-top">
