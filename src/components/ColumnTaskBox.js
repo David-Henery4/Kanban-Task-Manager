@@ -1,8 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openViewTaskModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
-import { selectTask, shuffleCols, handleDropInfo } from "../features/data/dataSlice";
+import {
+  selectTask,
+  shuffleCols,
+  handleDropInfo,
+  handleItemCoords,
+  checkNode,
+} from "../features/data/dataSlice";
 
 const ColumnTaskBox = ({
   title,
@@ -13,51 +19,33 @@ const ColumnTaskBox = ({
   colId,
   colIndex,
   taskIndex,
+  handleDragEnter,
   index,
   id,
 }) => {
-  const {overallData, activeBoardIndex} = useSelector(store => store.data)
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
-  const [dragging,setDragging] = useState(false)
   const dispatch = useDispatch();
-  // console.log(colIndex,taskIndex)
   //
-  const dragItem = useRef();
+  // const dragItem = useRef();
   const dragNode = useRef();
   //
-  const handleDragStart = (e, params) => {
-    console.log("drag starting", params)
-    dragItem.current = params;
+  const handleDragStart = (e, params, statusType) => {
+    // dragItem.current = params;
+    // console.log(statusType)
+    // e.dataTransfer.setData("status", statusType)
     dragNode.current = e.target;
-    // dragItem.current = params
-    console.log(dragItem.current)
-    dragNode.current.addEventListener("dragend", handleDragEnd)
-    setTimeout(() => {
-      setDragging(true)
-    }, 0)
-  }
+    dispatch(handleItemCoords(params));
+    dispatch(checkNode(e.target));
+    dragNode.current.addEventListener("dragend", handleDragEnd);
+  };
   //
-  const handleDragEnter = (e, params) => {
-    e.preventDefault()
-    console.log("entering drag", params)
-    const currentItem = dragItem.current
-    console.log(currentItem)
-    console.log(dragItem.current)
-    console.log(dragNode.current)
-    if (e.target !== dragNode.current) {
-      console.log("target not the same")
-      // console.log(currentItem)
-    }
-    // dragItem.current = params
-  }
-  //
-  const handleDragEnd = () => {
-    console.log("ending drag")
-    setDragging(false)
-    dragNode.current.removeEventListener("dragend", handleDragEnd)
-    dragItem.current = null
-    dragNode.current = null
-  }
+  const handleDragEnd = (e) => {
+    // dragItem.current = null;
+    // let statusType = e.dataTransfer.getData("status")
+    // console.log(statusType)
+    dragNode.current.removeEventListener("dragend", handleDragEnd);
+    dragNode.current = null;
+  };
   //
   const handleViewTask = () => {
     let columnName = name;
@@ -92,8 +80,7 @@ const ColumnTaskBox = ({
       className="column-task"
       onClick={handleViewTask}
       draggable
-      onDragStart={(e) => handleDragStart(e, { colIndex, taskIndex })
-      }
+      onDragStart={(e) => handleDragStart(e, { colIndex, taskIndex }, status)}
       onDragEnter={(e) => handleDragEnter(e, { colIndex, taskIndex })}
     >
       <h3 className="column-task__title heading-m">{title}</h3>

@@ -30,14 +30,25 @@ const initialState = {
       },
     ],
   },
+  itemCoords: 0,
+  itemNode: "",
 };
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    checkNode: (state,{payload}) => {
+      state.itemNode = payload
+      console.log(payload)
+    },
+    handleItemCoords: (state, {payload}) => {
+      state.itemCoords = payload
+      console.log(payload)
+    },
     handleDropInfo: (state, {payload}) => {
       console.log(payload)
+      state.overallData[state.activeBoardIndex].columns = payload
       // const {colIndex, taskIndex, currentItem} = payload
       // console.log(currentItem)
       // console.log(state.overallData[state.activeBoardIndex])
@@ -194,7 +205,9 @@ export const {
   editBoard,
   deleteBoard,
   resetBoardInputValues,
-  handleDropInfo
+  handleDropInfo,
+  handleItemCoords,
+  checkNode
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
