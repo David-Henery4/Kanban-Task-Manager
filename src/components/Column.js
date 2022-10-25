@@ -3,17 +3,17 @@ import { useDispatch } from "react-redux";
 import { handleDropInfo } from "../features/data/dataSlice";
 import { ColumnHeading, ColumnTaskBox } from "../components";
 
-const Column = ({ name, tasks, id }) => {
+const Column = ({ name, tasks, id, colIndex }) => {
   const [taskLength, setTaskLength] = useState(0);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //
-  const onDragOver = (e) => {
-    e.preventDefault()
-  };
+  // const onDragOver = (e) => {
+  //   e.preventDefault()
+  // };
   //
-  const onDrop = (e,colName) => {
-    dispatch(handleDropInfo({e,colName}))
-  };
+  // const onDrop = (e,colName) => {
+  //   dispatch(handleDropInfo({e,colName}))
+  // };
   //
   useEffect(() => {
     if (tasks) {
@@ -23,14 +23,14 @@ const Column = ({ name, tasks, id }) => {
   return (
     <div
       className="column"
-      onDragOver={(e) => onDragOver(e)}
-      onDrop={(e) => onDrop(e, name)}
+      // onDragOver={(e) => onDragOver(e)}
+      // onDrop={(e) => onDrop(e, name)}
     >
       <ColumnHeading name={name} quantity={taskLength} />
       {tasks &&
         tasks.map((task, i) => {
           return (
-            <ColumnTaskBox key={i} {...task} name={name} colId={id} index={i} />
+            <ColumnTaskBox key={i} {...task} name={name} colId={id} taskIndex={i} colIndex={colIndex}/>
           );
         })}
     </div>
