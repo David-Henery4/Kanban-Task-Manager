@@ -30,9 +30,6 @@ const ColumnTaskBox = ({
   const dragNode = useRef();
   //
   const handleDragStart = (e, params, statusType) => {
-    // dragItem.current = params;
-    // console.log(statusType)
-    // e.dataTransfer.setData("status", statusType)
     dragNode.current = e.target;
     dispatch(handleItemCoords(params));
     dispatch(checkNode(e.target));
@@ -40,9 +37,6 @@ const ColumnTaskBox = ({
   };
   //
   const handleDragEnd = (e) => {
-    // dragItem.current = null;
-    // let statusType = e.dataTransfer.getData("status")
-    // console.log(statusType)
     dragNode.current.removeEventListener("dragend", handleDragEnd);
     dragNode.current = null;
   };

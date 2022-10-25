@@ -38,16 +38,17 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    updateTaskStatus: (state, {payload}) => {
+      const {id, name} = payload
+      state.overallData[state.activeBoardIndex].columns.find((col) => col.id === id).tasks.map((task) => task.status = name)
+    },
     checkNode: (state,{payload}) => {
       state.itemNode = payload
-      console.log(payload)
     },
     handleItemCoords: (state, {payload}) => {
       state.itemCoords = payload
-      console.log(payload)
     },
     handleDropInfo: (state, {payload}) => {
-      console.log(payload)
       state.overallData[state.activeBoardIndex].columns = payload
       // const {colIndex, taskIndex, currentItem} = payload
       // console.log(currentItem)
@@ -207,7 +208,8 @@ export const {
   resetBoardInputValues,
   handleDropInfo,
   handleItemCoords,
-  checkNode
+  checkNode,
+  updateTaskStatus,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleDropInfo, handleItemCoords } from "../features/data/dataSlice";
+import { handleDropInfo, handleItemCoords, updateTaskStatus } from "../features/data/dataSlice";
 import { ColumnHeading, ColumnTaskBox } from "../components";
 
 const Column = ({ name, tasks, id, colIndex }) => {
@@ -28,6 +28,16 @@ const Column = ({ name, tasks, id, colIndex }) => {
       dispatch(handleDropInfo(newCols));
     }
   };
+  //
+  // COME BACK TOO!!!!!!!!!
+  // SETTING ALL TASK STATUSES TO THE COLUMN NAME,
+  // WHEN COLUMN DATA CHANGES!!!
+  // useEffect(() => {
+  //   console.log(tasks);
+  //   // if (tasks.length > 0){
+  //   //   dispatch(updateTaskStatus({name,id}))
+  //   // }
+  // }, [overallData[activeBoardIndex].columns])
   //
   useEffect(() => {
     if (tasks) {
