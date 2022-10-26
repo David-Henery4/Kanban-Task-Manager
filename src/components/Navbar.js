@@ -14,6 +14,7 @@ import {
   EditDeleteIcon,
   LogoDark,
   LogoLight,
+  Cross
 } from "../assets";
 
 const Navbar = () => {
@@ -71,7 +72,8 @@ const Navbar = () => {
       </div>
       <div className="navbar-right">
         <div className="navbar-add-task" onClick={openAddTask}>
-          <AddTaskMobile className="navbar-add-task__icon" />
+          {/* <AddTaskMobile className="navbar-add-task__icon" /> */}
+          <span className="navbar-add-task__icon">+</span>
           <button
             className="navbar-add-task__text heading-m del-edit-btn"
             disabled={isBoardDataEmpty || isThereNoColumns ? true : false}

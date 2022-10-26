@@ -27,6 +27,12 @@
     &__heading{
       color: $nonActiveFontColor;
     }
+    &__btn{
+      
+      &:hover{
+        cursor: pointer;
+      }
+    }
   }
 }
 

@@ -14,8 +14,14 @@
   gap: 16px;
   &__edit-btn{
     color: $nonActiveFontColor;
+    &:hover{
+      cursor: pointer;
+    }
   }
   &__delete-btn{
     color: $red;
+    &:hover{
+      cursor: pointer;
+    }
   }
 }

@@ -64,14 +64,22 @@
         align-items: center;
         gap: 16px;
         &__input {
+          
         }
         &__icon {
           height: 15px;
           width: 15px;
+          :hover{
+            cursor: pointer;
+          }
         }
       }
       &__add-subtask-btn {
         width: 100%;
+        &:hover{
+          cursor: pointer;
+          background-color: var(--btnSecondaryHover);
+        }
       }
     }
     //
@@ -84,6 +92,9 @@
       &__label {
       }
       &-select {
+        &:hover{
+          cursor: pointer;
+        }
         &__option {
         }
       }
@@ -92,6 +103,9 @@
   // TASK/FORM SUBMIT BUTTON
   &__submit-btn {
     width: 100%;
+    &:hover{
+      cursor: pointer;
+    }
   }
 }
 

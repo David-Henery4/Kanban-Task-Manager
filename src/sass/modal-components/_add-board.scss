@@ -37,15 +37,26 @@
         grid-template-columns: 1fr 16px;
         align-items: center;
         gap: 16px;
+        &__close-icon{
+          &:hover{
+            cursor: pointer;
+          }
+        }
       }
       &__btn{
         width: 100%;
+        &:hover{
+          cursor: pointer;
+        }
       }
     }
   }
   //
   &__btn{
     width: 100%;
+    &:hover{
+      cursor: pointer;
+    }
   }
 }
 

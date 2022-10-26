@@ -19,11 +19,12 @@ const NewColumn = () => {
   //
   return (
     <div className="new-column">
-      <button className="new-column__btn" onClick={handleNewColumnClick}>
-        <span>
-          <AddTaskMobile />
-        </span>
-        <p className="heading-xl">New Column</p>
+      <button
+        className="new-column__btn heading-xl"
+        onClick={handleNewColumnClick}
+      >
+        <span className="new-column__btn--icon">+</span>
+        <p>New Column</p>
       </button>
     </div>
   );

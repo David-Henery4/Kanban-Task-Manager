@@ -29,7 +29,7 @@
   }
   //
   &-task{
-    cursor: grab;
+    // cursor: grab;
     background-color: var(--itemColor);
     border-radius: 8px;
     width: 280px;
@@ -39,6 +39,9 @@
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
+    &:hover{
+      cursor: pointer;
+    }
     &__title{
       
     }

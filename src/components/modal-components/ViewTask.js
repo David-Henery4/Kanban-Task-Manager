@@ -61,6 +61,7 @@ const ViewTask = () => {
           <h4 className="view-task__title heading-l">{selectedTask.title}</h4>
           <div className="view-task-heading__icon">
             <EditDeleteIcon
+              className="view-task-heading__icon--icon"
               onClick={() => dispatch(openViewTaskEditDelete())}
             />
           </div>
@@ -82,7 +83,14 @@ const ViewTask = () => {
             selectedTask.subtasks.map((sub, i) => {
               // console.log(sub)
               return (
-                <div className="view-task-subtask" key={i}>
+                <div
+                  className={
+                    sub.isCompleted
+                      ? "view-task-subtask"
+                      : "view-task-subtask non-completed-task"
+                  }
+                  key={i}
+                >
                   <div
                     className={
                       sub.isCompleted

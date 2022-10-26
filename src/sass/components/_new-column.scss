@@ -14,5 +14,14 @@
     border: none;
     gap: 3px;
     color: $colorPrimary;
+    justify-content: flex-end;
+    &--icon{
+      font-size: 24px;
+      position: relative;
+      top: 2.5px;
+    }
+    &:hover{
+      cursor: pointer;
+    }
   }
 }

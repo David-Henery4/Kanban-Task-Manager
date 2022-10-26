@@ -22,6 +22,9 @@
       width: 15%;
       display: flex;
       justify-content: flex-end;
+      &--icon{
+        cursor: pointer;
+      }
     }
   }
   &__title {
@@ -56,6 +59,7 @@
     background-color: var(--backgroundColor);
     padding: 13px 8px 13px 13px;
     border-radius: 4px;
+
     //
     &-checkbox {
       height: 16px;
@@ -100,6 +104,10 @@
 
 .view-task-active{
   display: flex;
+}
+
+.non-completed-task{
+  background-color: $taskColor;
 }
 
 .checkbox-completed{

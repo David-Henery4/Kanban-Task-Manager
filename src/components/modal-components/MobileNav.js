@@ -8,7 +8,7 @@ import { BoardIcon, AddTaskMobile, LightIcon, DarkIcon } from "../../assets";
 
 const MobileNav = () => {
   const {isLightMode} = useSelector(store => store.theme)
-  const { overallData } = useSelector((store) => store.data);
+  const { overallData, activeBoardIndex } = useSelector((store) => store.data);
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const dispatch = useDispatch();
   //
@@ -30,7 +30,11 @@ const MobileNav = () => {
           // active-board
           return (
             <div
-              className="board-container-board"
+              className={
+                i === activeBoardIndex
+                  ? "board-container-board active-board-style"
+                  : "board-container-board"
+              }
               key={id}
               onClick={() => handleBoardSwitch(i)}
             >

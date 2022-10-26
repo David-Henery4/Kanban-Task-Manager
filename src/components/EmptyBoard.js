@@ -12,23 +12,27 @@ const EmptyBoard = () => {
   return (
     <div className="board-empty">
       <h2 className="heading-l board-empty__heading">
-        This board is empty. Create a new <span>{isBoardDataEmpty ? "board": "column"}</span> to get started.
+        This board is empty. Create a new{" "}
+        <span>{isBoardDataEmpty ? "board" : "column"}</span> to get started.
       </h2>
-      <button className="new-col-btn btn-primary-color heading-m" onClick={() => {
-        dispatch(openOverlay())
-        if (isBoardDataEmpty) {
-          dispatch(openAddNewBoardModal())
-        }
-        if (!isBoardDataEmpty){
-          dispatch(openAddNewBoardModal());
-          dispatch(activateEditBoard())
-        }
-      }}>
+      <button
+        className="new-col-btn btn-primary-color heading-m board-empty__btn"
+        onClick={() => {
+          dispatch(openOverlay());
+          if (isBoardDataEmpty) {
+            dispatch(openAddNewBoardModal());
+          }
+          if (!isBoardDataEmpty) {
+            dispatch(openAddNewBoardModal());
+            dispatch(activateEditBoard());
+          }
+        }}
+      >
         {isBoardDataEmpty ? (
           <span>Add Board</span>
         ) : (
           <span>
-            <AddTaskMobile />
+            +
             Add new Column
           </span>
         )}

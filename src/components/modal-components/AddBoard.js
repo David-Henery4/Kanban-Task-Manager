@@ -145,7 +145,10 @@ const AddBoard = () => {
                     value={col.name}
                     onChange={handleColumnValueChange(i)}
                   />
-                  <Cross onClick={() => handleRemoveColumn(col.id)} />
+                  <Cross
+                    className="new-board-form-columns-input__close-icon"
+                    onClick={() => handleRemoveColumn(col.id)}
+                  />
                 </div>
               );
             })}

@@ -70,9 +70,7 @@ const Sidebar = () => {
                 dispatch(openOverlay());
               }}
             >
-              <span>
-                <AddTaskMobile className="board-container-board__icon" />
-              </span>
+              <span className="board-container-board__icon--plus">+</span>
               Create New Board
             </button>
           </div>
@@ -80,23 +78,26 @@ const Sidebar = () => {
       </div>
       {/***/}
       <div className="sidebar-bottom">
-        <div className="theme-toggle">
-          <LightIcon />
-          <div
-            className="mob-nav-toggle theme-toggle-switch"
-            onClick={() => dispatch(toggleTheme())}
-          >
-            {/* switch-light-mode-active */}
+        <div className="sidebar-bottom-theme">
+          <div className="theme-toggle">
+            <LightIcon />
             <div
-              className={
-                isLightMode
-                  ? "theme-toggle-switch__ball switch-light-mode-active"
-                  : "theme-toggle-switch__ball"
-              }
-            ></div>
+              className="mob-nav-toggle theme-toggle-switch"
+              onClick={() => dispatch(toggleTheme())}
+            >
+              {/* switch-light-mode-active */}
+              <div
+                className={
+                  isLightMode
+                    ? "theme-toggle-switch__ball switch-light-mode-active"
+                    : "theme-toggle-switch__ball"
+                }
+              ></div>
+            </div>
+            <DarkIcon />
           </div>
-          <DarkIcon />
         </div>
+        {/**/}
         <div
           className="sidebar-hide-sidebar"
           onClick={() => dispatch(closeSidebar())}
