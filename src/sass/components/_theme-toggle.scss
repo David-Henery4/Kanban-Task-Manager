@@ -11,6 +11,10 @@
     background-color: $colorPrimary;
     border-radius: 12px;
     position: relative;
+    &:hover{
+      cursor: pointer;
+      background-color: $colorPrimaryShade;
+    }
     &__ball{
       content: "";
       background-color: $white;

@@ -83,6 +83,11 @@
     min-width: 48px;
     min-height: 32px;
     background-color: $colorPrimary;
+    position: relative;
+    &:hover{
+      cursor: pointer;
+      background-color: $colorPrimaryShade;
+    }
     @include respond(tab) {
       min-height: 48px;
       padding: 0 24px;
@@ -93,6 +98,9 @@
     &__text {
       color: $white;
       display: none;
+      &:hover{
+      cursor: pointer;
+      }
       @include respond(tab) {
         display: flex;
       }
@@ -100,6 +108,9 @@
   }
   //
   &__edit-delete-icon {
+    &:hover{
+      cursor: pointer;
+    }
   }
 }
 

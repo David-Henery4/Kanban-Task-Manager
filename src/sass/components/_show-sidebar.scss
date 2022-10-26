@@ -8,6 +8,10 @@
   place-items: center;
   position: relative;
   right: 16px;
+  &:hover{
+    cursor: pointer;
+    background-color: $colorPrimaryShade;
+  }
   @include respond (tab){
     display: grid;
   }

@@ -17,6 +17,7 @@
     display: grid;
     grid-template-columns: 24px 1fr 24px;
     row-gap: 54px;
+    width: 100%;
   }
   &-bottom{
     width: 100%;
@@ -35,6 +36,9 @@
     justify-content: flex-start;
     gap: 10px;
     color: $nonActiveFontColor;
+    &:hover{
+      cursor: pointer;
+    }
     @include respond (lap){
       padding: 0 8px;
     }
