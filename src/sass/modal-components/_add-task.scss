@@ -64,7 +64,7 @@
         align-items: center;
         gap: 16px;
         &__input {
-          
+
         }
         &__icon {
           height: 15px;
@@ -87,15 +87,45 @@
       width: 100%;
       display: grid;
       gap: 8px;
+      position: relative;
+      //
       &__title {
       }
+      //
       &__label {
       }
+      //
+      &__icon{
+        position: absolute;
+        right: 16px;
+        top: 40px;
+      }
+      //
       &-select {
+        
         &:hover{
           cursor: pointer;
         }
-        &__option {
+      }
+      &-dropdown{
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: var(--backgroundColor);
+        width: 100%;
+        color: $nonActiveFontColor;
+        padding: 8px 16px;
+        border-radius: 8px;
+        // display: flex;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 8px;
+        &__option{
+          &:hover{
+            cursor: pointer;
+          }
         }
       }
     }
@@ -110,5 +140,9 @@
 }
 
 .add-task-active{
+  display: flex;
+}
+
+.active-status-dropdown{
   display: flex;
 }

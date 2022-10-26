@@ -1,5 +1,6 @@
 import {ReactComponent as MobileLogo} from "../assets/logo-mobile.svg";
 import {ReactComponent as DownArrow} from "../assets/icon-chevron-down.svg";
+import {ReactComponent as UpArrow} from "../assets/icon-chevron-up.svg";
 import {ReactComponent as Cross} from "../assets/icon-cross.svg";
 import {ReactComponent as AddTaskMobile} from "../assets/icon-add-task-mobile.svg";
 import {ReactComponent as EditDeleteIcon} from "../assets/icon-vertical-ellipsis.svg";
@@ -15,6 +16,7 @@ import {ReactComponent as ShowSidebarIcon} from "../assets/icon-show-sidebar.svg
 
 export {
   MobileLogo,
+  UpArrow,
   DownArrow,
   Cross,
   AddTaskMobile,

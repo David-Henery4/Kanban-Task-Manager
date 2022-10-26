@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewTask , resetTaskInputValues, editTask} from "../../features/data/dataSlice";
-import { closeNewTaskModal, closeViewTaskModal, closeEditDeleteModals } from "../../features/modals/modalsSlice";
+import {
+  addNewTask,
+  resetTaskInputValues,
+  editTask,
+} from "../../features/data/dataSlice";
+import {
+  closeNewTaskModal,
+  closeViewTaskModal,
+  closeEditDeleteModals,
+} from "../../features/modals/modalsSlice";
 import { deActivateEditTask } from "../../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
-import { Cross } from "../../assets";
+import { Cross, DownArrow, UpArrow } from "../../assets";
 
 const AddTask = () => {
+  const [isDropdownActive, setIsDropdownActive] = useState(false)
+  //
   const dispatch = useDispatch();
+  //
   const { activeBoardData, selectedTask, emptyTaskInputValues, overallData } =
     useSelector((store) => store.data);
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
@@ -39,7 +50,7 @@ const AddTask = () => {
     //     },
     //   ],
     // });
-  }
+  };
   //
   const setEditTaskValues = () => {
     setTask({
@@ -52,9 +63,9 @@ const AddTask = () => {
   };
   //
   const handleEditSubmit = () => {
-    dispatch(editTask(task))
+    dispatch(editTask(task));
     // resetEmptyTaskInputValues()
-    dispatch(resetTaskInputValues())
+    dispatch(resetTaskInputValues());
   };
   //
   const handleNewSubmit = () => {
@@ -85,8 +96,8 @@ const AddTask = () => {
   };
   //
   useEffect(() => {
-    setTask(emptyTaskInputValues)
-  }, [emptyTaskInputValues])
+    setTask(emptyTaskInputValues);
+  }, [emptyTaskInputValues]);
   //
   useEffect(() => {
     if (isEditTaskActive) {
@@ -98,10 +109,9 @@ const AddTask = () => {
   useEffect(() => {
     // activeBoardData.columns > 0;
     if (activeBoardData.columns) {
-      if (activeBoardData.columns.length > 0){
+      if (activeBoardData.columns.length > 0) {
         setTask({ ...task, status: activeBoardData.columns[0].name });
         dispatch(resetTaskInputValues());
-        
       }
       // to clear inputs when adding new task (might not need!)
       // might! have to change
@@ -178,29 +188,47 @@ const AddTask = () => {
           </div>
         </div>
         {/* STATUS INPUT */}
-        <div className="add-task-form-status field-set-remove-border">
+        <div className="add-task-form-status">
           {/* Might not use select/might use plain div & p & take text value */}
           <h5 className="add-task-form-status__title input-heading">Status</h5>
-          <select
+          {isDropdownActive ? (
+            <DownArrow className="add-task-form-status__icon" />
+          ) : (
+            <UpArrow className="add-task-form-status__icon" />
+          )}
+          <input
+            type="text"
+            readOnly
             className="add-task-form-status-select input-style-basic"
             name="status"
             id="status"
             value={task.status}
-            onChange={(e) => setTask({ ...task, status: e.target.value })}
+            onClick={() => {
+              setIsDropdownActive(!isDropdownActive)
+            }}
+          />
+          <div
+            className={
+              isDropdownActive
+                ? "add-task-form-status-dropdown basicTextMedium active-status-dropdown"
+                : "add-task-form-status-dropdown basicTextMedium"
+            }
           >
             {activeBoardData.columns &&
               activeBoardData.columns.map((col, i) => {
                 return (
-                  <option
-                    className="add-task-form-status-select__option"
-                    value={col.name}
+                  <p
+                    className="add-task-form-status-dropdown__option"
                     key={i}
+                    onClick={() => {
+                      setTask({ ...task, status: col.name });
+                    }}
                   >
                     {col.name}
-                  </option>
+                  </p>
                 );
               })}
-          </select>
+          </div>
         </div>
       </form>
       {/* SUBMIT BTN */}
@@ -213,9 +241,9 @@ const AddTask = () => {
           if (isEditTaskActive) {
             // turn edit off when submiting from edit mode.
             handleEditSubmit();
-            dispatch(closeEditDeleteModals())
-            dispatch(closeViewTaskModal())
-            dispatch(deActivateEditTask())
+            dispatch(closeEditDeleteModals());
+            dispatch(closeViewTaskModal());
+            dispatch(deActivateEditTask());
           }
           if (!isEditTaskActive) {
             handleNewSubmit();
