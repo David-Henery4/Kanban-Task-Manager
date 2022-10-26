@@ -7,6 +7,7 @@ import { openOverlay } from "../features/overlay/overlaySlice";
 import { changeActiveBoard } from "../features/data/dataSlice";
 import {
   LogoLight,
+  LogoDark,
   BoardIcon,
   AddTaskMobile,
   DarkIcon,
@@ -29,7 +30,11 @@ const Sidebar = () => {
   return (
     <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
       <div className="sidebar-top">
-        <LogoLight className="sidebar__logo" />
+        {isLightMode ? (
+          <LogoDark className="sidebar__logo" />
+        ) : (
+          <LogoLight className="sidebar__logo" />
+        )}
         <div className="board-container">
           <div className="board-container-header">
             <h4 className="board-container-header__title heading-s">

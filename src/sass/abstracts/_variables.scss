@@ -1,11 +1,18 @@
 
 // COLOURS
 
+//Linear Gradient
+$newColumnBgColLight: rgba(233,239,250,100%);
+$newColumnBgColSecondLight: rgba(233,239,250,50%);
+
 
 // **LIGHT**
 .lightMode{
   --backgroundColor: #F4F7FD;
   --itemColor: #ffffff;
+  //
+  --shadedColor: rgba(233,239,250,100%);
+  --shadedColorTwo: rgba(233,239,250,50%);
   //
   --btnSecondary: rgba(99,95,199, .10);
   --btnSecondaryHover: rgba(99,95,199, .25);
@@ -17,6 +24,9 @@
 .darkMode{
   --backgroundColor: #20212C;
   --itemColor: #2B2C37;
+  //
+  --shadedColor: rgba(43,44,55,13%);
+  --shadedColorTwo: rgba(43,44,55,8%);
   //
   --btnSecondary: #ffff;
   --btnSecondaryHover: #ffff;

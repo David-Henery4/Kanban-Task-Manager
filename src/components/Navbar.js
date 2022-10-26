@@ -21,7 +21,8 @@ const Navbar = () => {
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const { isNavbarEditDeleteActive } = useSelector((store) => store.modals);
   const { activeBoardData, overallData } = useSelector((store) => store.data);
-  const { isBoardDataEmpty } = useSelector((store) => store.modes); 
+  const { isBoardDataEmpty } = useSelector((store) => store.modes);
+  const { isLightMode } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
   //
   const openAddTask = () => {
@@ -45,6 +46,7 @@ const Navbar = () => {
     <nav className="navbar">
       <MobileNav />
       <div className="navbar-left">
+        {/* {isLightMode ? "" : ""} */}
         <MobileLogo className="navbar__logo" />
         <div
           className={
@@ -53,7 +55,11 @@ const Navbar = () => {
               : "navbar__logo--tab-section"
           }
         >
-          <LogoLight className="navbar__logo--tab" />
+          {isLightMode ? (
+            <LogoDark className="navbar__logo--tab" />
+          ) : (
+            <LogoLight className="navbar__logo--tab" />
+          )}
         </div>
         <h1 className="navbar__board-name heading-l">
           {activeBoardData ? activeBoardData.name : "Task Manager"}
@@ -68,18 +74,18 @@ const Navbar = () => {
           <AddTaskMobile className="navbar-add-task__icon" />
           <button
             className="navbar-add-task__text heading-m del-edit-btn"
-            disabled={(isBoardDataEmpty || isThereNoColumns) ? true : false}
+            disabled={isBoardDataEmpty || isThereNoColumns ? true : false}
           >
             Add new task
           </button>
         </div>
         <EditDeleteIcon
           className="navbar__edit-delete-icon"
-          onClick={() =>  {
-            if (!isBoardDataEmpty){
-              dispatch(openNavbarEditDelete())
-            }}
-          }
+          onClick={() => {
+            if (!isBoardDataEmpty) {
+              dispatch(openNavbarEditDelete());
+            }
+          }}
         />
         {isNavbarEditDeleteActive && <EditDelete />}
       </div>

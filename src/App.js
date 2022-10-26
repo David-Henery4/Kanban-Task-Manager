@@ -1,13 +1,15 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Navbar, Board, Sidebar, Overlay } from "./components";
 import {ShowSidebarIcon} from "./assets";
 
 function App() {
+  const { isLightMode } = useSelector((store) => store.theme);
   //
   useEffect(() => {
-    // ONLY TEMP TILL PROPER THEME SETUP
-    document.documentElement.className = "darkMode";
-  }, []);
+    if (!isLightMode) document.documentElement.className = "darkMode";
+    if (isLightMode) document.documentElement.className = "lightMode";
+  }, [isLightMode]);
   //
   return (
     <div className="App overall-layout">
