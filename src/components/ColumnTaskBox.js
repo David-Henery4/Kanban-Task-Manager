@@ -29,10 +29,13 @@ const ColumnTaskBox = ({
   // const dragItem = useRef();
   const dragNode = useRef();
   //
-  const handleDragStart = (e, params, statusType) => {
+  const handleDragStart = (e, params, id) => {
+    // item replaced (e.target & node)
+    // dispatch(checkNode(e.target));
     dragNode.current = e.target;
     dispatch(handleItemCoords(params));
-    dispatch(checkNode(e.target));
+    // change checknode name & itemNode name in state
+    dispatch(checkNode(id));
     dragNode.current.addEventListener("dragend", handleDragEnd);
   };
   //
@@ -74,8 +77,10 @@ const ColumnTaskBox = ({
       className="column-task"
       onClick={handleViewTask}
       draggable
-      onDragStart={(e) => handleDragStart(e, { colIndex, taskIndex }, status)}
-      onDragEnter={(e) => handleDragEnter(e, { colIndex, taskIndex })}
+      onDragStart={(e) => handleDragStart(e, { colIndex, taskIndex }, id)}
+      // Over call more times than Enter
+      // but Over has the drop icon
+      onDragOver={(e) => handleDragEnter(e, { colIndex, taskIndex }, id)}
     >
       <h3 className="column-task__title heading-m">{title}</h3>
       <p className="column-task__status basicTextMedium">

@@ -10,12 +10,14 @@ const Column = ({ name, tasks, id, colIndex }) => {
   );
   const dispatch = useDispatch();
   //
-  const handleDragEnter = (e, params) => {
+  const handleDragEnter = (e, params,id) => {
+    e.preventDefault();
+    // id replaced (e.target & node)
     const colPlace = itemCoords.colIndex;
     const taskPlace = itemCoords.taskIndex;
-    // let statusType = e.dataTransfer.getData("status")
-    // console.log(statusType)
-    if (itemNode !== e.target) {
+    // console.log(id , itemNode)
+    // change checknode name & itemNode name in state
+    if (itemNode !== id) {
       const newCols = JSON.parse(
         JSON.stringify(overallData[activeBoardIndex].columns)
       );
@@ -47,7 +49,7 @@ const Column = ({ name, tasks, id, colIndex }) => {
   return (
     <div
       className="column"
-      onDragEnter={taskLength <= 0 ? (e) => handleDragEnter(e,{colIndex, taskIndex: 0}) : null}
+      onDragEnter={taskLength <= 0 ? (e) => handleDragEnter(e,{colIndex, taskIndex: 0}, id) : null}
     >
       <ColumnHeading name={name} quantity={taskLength} />
       {tasks &&
