@@ -13,6 +13,7 @@ const ViewTask = () => {
   const [subTaskCompletedNumber, setSubTaskCompletedNumber] = useState(0);
   const [subTaskAmount, setSubTaskAmount] = useState(0);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState("")
   const dispatch = useDispatch();
   const { selectedTask,  activeBoardData, overallData } = useSelector(
     (store) => store.data
@@ -24,6 +25,16 @@ const ViewTask = () => {
   const handleSubTaskCheckboxToggle = (sub, i) => {
     dispatch(toggleSubTaskStatus({ sub, i }));
   };
+  //
+  const handleSetDefaultStatus = () => {
+    if (selectedTask.status){
+      setCurrentStatus(selectedTask.status); 
+    }
+  }
+  //
+  useEffect(() => {
+    handleSetDefaultStatus()
+  }, [selectedTask])
   //
   useEffect(() => {
     if (activeBoardData){
@@ -130,7 +141,7 @@ const ViewTask = () => {
           className="input-style-basic view-task-overall-status__select"
           type="text"
           readOnly
-          value={selectedTask.status} // uncontrolled // set default
+          value={currentStatus} // uncontrolled // set default
           onClick={() => {
             setIsDropdownActive(!isDropdownActive);
           }}
@@ -155,6 +166,7 @@ const ViewTask = () => {
                     dispatch(
                       updateStatusFromViewTask({ taskId, colId, newStatus })
                     );
+                    setCurrentStatus(newStatus)
                     setIsDropdownActive(!isDropdownActive);
                   }}
                 >

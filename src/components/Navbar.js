@@ -71,16 +71,14 @@ const Navbar = () => {
         />
       </div>
       <div className="navbar-right">
-        <div className="navbar-add-task" onClick={openAddTask}>
-          {/* <AddTaskMobile className="navbar-add-task__icon" /> */}
           <button
-            className="navbar-add-task__text heading-m del-edit-btn"
+            className="navbar-add-task navbar-add-task__text heading-m del-edit-btn"
             disabled={isBoardDataEmpty || isThereNoColumns ? true : false}
+            onClick={openAddTask}
           >
-          <span className="navbar-add-task__icon">+ </span>
+            <span className="navbar-add-task__icon">+ </span>
             Add new task
           </button>
-        </div>
         <EditDeleteIcon
           className="navbar__edit-delete-icon"
           onClick={() => {
