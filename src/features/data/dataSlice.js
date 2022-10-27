@@ -38,18 +38,20 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    updateTaskStatus: (state, {payload}) => {
-      const {id, name} = payload
-      state.overallData[state.activeBoardIndex].columns.find((col) => col.id === id).tasks.map((task) => task.status = name)
+    updateTaskStatus: (state, { payload }) => {
+      const { id, name } = payload;
+      state.overallData[state.activeBoardIndex].columns
+        .find((col) => col.id === id)
+        .tasks.map((task) => (task.status = name));
     },
-    checkNode: (state,{payload}) => {
-      state.itemNode = payload
+    checkNode: (state, { payload }) => {
+      state.itemNode = payload;
     },
-    handleItemCoords: (state, {payload}) => {
-      state.itemCoords = payload
+    handleItemCoords: (state, { payload }) => {
+      state.itemCoords = payload;
     },
-    handleDropInfo: (state, {payload}) => {
-      state.overallData[state.activeBoardIndex].columns = payload
+    handleDropInfo: (state, { payload }) => {
+      state.overallData[state.activeBoardIndex].columns = payload;
       // const {colIndex, taskIndex, currentItem} = payload
       // console.log(currentItem)
       // console.log(state.overallData[state.activeBoardIndex])
@@ -157,24 +159,28 @@ const dataSlice = createSlice({
       }).tasks = [...activeCol.tasks, payload];
     },
     changeActiveBoard: (state, { payload }) => {
-      let newIndex = payload
+      let newIndex = payload;
       if (state.overallData.length - 1 < payload) {
-        newIndex = payload - 1
+        newIndex = payload - 1;
       }
-      if (newIndex < 0){
-        newIndex = 0
+      if (newIndex < 0) {
+        newIndex = 0;
       }
       state.activeBoardIndex = newIndex;
     },
-    changeToNewBoard: (state, {payload}) => {
-      console.log(state.overallData.length - 1);
-      state.activeBoardIndex = state.overallData.length - 1
+    changeToNewBoard: (state, { payload }) => {
+      state.activeBoardIndex = state.overallData.length - 1;
     },
     setActiveBoardData: (state, { payload }) => {
       state.activeBoardData = payload;
     },
     selectTask: (state, { payload }) => {
       state.selectedTask = payload;
+    },
+    updateStatusFromViewTask: (state, { payload }) => {
+      const {colId, taskId, newStatus} = payload
+      state.overallData[state.activeBoardIndex].columns.find(col => col.id === colId).tasks.find(task => task.id === taskId).status = newStatus
+      state.selectedTask.status = newStatus
     },
     toggleSubTaskStatus: (state, { payload }) => {
       const { sub } = payload;
@@ -221,7 +227,8 @@ export const {
   handleItemCoords,
   checkNode,
   updateTaskStatus,
-  changeToNewBoard
+  changeToNewBoard,
+  updateStatusFromViewTask,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

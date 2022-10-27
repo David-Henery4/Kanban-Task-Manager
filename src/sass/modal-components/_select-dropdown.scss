@@ -13,6 +13,11 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 8px;
+  &__icon{
+    position: absolute;
+    right: 16px;
+    top: 40px;
+  }
   &__option {
     width: 100%;
     &:hover {

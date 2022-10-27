@@ -192,9 +192,9 @@ const AddTask = () => {
           {/* Might not use select/might use plain div & p & take text value */}
           <h5 className="add-task-form-status__title input-heading">Status</h5>
           {isDropdownActive ? (
-            <DownArrow className="add-task-form-status__icon" />
+            <DownArrow className="add-task-form-status__icon select-dropdown__icon" />
           ) : (
-            <UpArrow className="add-task-form-status__icon" />
+            <UpArrow className="add-task-form-status__icon select-dropdown__icon" />
           )}
           <input
             type="text"
