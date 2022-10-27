@@ -24,7 +24,7 @@ const ViewTask = () => {
   };
   //
   useEffect(() => {
-    if (overallData){
+    if (activeBoardData){
       let curTasks;
       if (Object.entries(activeBoardData).length > 0) {
         const update = activeBoardData.columns.find((col) => {

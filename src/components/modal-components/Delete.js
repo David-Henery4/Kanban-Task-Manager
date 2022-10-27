@@ -6,11 +6,13 @@ import {
   deActivateDeleteTask,
 } from "../../features/edit-delete-modes/modesSlice";
 import { closeDeleteModal } from "../../features/modals/modalsSlice";
-import { deleteTask, deleteBoard } from "../../features/data/dataSlice";
+import { deleteTask, deleteBoard, changeActiveBoard } from "../../features/data/dataSlice";
 
 const Delete = () => {
   const dispatch = useDispatch();
-  const { selectedTask, activeBoardData } = useSelector((store) => store.data);
+  const { selectedTask, activeBoardData, activeBoardIndex } = useSelector(
+    (store) => store.data
+  );
   const { isDeleteModalActive } = useSelector((store) => store.modals);
   const { isDeleteTaskActive } = useSelector((store) => store.modes);
   //
@@ -27,6 +29,7 @@ const Delete = () => {
     }
     if (!isDeleteTaskActive){
       dispatch(deleteBoard());
+      dispatch(changeActiveBoard(activeBoardIndex))
     }
     //
     dispatch(closeOverlay());
@@ -43,7 +46,7 @@ const Delete = () => {
       <p className="basicTextMedium delete__text">
         {isDeleteTaskActive
           ? `Are you sure you want to delete the ‘${selectedTask.title}’ task and its subtasks? This action cannot be reversed.`
-          : ` Are you sure you want to delete the ‘${activeBoardData.name}’ board? This action will remove all columns and tasks and cannot be reversed.`}
+          : ` Are you sure you want to delete the ‘${activeBoardData &&  activeBoardData.name}’ board? This action will remove all columns and tasks and cannot be reversed.`}
       </p>
       <div className="delete-btns">
         <button

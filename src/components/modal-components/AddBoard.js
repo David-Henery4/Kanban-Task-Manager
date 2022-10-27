@@ -5,6 +5,7 @@ import {
   addNewBoard,
   editBoard,
   resetBoardInputValues,
+  changeToNewBoard,
 } from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
@@ -172,6 +173,7 @@ const AddBoard = () => {
         }
         if (!isEditBoardActive) {
           submitNewBoard()
+          dispatch(changeToNewBoard())
         }
       }}>
         {isEditBoardActive ? "Save Changes" : "Create New Borad"}

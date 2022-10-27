@@ -108,7 +108,7 @@ const AddTask = () => {
   //
   useEffect(() => {
     // activeBoardData.columns > 0;
-    if (activeBoardData.columns) {
+    if (activeBoardData && activeBoardData.columns) {
       if (activeBoardData.columns.length > 0) {
         setTask({ ...task, status: activeBoardData.columns[0].name });
         dispatch(resetTaskInputValues());
@@ -116,7 +116,7 @@ const AddTask = () => {
       // to clear inputs when adding new task (might not need!)
       // might! have to change
     }
-  }, [activeBoardData.columns]);
+  }, [activeBoardData]);
   //
   return (
     <div
@@ -214,7 +214,7 @@ const AddTask = () => {
                 : "add-task-form-status-dropdown basicTextMedium"
             }
           >
-            {activeBoardData.columns &&
+            {activeBoardData && activeBoardData.columns &&
               activeBoardData.columns.map((col, i) => {
                 return (
                   <p

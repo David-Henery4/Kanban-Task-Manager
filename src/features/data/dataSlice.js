@@ -157,7 +157,18 @@ const dataSlice = createSlice({
       }).tasks = [...activeCol.tasks, payload];
     },
     changeActiveBoard: (state, { payload }) => {
-      state.activeBoardIndex = payload;
+      let newIndex = payload
+      if (state.overallData.length - 1 < payload) {
+        newIndex = payload - 1
+      }
+      if (newIndex < 0){
+        newIndex = 0
+      }
+      state.activeBoardIndex = newIndex;
+    },
+    changeToNewBoard: (state, {payload}) => {
+      console.log(state.overallData.length - 1);
+      state.activeBoardIndex = state.overallData.length - 1
     },
     setActiveBoardData: (state, { payload }) => {
       state.activeBoardData = payload;
@@ -210,6 +221,7 @@ export const {
   handleItemCoords,
   checkNode,
   updateTaskStatus,
+  changeToNewBoard
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
