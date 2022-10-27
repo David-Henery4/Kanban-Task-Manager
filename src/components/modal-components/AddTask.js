@@ -204,24 +204,26 @@ const AddTask = () => {
             id="status"
             value={task.status}
             onClick={() => {
-              setIsDropdownActive(!isDropdownActive)
+              setIsDropdownActive(!isDropdownActive);
             }}
           />
           <div
             className={
               isDropdownActive
-                ? "add-task-form-status-dropdown basicTextMedium active-status-dropdown"
-                : "add-task-form-status-dropdown basicTextMedium"
+                ? "select-dropdown basicTextMedium active-status-dropdown"
+                : "select-dropdown basicTextMedium"
             }
           >
-            {activeBoardData && activeBoardData.columns &&
+            {activeBoardData &&
+              activeBoardData.columns &&
               activeBoardData.columns.map((col, i) => {
                 return (
                   <p
-                    className="add-task-form-status-dropdown__option"
+                    className="select-dropdown__option"
                     key={i}
                     onClick={() => {
                       setTask({ ...task, status: col.name });
+                      setIsDropdownActive(!isDropdownActive);
                     }}
                   >
                     {col.name}

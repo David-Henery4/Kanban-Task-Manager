@@ -108,24 +108,7 @@
         }
       }
       &-dropdown{
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background-color: var(--backgroundColor);
-        width: 100%;
-        color: $nonActiveFontColor;
-        padding: 8px 16px;
-        border-radius: 8px;
-        // display: flex;
-        display: none;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 8px;
         &__option{
-          &:hover{
-            cursor: pointer;
-          }
         }
       }
     }
@@ -143,6 +126,3 @@
   display: flex;
 }
 
-.active-status-dropdown{
-  display: flex;
-}
