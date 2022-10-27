@@ -37,9 +37,9 @@ const Column = ({ name, tasks, id, colIndex }) => {
   // WHEN COLUMN DATA CHANGES!!!
   // useEffect(() => {
   //   console.log(tasks);
-  //   // if (tasks.length > 0){
-  //   //   dispatch(updateTaskStatus({name,id}))
-  //   // }
+  //   if (tasks.length > 0){
+  //     dispatch(updateTaskStatus({name,id}))
+  //   }
   // }, [overallData[activeBoardIndex].columns])
   //
   useEffect(() => {

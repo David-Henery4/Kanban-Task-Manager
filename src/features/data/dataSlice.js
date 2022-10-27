@@ -38,6 +38,25 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    sortTasks: (state, {payload}) => {
+      // console.log(payload)
+      const newTasks = state.activeBoardData.columns.map(col => {
+        const groups = []
+        payload.map(t => {
+          if (col.name === t.status) {
+            return groups.push(t)
+          }
+          return t
+        })
+        return groups
+      })
+      // const newOnea = state.overallData[state.activeBoardIndex].columns.map((col,i) => {
+      //   return col.tasks = newTasks[i]
+      // })
+      console.log(newTasks)
+      state.checkValues = newTasks
+      // state.overallData[state.activeBoardIndex].columns = newTasks
+    },
     updateTaskStatus: (state, { payload }) => {
       const { id, name } = payload;
       state.overallData[state.activeBoardIndex].columns
@@ -51,28 +70,9 @@ const dataSlice = createSlice({
       state.itemCoords = payload;
     },
     handleDropInfo: (state, { payload }) => {
+      // might delete not realy doing any thing anymore, same with "check value"
       state.overallData[state.activeBoardIndex].columns = payload;
-      // const {colIndex, taskIndex, currentItem} = payload
-      // console.log(currentItem)
-      // console.log(state.overallData[state.activeBoardIndex])
-      // const cols = state.overallData[state.activeBoardIndex].columns
-      // const newCols = cols[colIndex].tasks.splice(taskIndex, 0, cols[currentItem.colIndex].tasks.splice(currentItem.taskIndex, 1)[0])
-      //
-      // state.overallData[state.activeBoardIndex].columns = newCols
-      //
-      // const {e,colName} = payload
       // const id = e.dataTransfer.getData("id")
-      // const newCols = state.overallData[state.activeBoardIndex].columns.map((col) => {
-      //   const newTasks = col.tasks.filter((task) => {
-      //     if(task.id === +id){
-      //       task.status = colName
-      //     }
-      //     return task
-      //   })
-      //   return {...col, tasks: newTasks}
-      // })
-      // state.checkValues = newCols
-      // state.overallData[state.activeBoardIndex].columns = newCols
     },
     resetBoardInputValues: (state, { payload }) => {
       state.emptyBoardInputValues = {
@@ -229,6 +229,7 @@ export const {
   updateTaskStatus,
   changeToNewBoard,
   updateStatusFromViewTask,
+  sortTasks
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
