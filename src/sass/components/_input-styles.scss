@@ -13,3 +13,21 @@
 .field-set-remove-border{
   border: none;
 }
+
+.error-input-style{
+  border: 1px solid $red;
+}
+
+.error-input-label{
+  color: $red;
+  position: absolute;
+  top: 32px;
+  right: 16px;
+}
+
+.error-input-label-2{
+  color: $red;
+  position: absolute;
+  top: 9px;
+  right: 48px;
+}

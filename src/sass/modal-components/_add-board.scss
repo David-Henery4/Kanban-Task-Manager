@@ -16,6 +16,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
+    position: relative;
     &-name{
       width: 100%;
       display: flex;
@@ -37,6 +38,7 @@
         grid-template-columns: 1fr 16px;
         align-items: center;
         gap: 16px;
+        position: relative;
         &__close-icon{
           &:hover{
             cursor: pointer;

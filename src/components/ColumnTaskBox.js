@@ -8,6 +8,7 @@ import {
   handleDropInfo,
   handleItemCoords,
   checkNode,
+  sortTasks,
 } from "../features/data/dataSlice";
 
 const ColumnTaskBox = ({
@@ -24,6 +25,7 @@ const ColumnTaskBox = ({
   id,
 }) => {
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
+  const { activeBoardData } = useSelector((store) => store.data);
   const dispatch = useDispatch();
   //
   // const dragItem = useRef();
@@ -61,6 +63,20 @@ const ColumnTaskBox = ({
       })
     );
   };
+  const handleGetAllCurrentBoardTasks = () => {
+    if (activeBoardData && activeBoardData.columns) {
+      const allTasks = [];
+      activeBoardData.columns.forEach((col) => {
+        allTasks.push(col.tasks);
+      });
+      dispatch(sortTasks(allTasks.flat()));
+    }
+  };
+  // // semi works to update columns
+  // but breaks DRAG N DROP
+  // useEffect(() => {
+  //   handleGetAllCurrentBoardTasks()
+  // },[status])
   //
   useEffect(() => {
     const completedTasks = [];
@@ -80,7 +96,7 @@ const ColumnTaskBox = ({
       onDragStart={(e) => handleDragStart(e, { colIndex, taskIndex }, id)}
       // Over call more times than Enter
       // but Over has the drop icon
-      onDragOver={(e) => handleDragEnter(e, { colIndex, taskIndex }, id)}
+      onDragEnter={(e) => handleDragEnter(e, { colIndex, taskIndex }, id)}
     >
       <h3 className="column-task__title heading-m">{title}</h3>
       <p className="column-task__status basicTextMedium">

@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleDropInfo, handleItemCoords, updateTaskStatus } from "../features/data/dataSlice";
+import {
+  handleDropInfo,
+  handleItemCoords,
+  updateTaskStatus,
+  sortTasks
+} from "../features/data/dataSlice";
 import { ColumnHeading, ColumnTaskBox } from "../components";
 
 const Column = ({ name, tasks, id, colIndex }) => {
   const [taskLength, setTaskLength] = useState(0);
-  const { itemCoords, itemNode, overallData, activeBoardIndex } = useSelector(
+  const { itemCoords, itemNode, overallData, activeBoardIndex, activeBoardData } = useSelector(
     (store) => store.data
   );
   const dispatch = useDispatch();
   //
-  const handleDragEnter = (e, params,id) => {
+  const handleDragEnter = (e, params, id) => {
     e.preventDefault();
     // id replaced (e.target & node)
     const colPlace = itemCoords.colIndex;
@@ -32,15 +37,32 @@ const Column = ({ name, tasks, id, colIndex }) => {
     }
   };
   //
-  // COME BACK TOO!!!!!!!!!
-  // SETTING ALL TASK STATUSES TO THE COLUMN NAME,
-  // WHEN COLUMN DATA CHANGES!!!
-  // useEffect(() => {
-  //   console.log(tasks);
-  //   if (tasks.length > 0){
-  //     dispatch(updateTaskStatus({name,id}))
+  // const handleGetAllCurrentBoardTasks = () => {
+  //   if (activeBoardData && activeBoardData.columns) {
+  //     const allTasks = [];
+  //     activeBoardData.columns.forEach((col) => {
+  //       allTasks.push(col.tasks);
+  //     });
+  //     dispatch(sortTasks(allTasks.flat()));
   //   }
-  // }, [overallData[activeBoardIndex].columns])
+  // };
+  //
+  // useEffect(() => {
+    // handleGetAllCurrentBoardTasks()
+  // },[tasks])
+  //
+  // SETTING ALL TASK STATUSES TO THE COLUMN NAME,
+  // WHEN DRAG N DROPPIN
+  // MIGHT HAVE TO DO DIFFERENT
+  // useEffect(() => {
+  //   if (tasks){
+  //     if (tasks.length > 0){
+  //       dispatch(updateTaskStatus({name,id}))
+  //     }
+  //   }
+  // }, [overallData])
+  //
+
   //
   useEffect(() => {
     if (tasks) {
@@ -50,7 +72,11 @@ const Column = ({ name, tasks, id, colIndex }) => {
   return (
     <div
       className="column"
-      onDragEnter={taskLength <= 0 ? (e) => handleDragEnter(e,{colIndex, taskIndex: 0}, id) : null}
+      onDragEnter={
+        taskLength <= 0
+          ? (e) => handleDragEnter(e, { colIndex, taskIndex: 0 }, id)
+          : null
+      }
     >
       <ColumnHeading name={name} quantity={taskLength} />
       {tasks &&

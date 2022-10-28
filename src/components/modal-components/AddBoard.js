@@ -10,11 +10,29 @@ import {
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { deActivateEditBoard } from "../../features/edit-delete-modes/modesSlice";
+import useForm from "../../CustomHook/useForm";
 
 // ** ALSO HAVE TO RESET BOARD VALUES
 // & TURN OFF EDIT MODE ON THE OVERLAY CLICK!!**
 
 const AddBoard = () => {
+  //
+  const callBackSubmit = () => {
+    // handle submit when validated
+    console.log(values)
+    console.log("validated")
+  }
+  // HOOK
+  const {handleChange,handleSubmit, values, errors} = useForm(callBackSubmit)
+  // check individual inputs
+  const [checkBoardName, setCheckBoardName] = useState(false)
+  const [checkColumnName, setCheckColumnName] = useState(false)
+  //
+  useEffect(() => {
+    setCheckBoardName(errors.boardName && values.boardName.length >= 1)
+    setCheckColumnName(errors.columnName && values.columnName.length >= 1);
+  }, [errors, values])
+  //
   const [boardValues, setBoardValues] = useState({
     id: +new Date(),
     name: "",
@@ -121,11 +139,23 @@ const AddBoard = () => {
           <label htmlFor="board-name" className="input-heading">
             Board Name
           </label>
+          {checkBoardName && (
+            <label
+              htmlFor="board-name"
+              className="error-input-label basicTextMedium"
+            >
+              Can't be empty
+            </label>
+          )}
           <input
             type="text"
             name="board-name"
             id="board-name"
-            className="input-style-basic"
+            className={
+              checkBoardName
+                ? "input-style-basic error-input-style"
+                : "input-style-basic"
+            }
             placeholder="e.g Web Design"
             value={boardValues.name}
             onChange={(e) => handleBoardNameChange(e)}
@@ -139,9 +169,22 @@ const AddBoard = () => {
             {boardValues.columns.map((col, i) => {
               return (
                 <div className="new-board-form-columns-input" key={i}>
+                  {checkColumnName && (
+                    <label
+                      htmlFor="column-name"
+                      className="error-input-label-2 basicTextMedium"
+                    >
+                      Can't be empty
+                    </label>
+                  )}
                   <input
                     type="text"
-                    className="input-style-basic"
+                    name="column-name"
+                    className={
+                      checkColumnName
+                        ? "input-style-basic error-input-style"
+                        : "input-style-basic"
+                    }
                     placeholder="e.g Todo"
                     value={col.name}
                     onChange={handleColumnValueChange(i)}
@@ -162,20 +205,23 @@ const AddBoard = () => {
           </div>
         </div>
       </form>
-      <button className="btn-sml btn-primary-color new-board__btn" onClick={() => {
-        // resetBoardValues()
-        dispatch(resetBoardInputValues())
-        dispatch(closeAddNewBoardModal())
-        dispatch(closeOverlay())
-        if (isEditBoardActive) {
-          submitEditedBoard()
-          dispatch(deActivateEditBoard())
-        }
-        if (!isEditBoardActive) {
-          submitNewBoard()
-          dispatch(changeToNewBoard())
-        }
-      }}>
+      <button
+        className="btn-sml btn-primary-color new-board__btn"
+        onClick={() => {
+          // resetBoardValues()
+          dispatch(resetBoardInputValues());
+          dispatch(closeAddNewBoardModal());
+          dispatch(closeOverlay());
+          if (isEditBoardActive) {
+            submitEditedBoard();
+            dispatch(deActivateEditBoard());
+          }
+          if (!isEditBoardActive) {
+            submitNewBoard();
+            dispatch(changeToNewBoard());
+          }
+        }}
+      >
         {isEditBoardActive ? "Save Changes" : "Create New Borad"}
       </button>
     </div>

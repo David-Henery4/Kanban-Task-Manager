@@ -6,6 +6,7 @@ import {
   toggleSubTaskStatus,
   updateSubTaskCompletedQuantity,
   updateStatusFromViewTask,
+  sortTasks,
 } from "../../features/data/dataSlice";
 import { TickMark, DownArrow, EditDeleteIcon, UpArrow } from "../../assets";
 
@@ -13,9 +14,9 @@ const ViewTask = () => {
   const [subTaskCompletedNumber, setSubTaskCompletedNumber] = useState(0);
   const [subTaskAmount, setSubTaskAmount] = useState(0);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
-  const [currentStatus, setCurrentStatus] = useState("")
+  const [currentStatus, setCurrentStatus] = useState("");
   const dispatch = useDispatch();
-  const { selectedTask,  activeBoardData, overallData } = useSelector(
+  const { selectedTask, activeBoardData, overallData } = useSelector(
     (store) => store.data
   );
   const { isViewTaskActive, isViewTaskEditDeleteActive } = useSelector(
@@ -27,42 +28,56 @@ const ViewTask = () => {
   };
   //
   const handleSetDefaultStatus = () => {
-    if (selectedTask.status){
-      setCurrentStatus(selectedTask.status); 
+    if (selectedTask.status) {
+      setCurrentStatus(selectedTask.status);
     }
-  }
+  };
+  //
+  const handleStatusUpdate = () => {
+    if (activeBoardData && activeBoardData.columns) {
+      const allTasks = [];
+      activeBoardData.columns.forEach((col) => {
+        allTasks.push(col.tasks);
+      });
+      dispatch(sortTasks(allTasks.flat()));
+    }
+  };
+  // //
+  // useEffect(() => {
+  //   handleStatusUpdate()
+  // }, [currentStatus])
   //
   useEffect(() => {
-    handleSetDefaultStatus()
-  }, [selectedTask])
+    handleSetDefaultStatus();
+  }, [selectedTask]);
   //
   useEffect(() => {
-    if (activeBoardData){
+    if (activeBoardData) {
       let curTasks;
       if (Object.entries(activeBoardData).length > 0) {
         const update = activeBoardData.columns.find((col) => {
-        return col.name === selectedTask.columnName;
-      });
-      curTasks = update;
+          return col.name === selectedTask.columnName;
+        });
+        curTasks = update;
+      }
+      let task;
+      if (curTasks) {
+        const currrentTask = curTasks.tasks.find((t) => {
+          return t.title === selectedTask.title;
+        });
+        task = currrentTask;
+      }
+      if (task) {
+        setSubTaskAmount(task.subtasks.length);
+        const completedTasks = [];
+        task.subtasks.forEach((task) => {
+          if (task.isCompleted) {
+            completedTasks.push(task);
+          }
+        });
+        setSubTaskCompletedNumber(completedTasks.length);
+      }
     }
-    let task;
-    if (curTasks) {
-      const currrentTask = curTasks.tasks.find((t) => {
-        return t.title === selectedTask.title;
-      });
-      task = currrentTask
-    }
-    if (task) {
-      setSubTaskAmount(task.subtasks.length);
-      const completedTasks = [];
-      task.subtasks.forEach((task) => {
-        if (task.isCompleted) {
-          completedTasks.push(task);
-        }
-      });
-      setSubTaskCompletedNumber(completedTasks.length);
-    }
-  }
   }, [activeBoardData, selectedTask, overallData]);
   //
   return (
@@ -141,7 +156,7 @@ const ViewTask = () => {
           className="input-style-basic view-task-overall-status__select"
           type="text"
           readOnly
-          value={currentStatus} // uncontrolled // set default
+          value={currentStatus}
           onClick={() => {
             setIsDropdownActive(!isDropdownActive);
           }}
@@ -166,8 +181,10 @@ const ViewTask = () => {
                     dispatch(
                       updateStatusFromViewTask({ taskId, colId, newStatus })
                     );
-                    setCurrentStatus(newStatus)
+                    setCurrentStatus(newStatus);
                     setIsDropdownActive(!isDropdownActive);
+                    // handleStatusUpdate()
+                    // dispatch(sortTasks());
                   }}
                 >
                   {col.name}

@@ -4,6 +4,7 @@ import {
   addNewTask,
   resetTaskInputValues,
   editTask,
+  sortTasks
 } from "../../features/data/dataSlice";
 import {
   closeNewTaskModal,
@@ -15,7 +16,7 @@ import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { Cross, DownArrow, UpArrow } from "../../assets";
 
 const AddTask = () => {
-  const [isDropdownActive, setIsDropdownActive] = useState(false)
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
   //
   const dispatch = useDispatch();
   //
@@ -36,6 +37,19 @@ const AddTask = () => {
       },
     ],
   });
+  //
+  // const handleGetAllCurrentBoardTasks = () => {
+  //   if (activeBoardData && activeBoardData.columns) {
+  //     const allTasks = [];
+  //     activeBoardData.columns.forEach((col) => {
+  //       allTasks.push(col.tasks);
+  //     });
+  //     dispatch(sortTasks(allTasks.flat()));
+  //   }
+  // };
+  // useEffect(() => {
+  //   handleGetAllCurrentBoardTasks()
+  // }, [selectedTask])
   //
   const resetEmptyTaskInputValues = () => {
     // setTask({
@@ -240,6 +254,7 @@ const AddTask = () => {
         onClick={() => {
           dispatch(closeNewTaskModal());
           dispatch(closeOverlay());
+          // handleGetAllCurrentBoardTasks();
           if (isEditTaskActive) {
             // turn edit off when submiting from edit mode.
             handleEditSubmit();
