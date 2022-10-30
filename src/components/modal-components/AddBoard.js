@@ -6,6 +6,7 @@ import {
   editBoard,
   resetBoardInputValues,
   changeToNewBoard,
+  resetIsNameValid,
 } from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
@@ -16,22 +17,9 @@ import useForm from "../../CustomHook/useForm";
 // & TURN OFF EDIT MODE ON THE OVERLAY CLICK!!**
 
 const AddBoard = () => {
-  //
-  const callBackSubmit = () => {
-    // handle submit when validated
-    console.log(values)
-    console.log("validated")
-  }
-  // HOOK
-  const {handleChange,handleSubmit, values, errors} = useForm(callBackSubmit)
-  // check individual inputs
-  const [checkBoardName, setCheckBoardName] = useState(false)
-  const [checkColumnName, setCheckColumnName] = useState(false)
-  //
-  useEffect(() => {
-    setCheckBoardName(errors.boardName && values.boardName.length >= 1)
-    setCheckColumnName(errors.columnName && values.columnName.length >= 1);
-  }, [errors, values])
+  const [columnsErrorsList, setColumnsErrorsList] = useState([]);
+  const [isColumnErrors, setIsColumnErrors] = useState(false);
+  const [isBoardNameError, setIsBoardNameError] = useState(false);
   //
   const [boardValues, setBoardValues] = useState({
     id: +new Date(),
@@ -41,11 +29,13 @@ const AddBoard = () => {
         id: +new Date(),
         name: "",
         tasks: [],
+        isNameInvalid: false,
       },
     ],
   });
-  const dispatch = useDispatch()
-  const { activeBoardData, emptyBoardInputValues } = useSelector(
+  //
+  const dispatch = useDispatch();
+  const { activeBoardData, emptyBoardInputValues, overallData } = useSelector(
     (store) => store.data
   );
   const { isAddNewBoardActive } = useSelector((store) => store.modals);
@@ -64,30 +54,80 @@ const AddBoard = () => {
         },
       ],
     });
-  }
-  //
-  const submitNewBoard = () => {
-    dispatch(addNewBoard(boardValues))
   };
   //
-  const submitEditedBoard = () => {
-    dispatch(editBoard(boardValues))
-  }
+  const checkBoardNameValidtion = (values) => {
+    // true = errors / false = no errors
+    if (values.name.trim().length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  //
+  const checkBoardColumnNameValidation = ({ columns }) => {
+    // true = errors / false = no errors
+    const columnsCopy = JSON.parse(JSON.stringify(columns));
+    const errorsList = [];
+    const columnsErrorUpdate = columnsCopy.map((col, i) => {
+      if (col.name.trim().length === 0) {
+        errorsList.push({
+          [col.id]: "Can't be empty",
+        });
+        col.isNameInvalid = true;
+      } 
+      if (col.name.trim().length >= 1){
+        col.isNameInvalid = false
+      }
+      return col;
+    });
+    console.log(errorsList)
+    setBoardValues({ ...boardValues, columns: columnsErrorUpdate });
+    const isAnyErrors = errorsList.length >= 1;
+    return isAnyErrors;
+  };
+  //
+  const submitNewBoard = () => {
+    // true = errors / false = no errors
+    const nameCheckResult = checkBoardNameValidtion(boardValues);
+    const columnNameCheckResult = checkBoardColumnNameValidation(boardValues);
+    //
+    setIsBoardNameError(nameCheckResult);
+    setIsColumnErrors(columnNameCheckResult);
+    //
+    // if (columnNameCheckResult && nameCheckResult) {
+    //   console.log("A column name is inValid & Board name is invalid");
+    // }
+    if (!columnNameCheckResult && !nameCheckResult) {
+      console.log("Columns names are fine & Board name is good");
+      dispatch(resetBoardInputValues());
+      dispatch(closeAddNewBoardModal());
+      dispatch(closeOverlay());
+      if (isEditBoardActive) {
+        dispatch(deActivateEditBoard());
+        dispatch(editBoard(boardValues));
+      }
+      if (!isEditBoardActive) {
+        dispatch(changeToNewBoard());
+        dispatch(addNewBoard(boardValues));
+      }
+    }
+  };
   //
   const setEditBoardValues = () => {
     setBoardValues({
       id: activeBoardData.id,
       name: activeBoardData.name,
       columns: activeBoardData.columns,
-    })
+    });
   };
   //
   const handleBoardNameChange = (e) => {
-    setBoardValues({...boardValues, name: e.target.value})
-  }
+    setBoardValues({ ...boardValues, name: e.target.value });
+  };
   // **Column Functions**
   const handleAddNewColumn = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setBoardValues({
       ...boardValues,
       columns: [
@@ -115,15 +155,20 @@ const AddBoard = () => {
   };
   //
   useEffect(() => {
-    if(isEditBoardActive){
-      setEditBoardValues()
+    if (isEditBoardActive) {
+      setEditBoardValues();
     }
-  }, [isEditBoardActive])
+  }, [isEditBoardActive]);
   //
   useEffect(() => {
-    setBoardValues(emptyBoardInputValues)
+    setBoardValues(emptyBoardInputValues);
     // resetBoardInputValues
-  }, [emptyBoardInputValues])
+  }, [emptyBoardInputValues]);
+  //
+  useEffect(() => {
+    dispatch(resetIsNameValid());
+    console.log("called")
+  }, [overallData])
   //
   return (
     <div
@@ -136,23 +181,20 @@ const AddBoard = () => {
       </h4>
       <form className="new-board-form">
         <div className="new-board-form-name">
-          <label htmlFor="board-name" className="input-heading">
+          <label htmlFor="boardName" className="input-heading">
             Board Name
           </label>
-          {checkBoardName && (
-            <label
-              htmlFor="board-name"
-              className="error-input-label basicTextMedium"
-            >
+          {isBoardNameError && (
+            <label htmlFor="" className="error-input-label basicTextMedium">
               Can't be empty
             </label>
           )}
           <input
             type="text"
-            name="board-name"
-            id="board-name"
+            name="boardName"
+            id="boardName"
             className={
-              checkBoardName
+              isBoardNameError
                 ? "input-style-basic error-input-style"
                 : "input-style-basic"
             }
@@ -162,26 +204,23 @@ const AddBoard = () => {
           />
         </div>
         <div className="new-board-form-columns">
-          <label htmlFor="board-cols" className="input-heading">
+          <label htmlFor="board-columns-name" className="input-heading">
             Board Columns
           </label>
           <div className="new-board-form-columns-inputs-wrap">
             {boardValues.columns.map((col, i) => {
               return (
                 <div className="new-board-form-columns-input" key={i}>
-                  {checkColumnName && (
-                    <label
-                      htmlFor="column-name"
-                      className="error-input-label-2 basicTextMedium"
-                    >
+                  {col.isNameInvalid && (
+                    <label className="error-input-label-2 basicTextMedium">
                       Can't be empty
                     </label>
                   )}
                   <input
                     type="text"
-                    name="column-name"
+                    name="board-columns-name"
                     className={
-                      checkColumnName
+                      col.isNameInvalid
                         ? "input-style-basic error-input-style"
                         : "input-style-basic"
                     }
@@ -209,17 +248,13 @@ const AddBoard = () => {
         className="btn-sml btn-primary-color new-board__btn"
         onClick={() => {
           // resetBoardValues()
-          dispatch(resetBoardInputValues());
-          dispatch(closeAddNewBoardModal());
-          dispatch(closeOverlay());
-          if (isEditBoardActive) {
-            submitEditedBoard();
-            dispatch(deActivateEditBoard());
-          }
-          if (!isEditBoardActive) {
-            submitNewBoard();
-            dispatch(changeToNewBoard());
-          }
+          // if (isEditBoardActive) {
+          //   submitEditedBoard();
+          //   dispatch(deActivateEditBoard());
+          // }
+          // if (!isEditBoardActive) {
+          // }
+          submitNewBoard();
         }}
       >
         {isEditBoardActive ? "Save Changes" : "Create New Borad"}

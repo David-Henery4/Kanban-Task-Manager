@@ -27,6 +27,7 @@ const initialState = {
         id: +new Date(),
         name: "",
         tasks: [],
+        isNameInvalid: false,
       },
     ],
   },
@@ -38,6 +39,9 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    resetIsNameValid: (state, {payload}) => {
+      state.overallData.map(boards => boards.columns.map(cols => cols.isNameInvalid = false))
+    },
     sortTasks: (state, { payload }) => {
       console.log("called");
       // const allTasks = [];
@@ -96,6 +100,7 @@ const dataSlice = createSlice({
             id: +new Date(),
             name: "",
             tasks: [],
+            isNameInvalid: false
           },
         ],
       };
@@ -191,7 +196,7 @@ const dataSlice = createSlice({
     },
     //
     changeToNewBoard: (state, { payload }) => {
-      state.activeBoardIndex = state.overallData.length - 1;
+      state.activeBoardIndex = state.overallData.length;
     },
     //
     setActiveBoardData: (state, { payload }) => {
@@ -259,6 +264,7 @@ export const {
   changeToNewBoard,
   updateStatusFromViewTask,
   sortTasks,
+  resetIsNameValid,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

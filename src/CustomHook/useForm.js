@@ -7,12 +7,13 @@ const useForm = (callbackSubmit) => {
   const [errors, setErrors] = useState({});
   //
   // Validate Input Values
-  const validate = (e, value, name) => {
+  const validate = (e, value, name, cols = []) => {
     //
+    console.log(cols);
     switch (name) {
       //
-      case "board-name":
-        if (value.length < 1) {
+      case "boardName":
+        if (value.length <= 2) {
           // setErrorState
           setErrors({
             ...errors,
@@ -25,16 +26,17 @@ const useForm = (callbackSubmit) => {
         }
         break;
       //
-      case "column-name":
-        if (value.length < 1) {
+      case "columnName":
+        if (value.length <= 2) {
           //SetErrorState
+          const tempName = `${name}${cols.length}`;
           setErrors({
             ...errors,
-            columnName: "Can't be empty",
+            [tempName]: "Can't be empty",
           });
         } else {
           const newObj = errors;
-          delete newObj.columnName;
+          delete newObj.tempName;
           setErrors(newObj);
         }
         break;
@@ -74,24 +76,50 @@ const useForm = (callbackSubmit) => {
   // handleSubmit
   //
   const handleSubmit = (e) => {
-    if (e) e.preventDefault()
-    if (Object.keys(errors).length <= 0 && Object.keys(values).length >= 1){
-      callbackSubmit()
+    if (e) e.preventDefault();
+    if (Object.keys(errors).length <= 0 && Object.keys(values).length >= 1) {
+      callbackSubmit();
     }
-  }
+  };
   //
   // HandleFormInputs
-  const handleChange = (e) => {
-    e.preventDefault()
-    let name = e.target.name
-    let value = e.target.value
-    validate(e,value,name)
+  const handleChange = (e, boardColumnsInfo) => {
+    e.preventDefault();
+    //
+    // console.log(boardColumnsInfo)
+    let name = e.target.name;
+    let value = e.target.value;
+    let newBoardColumns;
+    //
+    if (name === "columnName") {
+      const { i, boardColumns } = boardColumnsInfo;
+      const newBoardValue = boardColumns.map((col, index, arr) => {
+        console.log(col);
+        console.log(name);
+        if (i !== index) {
+          console.log("not hit");
+          return col;
+        }
+        validate(e, col.name, name, arr);
+        return { ...col, name: value };
+      });
+      console.log(newBoardValue);
+      // newBoardColumns = newBoardValue
+      setValues({
+        ...values,
+        columns: newBoardValue,
+      });
+    }
+    validate(e, value, name);
     // set state values
-    setValues({
-      ...values,
-      [name]: value
-    })
-  }
+    if (name !== "columnName")
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    console.log(values);
+    console.log(errors);
+  };
   //
   return {
     values,

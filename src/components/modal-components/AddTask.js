@@ -16,6 +16,7 @@ import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { Cross, DownArrow, UpArrow } from "../../assets";
 
 const AddTask = () => {
+  const [isTaskNameError, setIsTaskNameError] = useState(false)
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   //
   const dispatch = useDispatch();
@@ -76,16 +77,33 @@ const AddTask = () => {
     });
   };
   //
+    const checkTaskTitleValidtion = (values) => {
+      // true = errors / false = no errors
+      if (values.title.trim().length === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+  // HERE DOING TASK NAME VALIDATION
+  const handleNewSubmit = () => {
+    const checkTitleResult = checkTaskTitleValidtion(task)
+    setIsTaskNameError(checkTitleResult)
+    if (isTaskNameError) {
+      console.log("task name needed")
+    }
+    if (!isTaskNameError){
+      console.log("task name is good")
+      dispatch(addNewTask(task));
+    }
+    // resetEmptyTaskInputValues(); // works here
+    // dispatch(resetTaskInputValues()); // doesn't work here
+  };
+  //
   const handleEditSubmit = () => {
     dispatch(editTask(task));
     // resetEmptyTaskInputValues()
     dispatch(resetTaskInputValues());
-  };
-  //
-  const handleNewSubmit = () => {
-    dispatch(addNewTask(task));
-    // resetEmptyTaskInputValues(); // works here
-    // dispatch(resetTaskInputValues()); // doesn't work here
   };
   //
   const handleSubtasksValueChange = (i) => (e) => {
@@ -142,11 +160,23 @@ const AddTask = () => {
       <form name="add-todo" className="add-task-form">
         {/* Title Input */}
         <div className="add-task-form-title field-set-remove-border">
-          <h5 className="add-task-form-title__title input-heading">Title</h5>
+          <label
+            className="add-task-form-title__title input-heading"
+            htmlFor="title"
+          >
+            Title
+          </label>
+          {isTaskNameError && (
+            <p className="error-input-label basicTextMedium">Can't be empty</p>
+          )}
           <input
             name="title"
             id="title"
-            className="add-task-form-title__input input-style-basic"
+            className={
+              isTaskNameError
+                ? "add-task-form-title__input input-style-basic error-input-style"
+                : "add-task-form-title__input input-style-basic"
+            }
             type="text"
             placeholder="e.g Take coffee break"
             value={task.title}
@@ -175,7 +205,7 @@ const AddTask = () => {
             Subtask
           </h5>
           <div className="add-task-form-subtasks-inputs">
-            {task.subtasks.map((t, i) => {
+            {task.subtasks.map((t, i, arr) => {
               return (
                 <div className="add-task-form-subtasks-task" key={i}>
                   <input
@@ -188,7 +218,9 @@ const AddTask = () => {
                   />
                   <Cross
                     className="add-task-form-subtasks-task__icon"
-                    onClick={() => handleRemoveSubtask(i)}
+                    onClick={
+                      arr.length <= 1 ? null : () => handleRemoveSubtask(i)
+                    }
                   />
                 </div>
               );
