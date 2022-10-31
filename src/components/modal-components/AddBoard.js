@@ -6,7 +6,6 @@ import {
   editBoard,
   resetBoardInputValues,
   changeToNewBoard,
-  resetIsNameValid,
 } from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
@@ -29,7 +28,6 @@ const AddBoard = () => {
         id: +new Date(),
         name: "",
         tasks: [],
-        isNameInvalid: false,
       },
     ],
   });
@@ -67,22 +65,18 @@ const AddBoard = () => {
   //
   const checkBoardColumnNameValidation = ({ columns }) => {
     // true = errors / false = no errors
-    const columnsCopy = JSON.parse(JSON.stringify(columns));
+    const columnsCopy = [...columns]
     const errorsList = [];
-    const columnsErrorUpdate = columnsCopy.map((col, i) => {
+    columnsCopy.map((col, i) => {
       if (col.name.trim().length === 0) {
         errorsList.push({
-          [col.id]: "Can't be empty",
+          id: col.id,
+          errorMsg: "Can't be empty"
         });
-        col.isNameInvalid = true;
       } 
-      if (col.name.trim().length >= 1){
-        col.isNameInvalid = false
-      }
       return col;
     });
-    console.log(errorsList)
-    setBoardValues({ ...boardValues, columns: columnsErrorUpdate });
+    setColumnsErrorsList(errorsList)
     const isAnyErrors = errorsList.length >= 1;
     return isAnyErrors;
   };
@@ -95,9 +89,6 @@ const AddBoard = () => {
     setIsBoardNameError(nameCheckResult);
     setIsColumnErrors(columnNameCheckResult);
     //
-    // if (columnNameCheckResult && nameCheckResult) {
-    //   console.log("A column name is inValid & Board name is invalid");
-    // }
     if (!columnNameCheckResult && !nameCheckResult) {
       console.log("Columns names are fine & Board name is good");
       dispatch(resetBoardInputValues());
@@ -165,9 +156,9 @@ const AddBoard = () => {
     // resetBoardInputValues
   }, [emptyBoardInputValues]);
   //
-  useEffect(() => {
-    dispatch(resetIsNameValid());
-  }, [overallData])
+  // useEffect(() => {
+  //   dispatch(resetIsNameValid());
+  // }, [overallData])
   //
   return (
     <div
@@ -208,18 +199,26 @@ const AddBoard = () => {
           </label>
           <div className="new-board-form-columns-inputs-wrap">
             {boardValues.columns.map((col, i) => {
+              let isErrorHere = false;
+              let errorMsg = "";
+              columnsErrorsList.map(errorCols => {
+                if (errorCols.id === col.id){
+                  isErrorHere = true
+                  errorMsg = errorCols.errorMsg
+                }
+              })
               return (
                 <div className="new-board-form-columns-input" key={i}>
-                  {col.isNameInvalid && (
+                  {isErrorHere && (
                     <label className="error-input-label-2 basicTextMedium">
-                      Can't be empty
+                      {errorMsg}
                     </label>
                   )}
                   <input
                     type="text"
                     name="board-columns-name"
                     className={
-                      col.isNameInvalid
+                      isErrorHere
                         ? "input-style-basic error-input-style"
                         : "input-style-basic"
                     }
