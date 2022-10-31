@@ -167,7 +167,6 @@ const AddBoard = () => {
   //
   useEffect(() => {
     dispatch(resetIsNameValid());
-    console.log("called")
   }, [overallData])
   //
   return (

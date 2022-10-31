@@ -4,7 +4,7 @@ import {
   addNewTask,
   resetTaskInputValues,
   editTask,
-  sortTasks
+  sortTasks,
 } from "../../features/data/dataSlice";
 import {
   closeNewTaskModal,
@@ -16,7 +16,9 @@ import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { Cross, DownArrow, UpArrow } from "../../assets";
 
 const AddTask = () => {
-  const [isTaskNameError, setIsTaskNameError] = useState(false)
+  const [subtaskErrorList, setSubtaskErrorList] = useState([]);
+  const [isSubtaskNameError, setIsSubtaskNameError] = useState(false);
+  const [isTaskNameError, setIsTaskNameError] = useState(false);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   //
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ const AddTask = () => {
     status: "",
     subtasks: [
       {
+        id: +new Date(),
         title: "",
         isCompleted: false,
       },
@@ -77,39 +80,62 @@ const AddTask = () => {
     });
   };
   //
-    const checkTaskTitleValidtion = (values) => {
-      // true = errors / false = no errors
-      if (values.title.trim().length === 0) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-  // HERE DOING TASK NAME VALIDATION
-  const handleNewSubmit = () => {
-    const checkTitleResult = checkTaskTitleValidtion(task)
-    setIsTaskNameError(checkTitleResult)
-    if (isTaskNameError) {
-      console.log("task name needed")
+  const checkTaskTitleValidtion = (values) => {
+    // true = errors / false = no errors
+    if (values.title.trim().length === 0) {
+      return true;
+    } else {
+      return false;
     }
-    if (!isTaskNameError){
-      console.log("task name is good")
-      dispatch(addNewTask(task));
+  };
+  //
+  const checkSubtaskTiltleValidation = ({ subtasks }) => {
+    const errorsList = [];
+    const subtasksCopy = [...subtasks];
+    subtasksCopy.map((sub, i) => {
+      if (sub.title.trim().length === 0) {
+        errorsList.push({
+          id: sub.id,
+          errorMsg: "Can't be empty",
+        });
+      }
+      return sub;
+    });
+    setSubtaskErrorList(errorsList);
+    const isErrors = errorsList.length >= 1;
+    return isErrors;
+  };
+  // HERE DOING TASK NAME VALIDATION
+  const handleSubmit = () => {
+    const checkTitleResult = checkTaskTitleValidtion(task);
+    const checkSubtaskTitleResult = checkSubtaskTiltleValidation(task);
+    setIsSubtaskNameError(checkSubtaskTitleResult);
+    setIsTaskNameError(checkTitleResult);
+    if (!checkTitleResult && !checkSubtaskTitleResult) {
+      console.log("task name is good");
+      dispatch(closeNewTaskModal());
+      dispatch(closeOverlay());
+      if (isEditTaskActive) {
+        // turn edit off when submiting from edit mode.
+        // handleEditSubmit();
+        dispatch(editTask(task));
+        dispatch(resetTaskInputValues());
+        dispatch(closeEditDeleteModals());
+        dispatch(closeViewTaskModal());
+        dispatch(deActivateEditTask());
+      }
+      if (!isEditTaskActive) {
+        dispatch(addNewTask(task));
+      }
     }
     // resetEmptyTaskInputValues(); // works here
     // dispatch(resetTaskInputValues()); // doesn't work here
   };
   //
-  const handleEditSubmit = () => {
-    dispatch(editTask(task));
-    // resetEmptyTaskInputValues()
-    dispatch(resetTaskInputValues());
-  };
-  //
   const handleSubtasksValueChange = (i) => (e) => {
     const newSubtasks = task.subtasks.map((s, ind) => {
       if (i !== ind) return s;
-      return { ...s, title: e.target.value, id: +new Date() + i };
+      return { ...s, title: e.target.value };
     });
     setTask({ ...task, subtasks: newSubtasks });
   };
@@ -123,7 +149,10 @@ const AddTask = () => {
     e.preventDefault();
     setTask({
       ...task,
-      subtasks: [...task.subtasks, { title: "", isCompleted: false }],
+      subtasks: [
+        ...task.subtasks,
+        { id: +new Date(), title: "", isCompleted: false },
+      ],
     });
   };
   //
@@ -201,16 +230,37 @@ const AddTask = () => {
         </div>
         {/* SUBTASK INPUT */}
         <div className="add-task-form-subtasks field-set-remove-border">
-          <h5 className="add-task-form-subtasks__title input-heading">
+          <label
+            htmlFor="subtask"
+            className="add-task-form-subtasks__title input-heading"
+          >
             Subtask
-          </h5>
+          </label>
           <div className="add-task-form-subtasks-inputs">
             {task.subtasks.map((t, i, arr) => {
+              let isErrorHere = false;
+              let errorMsg = "";
+              subtaskErrorList.map((sub) => {
+                if (sub.id === t.id) {
+                  isErrorHere = true;
+                  errorMsg = sub.errorMsg;
+                }
+              });
               return (
                 <div className="add-task-form-subtasks-task" key={i}>
+                  {isErrorHere && (
+                    <p className="error-input-label-2 basicTextMedium">
+                      {errorMsg}
+                    </p>
+                  )}
                   <input
                     name="subtask"
-                    className="add-task-form-subtasks-task__input input-style-basic"
+                    id="subtask"
+                    className={
+                      isErrorHere
+                        ? "add-task-form-subtasks-task__input input-style-basic error-input-style"
+                        : "add-task-form-subtasks-task__input input-style-basic"
+                    }
                     type="text"
                     placeholder="e.g Make Coffee"
                     value={t.title}
@@ -284,19 +334,8 @@ const AddTask = () => {
         form="add-todo"
         className="add-task__submit-btn btn-sml btn-primary-color"
         onClick={() => {
-          dispatch(closeNewTaskModal());
-          dispatch(closeOverlay());
           // handleGetAllCurrentBoardTasks();
-          if (isEditTaskActive) {
-            // turn edit off when submiting from edit mode.
-            handleEditSubmit();
-            dispatch(closeEditDeleteModals());
-            dispatch(closeViewTaskModal());
-            dispatch(deActivateEditTask());
-          }
-          if (!isEditTaskActive) {
-            handleNewSubmit();
-          }
+          handleSubmit();
         }}
       >
         {isEditTaskActive ? "Saves Changes" : "Create Task"}

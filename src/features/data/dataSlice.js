@@ -14,6 +14,7 @@ const initialState = {
     status: "",
     subtasks: [
       {
+        id: +new Date(),
         title: "",
         isCompleted: false,
       },
@@ -136,6 +137,7 @@ const dataSlice = createSlice({
           state.activeBoardData.columns[0].name,
         subtasks: [
           {
+            id: +new Date(),
             title: "",
             isCompleted: false,
           },
