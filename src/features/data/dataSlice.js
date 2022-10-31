@@ -64,6 +64,7 @@ const dataSlice = createSlice({
     },
     //
     updateTaskStatus: (state, { payload }) => {
+      // console.log(payload)
       const { id, name } = payload;
       state.overallData[state.activeBoardIndex].columns
         .find((col) => col.id === id)

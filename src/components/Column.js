@@ -8,16 +8,21 @@ import {
 } from "../features/data/dataSlice";
 import { ColumnHeading, ColumnTaskBox } from "../components";
 
-const Column = ({ name, tasks, id, colIndex }) => {
+const Column = ({ name, tasks, id, colIndex, updatedColumns }) => {
   const [taskLength, setTaskLength] = useState(0);
-  const { itemCoords, itemNode, overallData, activeBoardIndex, activeBoardData } = useSelector(
-    (store) => store.data
-  );
+  const {
+    itemCoords,
+    itemNode,
+    overallData,
+    activeBoardIndex,
+    activeBoardData,
+  } = useSelector((store) => store.data);
   const dispatch = useDispatch();
   //
   const handleDragEnter = (e, params, id) => {
     e.preventDefault();
     // id replaced (e.target & node)
+    console.log(params)
     const colPlace = itemCoords.colIndex;
     const taskPlace = itemCoords.taskIndex;
     // console.log(id , itemNode)
@@ -25,7 +30,7 @@ const Column = ({ name, tasks, id, colIndex }) => {
     // (ALSO ABSTRACT THIS TO THE STATE!!!!)
     if (itemNode !== id) {
       const newCols = JSON.parse(
-        JSON.stringify(overallData[activeBoardIndex].columns)
+        JSON.stringify(updatedColumns) // was activeboard data
       );
       newCols[params.colIndex].tasks.splice(
         params.taskIndex,
@@ -48,7 +53,7 @@ const Column = ({ name, tasks, id, colIndex }) => {
   // };
   //
   // useEffect(() => {
-    // handleGetAllCurrentBoardTasks()
+  // handleGetAllCurrentBoardTasks()
   // },[tasks])
   //
   // SETTING ALL TASK STATUSES TO THE COLUMN NAME,
@@ -61,7 +66,7 @@ const Column = ({ name, tasks, id, colIndex }) => {
   //     }
   //   }
   // }, [overallData])
-  //
+  // ******WASH HERE*******
 
   //
   useEffect(() => {

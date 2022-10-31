@@ -6,6 +6,7 @@ import {
   selectTask,
   shuffleCols,
   handleDropInfo,
+  updateTaskStatus,
   handleItemCoords,
   checkNode,
   sortTasks,
@@ -42,6 +43,8 @@ const ColumnTaskBox = ({
   };
   //
   const handleDragEnd = (e) => {
+    console.log("drag end")
+    // dispatch(updateTaskStatus({name, colId}))
     dragNode.current.removeEventListener("dragend", handleDragEnd);
     dragNode.current = null;
   };

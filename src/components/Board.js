@@ -21,13 +21,45 @@ import {
 //****//
 
 const Board = () => {
-  const [isColumnsEmpty, setIsColumnsEmpty] = useState(false)
+  const [activeTasks, setActiveTasks] = useState([]);
+  const [activeColumns, setActiveColumns] = useState([])
+  const [isColumnsEmpty, setIsColumnsEmpty] = useState(false);
   const dispatch = useDispatch();
   // did have "activeBoardColumns"
   const { overallData, activeBoardIndex, activeBoardData } = useSelector(
     (store) => store.data
   );
   const { isBoardDataEmpty } = useSelector((store) => store.modes);
+  //
+  const handleGetAllCurrentBoardTasks = () => {
+    const allTasks = [];
+    if (activeBoardData && activeBoardData.columns) {
+      activeBoardData.columns.forEach((col) => {
+        allTasks.push(col.tasks);
+      });
+      //
+      const newTasks = activeBoardData.columns.map((col) => {
+        const groups = [];
+        allTasks.flat().map((t) => {
+          if (col.name === t.status) {
+            groups.push(t);
+          }
+          return t;
+        });
+        return groups;
+      });
+      //
+      const columnsCopy = JSON.parse(JSON.stringify(activeBoardData.columns))
+      columnsCopy.map((col,i) => col.tasks = newTasks[i])
+      console.log(columnsCopy)
+      setActiveColumns(columnsCopy)
+      
+    }
+  };
+  //
+  useEffect(() => {
+    handleGetAllCurrentBoardTasks()
+  },[activeBoardData])
   //
   useEffect(() => {
     if (overallData.length >= 1) {
@@ -43,11 +75,11 @@ const Board = () => {
   }, [overallData, activeBoardIndex]);
   //
   useEffect(() => {
-    if (activeBoardData && activeBoardData.columns){
+    if (activeBoardData && activeBoardData.columns) {
       const areThereCols = activeBoardData.columns.length <= 0;
-      setIsColumnsEmpty(areThereCols)
+      setIsColumnsEmpty(areThereCols);
     }
-  }, [activeBoardData])
+  }, [activeBoardData]);
   //
   return (
     <main
@@ -78,9 +110,8 @@ const Board = () => {
         {activeBoardData &&
           activeBoardData.columns &&
           activeBoardData.columns.length > 0 &&
-          activeBoardData.columns.map((col, i) => {
-            
-            return <Column key={i} {...col} colIndex={i} />;
+          activeColumns.map((col, i, arr) => {
+            return <Column key={i} {...col} colIndex={i} updatedColumns={arr}/>;
           })}
         {activeBoardData &&
           activeBoardData.columns &&
