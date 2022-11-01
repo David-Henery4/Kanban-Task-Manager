@@ -74,6 +74,34 @@ const dataSlice = createSlice({
           }
         });
     },
+    updateTaskTargetStatus: (state, { payload }) => {
+      const { colIndex, taskIndex } = state.itemCoords;
+      state.overallData[state.activeBoardIndex].columns.map((col, i) => {
+        if (i === colIndex) {
+          col.tasks.map((task,i) => {
+            if (task.status !== col.name){
+              task.status = col.name
+            }
+            return task
+          })
+        }
+        return col
+      });
+      //   let colName;
+      //   state.overallData[state.activeBoardIndex].columns
+      //     .find((col, i) => {
+      //       if (i === colIndex) {
+      //         colName = col.name
+      //       }
+      //       return col
+      //     })
+      //     .tasks.find((task, i) => {
+      //       if (i === taskIndex){
+      //         task.status = colName
+      //       }
+      //       return task
+      //     });
+    },
     //
     checkNode: (state, { payload }) => {
       state.itemNode = payload;
@@ -262,6 +290,7 @@ export const {
   changeToNewBoard,
   updateStatusFromViewTask,
   sortTasks,
+  updateTaskTargetStatus
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

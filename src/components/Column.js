@@ -4,6 +4,7 @@ import {
   handleDropInfo,
   handleItemCoords,
   updateTaskStatus,
+  updateTaskTargetStatus,
   sortTasks
 } from "../features/data/dataSlice";
 import { ColumnHeading, ColumnTaskBox } from "../components";
@@ -21,8 +22,10 @@ const Column = ({ name, tasks, id, colIndex, updatedColumns }) => {
   //
   const handleDragEnter = (e, params, id) => {
     e.preventDefault();
+    console.log(e.target)
+    // dispatch(updateTaskTargetStatus())
     // id replaced (e.target & node)
-    console.log(params)
+    // console.log(params)
     const colPlace = itemCoords.colIndex;
     const taskPlace = itemCoords.taskIndex;
     // console.log(id , itemNode)

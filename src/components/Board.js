@@ -34,6 +34,7 @@ const Board = () => {
   const handleGetAllCurrentBoardTasks = () => {
     const allTasks = [];
     if (activeBoardData && activeBoardData.columns) {
+      console.log("condition #1 called")
       activeBoardData.columns.forEach((col) => {
         allTasks.push(col.tasks);
       });
@@ -53,7 +54,6 @@ const Board = () => {
       columnsCopy.map((col,i) => col.tasks = newTasks[i])
       console.log(columnsCopy)
       setActiveColumns(columnsCopy)
-      
     }
   };
   //
@@ -111,7 +111,9 @@ const Board = () => {
           activeBoardData.columns &&
           activeBoardData.columns.length > 0 &&
           activeColumns.map((col, i, arr) => {
-            return <Column key={i} {...col} colIndex={i} updatedColumns={arr}/>;
+            return (
+              <Column key={i} {...col} colIndex={i} updatedColumns={arr} />
+            );
           })}
         {activeBoardData &&
           activeBoardData.columns &&

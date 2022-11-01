@@ -7,6 +7,7 @@ import {
   shuffleCols,
   handleDropInfo,
   updateTaskStatus,
+  updateTaskTargetStatus,
   handleItemCoords,
   checkNode,
   sortTasks,
@@ -43,7 +44,10 @@ const ColumnTaskBox = ({
   };
   //
   const handleDragEnd = (e) => {
-    console.log("drag end")
+    console.log("drag end");
+    // dispatch(handleDropInfo())
+    dispatch(updateTaskTargetStatus());
+    // console.log({name, colId})
     // dispatch(updateTaskStatus({name, colId}))
     dragNode.current.removeEventListener("dragend", handleDragEnd);
     dragNode.current = null;
@@ -101,7 +105,9 @@ const ColumnTaskBox = ({
       // but Over has the drop icon
       onDragEnter={(e) => handleDragEnter(e, { colIndex, taskIndex }, id)}
     >
-      <h3 className="column-task__title heading-m">{title}</h3>
+      <h3 className="column-task__title heading-m">
+        {title}
+      </h3>
       <p className="column-task__status basicTextMedium">
         {subTaskCompleted.length} of {subtasks.length} subtasks
       </p>
