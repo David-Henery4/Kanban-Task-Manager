@@ -3,7 +3,6 @@
   position: relative;
   background-color: var(--backgroundColor);
   width: 100%;
-  // height: 100vh;
   min-height: calc(100vh - 64px);
   padding: 24px 16px;
   display: grid;
@@ -19,7 +18,6 @@
     gap: 24px;
   }
   &-empty{
-    // padding: 0 16px;
     text-align: center;
     display: grid;
     place-items: center;

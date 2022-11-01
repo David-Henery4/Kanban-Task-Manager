@@ -2,13 +2,12 @@ import React from "react";
 import { openAddNewBoardModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
 import { activateEditBoard } from "../features/edit-delete-modes/modesSlice";
-import { AddTaskMobile } from "../assets";
 import { useSelector, useDispatch } from "react-redux";
 
 const EmptyBoard = () => {
   const dispatch = useDispatch()
   const { isBoardDataEmpty } = useSelector((store) => store.modes);
-  // isBoardDataEmpty
+  //
   return (
     <div className="board-empty">
       <h2 className="heading-l board-empty__heading">

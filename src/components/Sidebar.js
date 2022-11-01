@@ -9,7 +9,6 @@ import {
   LogoLight,
   LogoDark,
   BoardIcon,
-  AddTaskMobile,
   DarkIcon,
   LightIcon,
   HideSidebarIcon,
@@ -24,8 +23,6 @@ const Sidebar = () => {
   const handleBoardSwitch = (i) => {
     dispatch(changeActiveBoard(i));
   };
-  //
-  const switchingThemes = () => {};
   //
   return (
     <aside className={isSidebarOpen ? "sidebar sidebar-active" : "sidebar"}>
@@ -44,7 +41,6 @@ const Sidebar = () => {
           </div>
           {overallData.map((board, i) => {
             const { name, id } = board;
-            // active board will have "active-board"
             return (
               <div
                 className={

@@ -40,11 +40,6 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     sortTasks: (state, { payload }) => {
-      console.log("called");
-      // const allTasks = [];
-      // state.activeBoardData.columns.forEach((col) => {
-      //   allTasks.push(col.tasks);
-      // });
       const newTasks = state.activeBoardData.columns.map((col) => {
         const groups = [];
         payload.map((t) => {
@@ -75,7 +70,7 @@ const dataSlice = createSlice({
         });
     },
     updateTaskTargetStatus: (state, { payload }) => {
-      const { colIndex, taskIndex } = state.itemCoords;
+      const { colIndex } = state.itemCoords;
       state.overallData[state.activeBoardIndex].columns.map((col, i) => {
         if (i === colIndex) {
           col.tasks.map((task,i) => {
@@ -87,20 +82,6 @@ const dataSlice = createSlice({
         }
         return col
       });
-      //   let colName;
-      //   state.overallData[state.activeBoardIndex].columns
-      //     .find((col, i) => {
-      //       if (i === colIndex) {
-      //         colName = col.name
-      //       }
-      //       return col
-      //     })
-      //     .tasks.find((task, i) => {
-      //       if (i === taskIndex){
-      //         task.status = colName
-      //       }
-      //       return task
-      //     });
     },
     //
     checkNode: (state, { payload }) => {

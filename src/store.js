@@ -9,22 +9,6 @@ import overlayReducer from "./features/overlay/overlaySlice";
 import modalsReducer from "./features/modals/modalsSlice";
 import modesReducer from "./features/edit-delete-modes/modesSlice";
 
-// export const store = configureStore({
-//   reducer: {
-//     data: dataReducer,
-//     sidebar: sidebarReducer,
-//     theme: themeReducer,
-//     overlay: overlayReducer,
-//     modals: modalsReducer,
-//     modes: modesReducer,
-//   },
-//   middleware: (getDefaultMiddleware) => {
-//     return getDefaultMiddleware({
-//       serializableCheck: false,
-//     });
-//   },
-// });
-
 const rootReducer = combineReducers({
   data: dataReducer,
   sidebar: sidebarReducer,

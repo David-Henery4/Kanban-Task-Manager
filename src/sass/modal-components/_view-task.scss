@@ -27,8 +27,6 @@
       }
     }
   }
-  &__title {
-  }
   &__text {
     color: $nonActiveFontColor;
   }
@@ -59,25 +57,20 @@
     background-color: var(--backgroundColor);
     padding: 13px 8px 13px 13px;
     border-radius: 4px;
-
     //
     &-checkbox {
       height: 16px;
       width: 16px;
       border-radius: 2px;
-      // background-color: $colorPrimary;
       background-color: var(--itemColor);
       border: 1px solid rgba($nonActiveFontColor, .25);
       display: grid;
       place-items: center;
-      &__icon {
-      }
     }
     //
     &__text {
       font-size: 12px;
       font-weight: $fontWeightBold;
-      // text-decoration: line-through;
     }
   }
   //
@@ -96,10 +89,6 @@
       cursor: pointer;
     }
     }
-    &__text {
-    }
-    &__icon {
-    }
   }
 }
 
@@ -115,7 +104,3 @@
   background-color: $colorPrimary;
   border: none;
 }
-// .checkbox-not-completed{
-//   background-color: var(--itemColor);
-//   border: 1px solid rgba($nonActiveFontColor, .25);
-// }

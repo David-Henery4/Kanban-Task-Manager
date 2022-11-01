@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import {
   openAddNewBoardModal,
@@ -6,7 +6,6 @@ import {
   openNewTaskModal,
   openDeleteModal,
   closeViewTaskModal,
-  openViewTaskEditDelete,
   closeEditDeleteModals,
 } from "../../features/modals/modalsSlice";
 import {
@@ -17,7 +16,6 @@ import {
 import { openOverlay } from "../../features/overlay/overlaySlice";
 
 const EditDelete = ({ isViewTaskActive = false }) => {
-  // const [isEditBoard, setIsEditBoard] = useState(true)
   const dispatch = useDispatch();
   //
   const handleEditBoardClick = () => {
@@ -25,7 +23,7 @@ const EditDelete = ({ isViewTaskActive = false }) => {
       dispatch(openAddNewBoardModal());
       dispatch(openOverlay());
       dispatch(openNavbarEditDelete());
-      dispatch(activateEditBoard()); // might not be toggle
+      dispatch(activateEditBoard());
     }
   };
   //

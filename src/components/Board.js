@@ -5,9 +5,8 @@ import {
   AddTask,
   AddBoard,
   Delete,
-  MobileNav,
 } from "../components/modal-components";
-import { AddTaskMobile, BoardIcon, ShowSidebarIcon } from "../assets";
+
 import { setActiveBoardData } from "../features/data/dataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -15,17 +14,10 @@ import {
   deActivateNoBoardDataMode,
 } from "../features/edit-delete-modes/modesSlice";
 
-//**WILL BE ADDED CONDITIONALY TO Board**/
-// EMPTY-STATE = .flex-cen-cen;
-// CONTENT-STATE = .flex-start-start;
-//****//
-
 const Board = () => {
-  const [activeTasks, setActiveTasks] = useState([]);
   const [activeColumns, setActiveColumns] = useState([])
   const [isColumnsEmpty, setIsColumnsEmpty] = useState(false);
   const dispatch = useDispatch();
-  // did have "activeBoardColumns"
   const { overallData, activeBoardIndex, activeBoardData } = useSelector(
     (store) => store.data
   );
@@ -34,7 +26,6 @@ const Board = () => {
   const handleGetAllCurrentBoardTasks = () => {
     const allTasks = [];
     if (activeBoardData && activeBoardData.columns) {
-      console.log("condition #1 called")
       activeBoardData.columns.forEach((col) => {
         allTasks.push(col.tasks);
       });

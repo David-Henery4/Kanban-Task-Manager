@@ -17,7 +17,6 @@ import { closeOverlay } from "../features/overlay/overlaySlice";
 import {
   resetTaskInputValues,
   resetBoardInputValues,
-  sortTasks,
 } from "../features/data/dataSlice";
 //
 const Overlay = () => {
@@ -25,16 +24,6 @@ const Overlay = () => {
   const { isOverlayActive } = useSelector((store) => store.overlay);
   const { isBoardDataEmpty } = useSelector((store) => store.modes);
   const dispatch = useDispatch();
-  //
-  // const handleGetAllCurrentBoardTasks = () => {
-  //   if (activeBoardData && activeBoardData.columns) {
-  //     const allTasks = [];
-  //     activeBoardData.columns.forEach((col) => {
-  //       allTasks.push(col.tasks);
-  //     });
-  //     dispatch(sortTasks(allTasks.flat()));
-  //   }
-  // };
   //
   const handleOverlay = () => {
     dispatch(closeSidebar());
@@ -47,7 +36,6 @@ const Overlay = () => {
     dispatch(deActivateDeleteTask());
     dispatch(deActivateEditTask());
     dispatch(closeEditDeleteModals());
-    // dispatch(handleGetAllCurrentBoardTasks());
     if (!isBoardDataEmpty && activeBoardData.columns.length > 0) {
       dispatch(resetBoardInputValues());
       dispatch(resetTaskInputValues());

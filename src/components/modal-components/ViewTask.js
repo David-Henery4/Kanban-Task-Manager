@@ -4,9 +4,7 @@ import { openViewTaskEditDelete } from "../../features/modals/modalsSlice";
 import { EditDelete } from "../modal-components";
 import {
   toggleSubTaskStatus,
-  updateSubTaskCompletedQuantity,
   updateStatusFromViewTask,
-  sortTasks,
 } from "../../features/data/dataSlice";
 import { TickMark, DownArrow, EditDeleteIcon, UpArrow } from "../../assets";
 
@@ -32,20 +30,6 @@ const ViewTask = () => {
       setCurrentStatus(selectedTask.status);
     }
   };
-  //
-  const handleStatusUpdate = () => {
-    if (activeBoardData && activeBoardData.columns) {
-      const allTasks = [];
-      activeBoardData.columns.forEach((col) => {
-        allTasks.push(col.tasks);
-      });
-      dispatch(sortTasks(allTasks.flat()));
-    }
-  };
-  // //
-  // useEffect(() => {
-  //   handleStatusUpdate()
-  // }, [currentStatus])
   //
   useEffect(() => {
     handleSetDefaultStatus();
@@ -183,8 +167,6 @@ const ViewTask = () => {
                     );
                     setCurrentStatus(newStatus);
                     setIsDropdownActive(!isDropdownActive);
-                    // handleStatusUpdate()
-                    // dispatch(sortTasks());
                   }}
                 >
                   {col.name}

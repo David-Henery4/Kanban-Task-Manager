@@ -10,10 +10,6 @@ import {
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
 import { deActivateEditBoard } from "../../features/edit-delete-modes/modesSlice";
-import useForm from "../../CustomHook/useForm";
-
-// ** ALSO HAVE TO RESET BOARD VALUES
-// & TURN OFF EDIT MODE ON THE OVERLAY CLICK!!**
 
 const AddBoard = () => {
   const [columnsErrorsList, setColumnsErrorsList] = useState([]);
@@ -33,26 +29,11 @@ const AddBoard = () => {
   });
   //
   const dispatch = useDispatch();
-  const { activeBoardData, emptyBoardInputValues, overallData } = useSelector(
+  const { activeBoardData, emptyBoardInputValues } = useSelector(
     (store) => store.data
   );
   const { isAddNewBoardActive } = useSelector((store) => store.modals);
   const { isEditBoardActive } = useSelector((store) => store.modes);
-  // new-board-active
-  // **Board Functions**
-  const resetBoardValues = () => {
-    setBoardValues({
-      id: +new Date(),
-      name: "",
-      columns: [
-        {
-          id: +new Date(),
-          name: "",
-          tasks: [],
-        },
-      ],
-    });
-  };
   //
   const checkBoardNameValidtion = (values) => {
     // true = errors / false = no errors
@@ -90,7 +71,6 @@ const AddBoard = () => {
     setIsColumnErrors(columnNameCheckResult);
     //
     if (!columnNameCheckResult && !nameCheckResult) {
-      console.log("Columns names are fine & Board name is good");
       dispatch(resetBoardInputValues());
       dispatch(closeAddNewBoardModal());
       dispatch(closeOverlay());
@@ -153,12 +133,7 @@ const AddBoard = () => {
   //
   useEffect(() => {
     setBoardValues(emptyBoardInputValues);
-    // resetBoardInputValues
   }, [emptyBoardInputValues]);
-  //
-  // useEffect(() => {
-  //   dispatch(resetIsNameValid());
-  // }, [overallData])
   //
   return (
     <div
@@ -245,13 +220,6 @@ const AddBoard = () => {
       <button
         className="btn-sml btn-primary-color new-board__btn"
         onClick={() => {
-          // resetBoardValues()
-          // if (isEditBoardActive) {
-          //   submitEditedBoard();
-          //   dispatch(deActivateEditBoard());
-          // }
-          // if (!isEditBoardActive) {
-          // }
           submitNewBoard();
         }}
       >

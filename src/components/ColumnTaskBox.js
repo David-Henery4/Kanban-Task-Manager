@@ -1,16 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {  useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { openViewTaskModal } from "../features/modals/modalsSlice";
 import { openOverlay } from "../features/overlay/overlaySlice";
 import {
   selectTask,
-  shuffleCols,
-  handleDropInfo,
-  updateTaskStatus,
   updateTaskTargetStatus,
   handleItemCoords,
   checkNode,
-  sortTasks,
 } from "../features/data/dataSlice";
 
 const ColumnTaskBox = ({
@@ -27,15 +23,12 @@ const ColumnTaskBox = ({
   id,
 }) => {
   const [subTaskCompleted, setSubTaskCompleted] = useState([]);
-  const { activeBoardData } = useSelector((store) => store.data);
   const dispatch = useDispatch();
   //
-  // const dragItem = useRef();
   const dragNode = useRef();
   //
   const handleDragStart = (e, params, id) => {
     // item replaced (e.target & node)
-    // dispatch(checkNode(e.target));
     dragNode.current = e.target;
     dispatch(handleItemCoords(params));
     // change checknode name & itemNode name in state
@@ -44,11 +37,7 @@ const ColumnTaskBox = ({
   };
   //
   const handleDragEnd = (e) => {
-    console.log("drag end");
-    // dispatch(handleDropInfo())
     dispatch(updateTaskTargetStatus());
-    // console.log({name, colId})
-    // dispatch(updateTaskStatus({name, colId}))
     dragNode.current.removeEventListener("dragend", handleDragEnd);
     dragNode.current = null;
   };
@@ -70,20 +59,6 @@ const ColumnTaskBox = ({
       })
     );
   };
-  const handleGetAllCurrentBoardTasks = () => {
-    if (activeBoardData && activeBoardData.columns) {
-      const allTasks = [];
-      activeBoardData.columns.forEach((col) => {
-        allTasks.push(col.tasks);
-      });
-      dispatch(sortTasks(allTasks.flat()));
-    }
-  };
-  // // semi works to update columns
-  // but breaks DRAG N DROP
-  // useEffect(() => {
-  //   handleGetAllCurrentBoardTasks()
-  // },[status])
   //
   useEffect(() => {
     const completedTasks = [];

@@ -1,7 +1,6 @@
 .mob-nav {
   @include absolute-center-pos;
   background-color: var(--itemColor);
-  // border: 2px solid red;
   top: 250px;
   width: 80%;
   max-width: 480px;

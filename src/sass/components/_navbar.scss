@@ -42,18 +42,11 @@
       border-right: 1px solid var(--linesColor);
       display: grid;
       place-items: center;
-      // "none" is temp
-      // will be added on sidebar conditional
-      // display: none; // temp
     }
   }
   &__logo--tab {
     position: relative;
     bottom: 2px;
-    // display: none;
-    // @include respond (tab){
-    //   display: block;
-    // }
   }
   //
   &__board-name {
@@ -76,8 +69,6 @@
   }
   //
   &-add-task {
-    // display: grid;
-    // place-items: center;
     @include flex-cen-cen;
     border-radius: 24px;
     min-width: 48px;

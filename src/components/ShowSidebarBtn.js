@@ -6,7 +6,7 @@ import {ShowSidebarIcon} from "../assets";
 const ShowSidebarBtn = () => {
   const dispatch = useDispatch();
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
-  // hide-show-sidebar
+  //
   return (
     <div
       className={

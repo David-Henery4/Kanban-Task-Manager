@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 20px;
-  min-width: 280px; // just added
+  min-width: 280px;
   height: 100%;
   &-heading-section{
     width: 100%;
@@ -19,9 +19,6 @@
     &__tasks-quantity{
       color: $nonActiveFontColor;
     }
-    &__title{
-      
-    }
     &__tasks-quantity{
       position: relative;
       right: 6px;
@@ -29,7 +26,6 @@
   }
   //
   &-task{
-    // cursor: grab;
     background-color: var(--itemColor);
     border-radius: 8px;
     width: 280px;
@@ -41,9 +37,6 @@
     gap: 8px;
     &:hover{
       cursor: pointer;
-    }
-    &__title{
-      
     }
     &__status{
       color: $nonActiveFontColor;

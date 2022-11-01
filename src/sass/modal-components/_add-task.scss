@@ -11,9 +11,6 @@
   padding: 24px;
   border-radius: 6px;
   display: none;
-  // MODAL HEADING
-  &__heading {
-  }
   // FORM SECTIONS
   &-form {
     width: 100%;
@@ -27,18 +24,12 @@
       display: grid;
       gap: 8px;
       position: relative;
-      &__title {
-      }
-      &__input {
-      }
     }
     //
     &-desc {
       width: 100%;
       display: grid;
       gap: 8px;
-      &__title {
-      }
       &__input {
         resize: none;
         min-height: 112px;
@@ -50,24 +41,18 @@
       width: 100%;
       display: grid;
       gap: 8px;
-      &__title {
-      }
       &-inputs {
         display: grid;
         gap: 12px;
       }
       &-task {
         width: 100%;
-        // @include flex-cen-cen;
         display: grid;
         grid-template-columns: 1fr 16px;
         justify-content: center;
         align-items: center;
         gap: 16px;
         position: relative;
-        &__input {
-
-        }
         &__icon {
           height: 15px;
           width: 15px;
@@ -91,24 +76,9 @@
       gap: 8px;
       position: relative;
       //
-      &__title {
-      }
-      //
-      &__label {
-      }
-      //
-      &__icon{
-      
-      }
-      //
       &-select {
-        
         &:hover{
           cursor: pointer;
-        }
-      }
-      &-dropdown{
-        &__option{
         }
       }
     }

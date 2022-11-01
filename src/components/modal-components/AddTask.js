@@ -4,7 +4,6 @@ import {
   addNewTask,
   resetTaskInputValues,
   editTask,
-  sortTasks,
 } from "../../features/data/dataSlice";
 import {
   closeNewTaskModal,
@@ -23,7 +22,7 @@ const AddTask = () => {
   //
   const dispatch = useDispatch();
   //
-  const { activeBoardData, selectedTask, emptyTaskInputValues, overallData } =
+  const { activeBoardData, selectedTask, emptyTaskInputValues } =
     useSelector((store) => store.data);
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
   const { isEditTaskActive } = useSelector((store) => store.modes);
@@ -41,34 +40,6 @@ const AddTask = () => {
       },
     ],
   });
-  //
-  // const handleGetAllCurrentBoardTasks = () => {
-  //   if (activeBoardData && activeBoardData.columns) {
-  //     const allTasks = [];
-  //     activeBoardData.columns.forEach((col) => {
-  //       allTasks.push(col.tasks);
-  //     });
-  //     dispatch(sortTasks(allTasks.flat()));
-  //   }
-  // };
-  // useEffect(() => {
-  //   handleGetAllCurrentBoardTasks()
-  // }, [selectedTask])
-  //
-  const resetEmptyTaskInputValues = () => {
-    // setTask({
-    //   id: +new Date(),
-    //   title: "",
-    //   description: "",
-    //   status: activeBoardData.columns && activeBoardData.columns[0].name,
-    //   subtasks: [
-    //     {
-    //       title: "",
-    //       isCompleted: false,
-    //     },
-    //   ],
-    // });
-  };
   //
   const setEditTaskValues = () => {
     setTask({
@@ -116,8 +87,6 @@ const AddTask = () => {
       dispatch(closeNewTaskModal());
       dispatch(closeOverlay());
       if (isEditTaskActive) {
-        // turn edit off when submiting from edit mode.
-        // handleEditSubmit();
         dispatch(editTask(task));
         dispatch(resetTaskInputValues());
         dispatch(closeEditDeleteModals());
@@ -128,8 +97,6 @@ const AddTask = () => {
         dispatch(addNewTask(task));
       }
     }
-    // resetEmptyTaskInputValues(); // works here
-    // dispatch(resetTaskInputValues()); // doesn't work here
   };
   //
   const handleSubtasksValueChange = (i) => (e) => {
@@ -168,14 +135,11 @@ const AddTask = () => {
   }, [isEditTaskActive]);
   //
   useEffect(() => {
-    // activeBoardData.columns > 0;
     if (activeBoardData && activeBoardData.columns) {
       if (activeBoardData.columns.length > 0) {
         setTask({ ...task, status: activeBoardData.columns[0].name });
         dispatch(resetTaskInputValues());
       }
-      // to clear inputs when adding new task (might not need!)
-      // might! have to change
     }
   }, [activeBoardData]);
   //
@@ -285,7 +249,6 @@ const AddTask = () => {
         </div>
         {/* STATUS INPUT */}
         <div className="add-task-form-status">
-          {/* Might not use select/might use plain div & p & take text value */}
           <h5 className="add-task-form-status__title input-heading">Status</h5>
           {isDropdownActive ? (
             <DownArrow className="add-task-form-status__icon select-dropdown__icon" />
@@ -334,7 +297,6 @@ const AddTask = () => {
         form="add-todo"
         className="add-task__submit-btn btn-sml btn-primary-color"
         onClick={() => {
-          // handleGetAllCurrentBoardTasks();
           handleSubmit();
         }}
       >

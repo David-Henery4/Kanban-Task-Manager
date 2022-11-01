@@ -10,18 +10,16 @@ import { MobileNav, EditDelete } from "../components/modal-components";
 import {
   MobileLogo,
   DownArrow,
-  AddTaskMobile,
   EditDeleteIcon,
   LogoDark,
   LogoLight,
-  Cross
 } from "../assets";
 
 const Navbar = () => {
   const [isThereNoColumns, setIsThereNoColumns] = useState(false)
   const { isSidebarOpen } = useSelector((store) => store.sidebar);
   const { isNavbarEditDeleteActive } = useSelector((store) => store.modals);
-  const { activeBoardData, overallData } = useSelector((store) => store.data);
+  const { activeBoardData} = useSelector((store) => store.data);
   const { isBoardDataEmpty } = useSelector((store) => store.modes);
   const { isLightMode } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
