@@ -6,7 +6,6 @@ import {
   AddBoard,
   Delete,
 } from "../components/modal-components";
-
 import { setActiveBoardData } from "../features/data/dataSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
