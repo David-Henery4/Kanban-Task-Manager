@@ -19,7 +19,6 @@ const Column = ({ name, tasks, id, colIndex, updatedColumns }) => {
     const colPlace = itemCoords.colIndex;
     const taskPlace = itemCoords.taskIndex;
     // change checknode name & itemNode name in state
-    // (ALSO ABSTRACT THIS TO THE STATE!!!!)
     if (itemNode !== id) {
       const newCols = JSON.parse(
         JSON.stringify(updatedColumns)

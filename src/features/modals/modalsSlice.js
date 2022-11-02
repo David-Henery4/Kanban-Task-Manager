@@ -10,18 +10,16 @@ const initialState = {
   isViewTaskEditDeleteActive: false,
 }
 
-// change toggles to open/close
 
 const modalsSlice = createSlice({
   name: "modals",
   initialState,
   reducers: {
-    // OPEN EDIT/DELETE MODAL ON NAVBAR (Might change to toggle)
+    // OPEN EDIT/DELETE MODAL ON NAVBAR 
     openNavbarEditDelete: (state) => {
       state.isNavbarEditDeleteActive = !state.isNavbarEditDeleteActive;
-      // state.isNavbarEditDeleteActive = true
     },
-    // OPEN EDIT/DELETE MODAL ON VIEWTASK (Might change to toggle)
+    // OPEN EDIT/DELETE MODAL ON VIEWTASK
     openViewTaskEditDelete: (state) => {
       state.isViewTaskEditDeleteActive = !state.isViewTaskEditDeleteActive;
     },
@@ -58,15 +56,10 @@ const modalsSlice = createSlice({
     closeDeleteModal: (state) => {
       state.isDeleteModalActive = false;
     },
-    // MIGHT NOT NEED
-    toggleAddNewColumnModal: (state) => {
-      state.isAddNewColumnActive = !state.isAddNewColumnActive;
-    },
   },
 });
 
 export const {
-  toggleAddNewColumnModal,
   openDeleteModal,
   closeDeleteModal,
   openNavbarEditDelete,

@@ -6,7 +6,6 @@ const initialState = {
   activeBoardIndex: 0,
   activeBoardData: {},
   selectedTask: {},
-  checkValues: [],
   emptyTaskInputValues: {
     id: +new Date(),
     title: "",
@@ -39,36 +38,6 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    sortTasks: (state, { payload }) => {
-      const newTasks = state.activeBoardData.columns.map((col) => {
-        const groups = [];
-        payload.map((t) => {
-          if (col.name === t.status) {
-            return groups.push(t);
-          }
-          return t;
-        });
-        return groups;
-      });
-      const newOnea = state.overallData[state.activeBoardIndex].columns.map(
-        (col, i) => {
-          return (col.tasks = newTasks[i]);
-        }
-      );
-      state.checkValues = newOnea;
-    },
-    //
-    updateTaskStatus: (state, { payload }) => {
-      // console.log(payload)
-      const { id, name } = payload;
-      state.overallData[state.activeBoardIndex].columns
-        .find((col) => col.id === id)
-        .tasks.map((task) => {
-          if (task.status !== name) {
-            task.status = name;
-          }
-        });
-    },
     updateTaskTargetStatus: (state, { payload }) => {
       const { colIndex } = state.itemCoords;
       state.overallData[state.activeBoardIndex].columns.map((col, i) => {
@@ -93,9 +62,7 @@ const dataSlice = createSlice({
     },
     //
     handleDropInfo: (state, { payload }) => {
-      // might delete not realy doing any thing anymore, same with "check value"
       state.overallData[state.activeBoardIndex].columns = payload;
-      // const id = e.dataTransfer.getData("id")
     },
     //
     resetBoardInputValues: (state, { payload }) => {
@@ -267,10 +234,8 @@ export const {
   handleDropInfo,
   handleItemCoords,
   checkNode,
-  updateTaskStatus,
   changeToNewBoard,
   updateStatusFromViewTask,
-  sortTasks,
   updateTaskTargetStatus
 } = dataSlice.actions;
 

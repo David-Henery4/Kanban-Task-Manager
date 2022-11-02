@@ -31,7 +31,6 @@ const ColumnTaskBox = ({
     // item replaced (e.target & node)
     dragNode.current = e.target;
     dispatch(handleItemCoords(params));
-    // change checknode name & itemNode name in state
     dispatch(checkNode(id));
     dragNode.current.addEventListener("dragend", handleDragEnd);
   };
