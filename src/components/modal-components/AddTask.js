@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { TaskTitleInput, TaskDescInput, TaskSubtaskInput, TaskStatusSelect } from "./taskFormComponents";
+import {
+  checkNameTitleValidtion,
+  checkDynamicInputsValidation,
+} from "../../validations";
 import {
   addNewTask,
   resetTaskInputValues,
@@ -12,7 +17,6 @@ import {
 } from "../../features/modals/modalsSlice";
 import { deActivateEditTask } from "../../features/edit-delete-modes/modesSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
-import { Cross, DownArrow, UpArrow } from "../../assets";
 
 const AddTask = () => {
   const [subtaskErrorList, setSubtaskErrorList] = useState([]);
@@ -22,8 +26,9 @@ const AddTask = () => {
   //
   const dispatch = useDispatch();
   //
-  const { activeBoardData, selectedTask, emptyTaskInputValues } =
-    useSelector((store) => store.data);
+  const { activeBoardData, selectedTask, emptyTaskInputValues } = useSelector(
+    (store) => store.data
+  );
   const { isAddNewTaskActive } = useSelector((store) => store.modals);
   const { isEditTaskActive } = useSelector((store) => store.modes);
   //
@@ -50,39 +55,19 @@ const AddTask = () => {
       subtasks: selectedTask.subtasks,
     });
   };
-  //
-  const checkTaskTitleValidtion = (values) => {
-    // true = errors / false = no errors
-    if (values.title.trim().length === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  //
-  const checkSubtaskTiltleValidation = ({ subtasks }) => {
-    const errorsList = [];
-    const subtasksCopy = [...subtasks];
-    subtasksCopy.map((sub, i) => {
-      if (sub.title.trim().length === 0) {
-        errorsList.push({
-          id: sub.id,
-          errorMsg: "Can't be empty",
-        });
-      }
-      return sub;
-    });
-    setSubtaskErrorList(errorsList);
-    const isErrors = errorsList.length >= 1;
-    return isErrors;
-  };
   // HERE DOING TASK NAME VALIDATION
   const handleSubmit = () => {
-    const checkTitleResult = checkTaskTitleValidtion(task);
-    const checkSubtaskTitleResult = checkSubtaskTiltleValidation(task);
-    setIsSubtaskNameError(checkSubtaskTitleResult);
+    const { isErrors, errorsList } = checkDynamicInputsValidation(
+      task,
+      "title"
+    );
+    const checkTitleResult = checkNameTitleValidtion(task, "title");
+    //
+    setSubtaskErrorList(errorsList);
+    setIsSubtaskNameError(isErrors);
     setIsTaskNameError(checkTitleResult);
-    if (!checkTitleResult && !checkSubtaskTitleResult) {
+    //
+    if (!checkTitleResult && !isErrors) {
       console.log("task name is good");
       dispatch(closeNewTaskModal());
       dispatch(closeOverlay());
@@ -152,145 +137,29 @@ const AddTask = () => {
       </h4>
       <form name="add-todo" className="add-task-form">
         {/* Title Input */}
-        <div className="add-task-form-title field-set-remove-border">
-          <label
-            className="add-task-form-title__title input-heading"
-            htmlFor="title"
-          >
-            Title
-          </label>
-          {isTaskNameError && (
-            <p className="error-input-label basicTextMedium">Can't be empty</p>
-          )}
-          <input
-            name="title"
-            id="title"
-            className={
-              isTaskNameError
-                ? "add-task-form-title__input input-style-basic error-input-style"
-                : "add-task-form-title__input input-style-basic"
-            }
-            type="text"
-            placeholder="e.g Take coffee break"
-            value={task.title}
-            onChange={(e) => setTask({ ...task, title: e.target.value })}
-          />
-        </div>
+        <TaskTitleInput taskTitleData={{ isTaskNameError, task, setTask }} />
         {/* Description Input */}
-        <div className="add-task-form-desc field-set-remove-border">
-          <h5 className="add-task-form-desc__title input-heading">
-            Description
-          </h5>
-          <textarea
-            className="add-task-form-desc__input input-style-basic"
-            name="description"
-            id="description"
-            placeholder="It's always good to take a break. This 
-            15 minute break will  recharge the batteries 
-            a little."
-            value={task.description}
-            onChange={(e) => setTask({ ...task, description: e.target.value })}
-          ></textarea>
-        </div>
+        <TaskDescInput taskDescData={{ task, setTask }} />
         {/* SUBTASK INPUT */}
-        <div className="add-task-form-subtasks field-set-remove-border">
-          <label
-            htmlFor="subtask"
-            className="add-task-form-subtasks__title input-heading"
-          >
-            Subtask
-          </label>
-          <div className="add-task-form-subtasks-inputs">
-            {task.subtasks.map((t, i, arr) => {
-              let isErrorHere = false;
-              let errorMsg = "";
-              subtaskErrorList.map((sub) => {
-                if (sub.id === t.id) {
-                  isErrorHere = true;
-                  errorMsg = sub.errorMsg;
-                }
-              });
-              return (
-                <div className="add-task-form-subtasks-task" key={i}>
-                  {isErrorHere && (
-                    <p className="error-input-label-2 basicTextMedium">
-                      {errorMsg}
-                    </p>
-                  )}
-                  <input
-                    name="subtask"
-                    id="subtask"
-                    className={
-                      isErrorHere
-                        ? "add-task-form-subtasks-task__input input-style-basic error-input-style"
-                        : "add-task-form-subtasks-task__input input-style-basic"
-                    }
-                    type="text"
-                    placeholder="e.g Make Coffee"
-                    value={t.title}
-                    onChange={handleSubtasksValueChange(i)}
-                  />
-                  <Cross
-                    className="add-task-form-subtasks-task__icon"
-                    onClick={
-                      arr.length <= 1 ? null : () => handleRemoveSubtask(i)
-                    }
-                  />
-                </div>
-              );
-            })}
-            <button
-              className="add-task-form-subtasks__add-subtask-btn btn-sml btn-secondary-color"
-              onClick={(e) => handleAddSubtask(e)}
-            >
-              Add New Subtask
-            </button>
-          </div>
-        </div>
+        <TaskSubtaskInput
+          subtaskInputData={{
+            task,
+            subtaskErrorList,
+            handleAddSubtask,
+            handleRemoveSubtask,
+            handleSubtasksValueChange,
+          }}
+        />
         {/* STATUS INPUT */}
-        <div className="add-task-form-status">
-          <h5 className="add-task-form-status__title input-heading">Status</h5>
-          {isDropdownActive ? (
-            <DownArrow className="add-task-form-status__icon select-dropdown__icon" />
-          ) : (
-            <UpArrow className="add-task-form-status__icon select-dropdown__icon" />
-          )}
-          <input
-            type="text"
-            readOnly
-            className="add-task-form-status-select input-style-basic"
-            name="status"
-            id="status"
-            value={task.status}
-            onClick={() => {
-              setIsDropdownActive(!isDropdownActive);
-            }}
-          />
-          <div
-            className={
-              isDropdownActive
-                ? "select-dropdown basicTextMedium active-status-dropdown"
-                : "select-dropdown basicTextMedium"
-            }
-          >
-            {activeBoardData &&
-              activeBoardData.columns &&
-              activeBoardData.columns.map((col, i) => {
-                return (
-                  <p
-                    className="select-dropdown__option"
-                    key={i}
-                    onClick={() => {
-                      setTask({ ...task, status: col.name });
-                      setIsDropdownActive(!isDropdownActive);
-                    }}
-                  >
-                    {col.name}
-                  </p>
-                );
-              })}
-          </div>
-        </div>
+        <TaskStatusSelect
+          taskStatusData={{
+            isDropdownActive,
+            task,
+            activeBoardData,
+            setIsDropdownActive,
+            setTask,
+          }}
+        />
       </form>
       {/* SUBMIT BTN */}
       <button

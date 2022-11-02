@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Cross } from "../../assets";
+import { BoardNameInput, BoardColumnsInputs } from "./boardFormComponents";
+import {
+  checkNameTitleValidtion,
+  checkDynamicInputsValidation,
+} from "../../validations";
 import {
   addNewBoard,
   editBoard,
@@ -35,42 +39,19 @@ const AddBoard = () => {
   const { isAddNewBoardActive } = useSelector((store) => store.modals);
   const { isEditBoardActive } = useSelector((store) => store.modes);
   //
-  const checkBoardNameValidtion = (values) => {
-    // true = errors / false = no errors
-    if (values.name.trim().length === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  //
-  const checkBoardColumnNameValidation = ({ columns }) => {
-    // true = errors / false = no errors
-    const columnsCopy = [...columns]
-    const errorsList = [];
-    columnsCopy.map((col, i) => {
-      if (col.name.trim().length === 0) {
-        errorsList.push({
-          id: col.id,
-          errorMsg: "Can't be empty"
-        });
-      } 
-      return col;
-    });
-    setColumnsErrorsList(errorsList)
-    const isAnyErrors = errorsList.length >= 1;
-    return isAnyErrors;
-  };
-  //
   const submitNewBoard = () => {
     // true = errors / false = no errors
-    const nameCheckResult = checkBoardNameValidtion(boardValues);
-    const columnNameCheckResult = checkBoardColumnNameValidation(boardValues);
+    const nameCheckResult = checkNameTitleValidtion(boardValues, "name");
+    const { isErrors, errorsList } = checkDynamicInputsValidation(
+      boardValues,
+      "name"
+    );
     //
+    setColumnsErrorsList(errorsList);
     setIsBoardNameError(nameCheckResult);
-    setIsColumnErrors(columnNameCheckResult);
+    setIsColumnErrors(isErrors);
     //
-    if (!columnNameCheckResult && !nameCheckResult) {
+    if (!isErrors && !nameCheckResult) {
       dispatch(resetBoardInputValues());
       dispatch(closeAddNewBoardModal());
       dispatch(closeOverlay());
@@ -145,77 +126,22 @@ const AddBoard = () => {
         {isEditBoardActive ? "Edit Board" : "Add New Board"}
       </h4>
       <form className="new-board-form">
-        <div className="new-board-form-name">
-          <label htmlFor="boardName" className="input-heading">
-            Board Name
-          </label>
-          {isBoardNameError && (
-            <label htmlFor="" className="error-input-label basicTextMedium">
-              Can't be empty
-            </label>
-          )}
-          <input
-            type="text"
-            name="boardName"
-            id="boardName"
-            className={
-              isBoardNameError
-                ? "input-style-basic error-input-style"
-                : "input-style-basic"
-            }
-            placeholder="e.g Web Design"
-            value={boardValues.name}
-            onChange={(e) => handleBoardNameChange(e)}
-          />
-        </div>
-        <div className="new-board-form-columns">
-          <label htmlFor="board-columns-name" className="input-heading">
-            Board Columns
-          </label>
-          <div className="new-board-form-columns-inputs-wrap">
-            {boardValues.columns.map((col, i) => {
-              let isErrorHere = false;
-              let errorMsg = "";
-              columnsErrorsList.map(errorCols => {
-                if (errorCols.id === col.id){
-                  isErrorHere = true
-                  errorMsg = errorCols.errorMsg
-                }
-              })
-              return (
-                <div className="new-board-form-columns-input" key={i}>
-                  {isErrorHere && (
-                    <label className="error-input-label-2 basicTextMedium">
-                      {errorMsg}
-                    </label>
-                  )}
-                  <input
-                    type="text"
-                    name="board-columns-name"
-                    className={
-                      isErrorHere
-                        ? "input-style-basic error-input-style"
-                        : "input-style-basic"
-                    }
-                    placeholder="e.g Todo"
-                    value={col.name}
-                    onChange={handleColumnValueChange(i)}
-                  />
-                  <Cross
-                    className="new-board-form-columns-input__close-icon"
-                    onClick={() => handleRemoveColumn(col.id)}
-                  />
-                </div>
-              );
-            })}
-            <button
-              className="btn-sml btn-secondary-color new-board-form-columns__btn"
-              onClick={(e) => handleAddNewColumn(e)}
-            >
-              Add New Column
-            </button>
-          </div>
-        </div>
+        <BoardNameInput
+          boardNameData={{
+            isBoardNameError,
+            boardValues,
+            handleBoardNameChange,
+          }}
+        />
+        <BoardColumnsInputs
+          boardColumnsData={{
+            handleColumnValueChange,
+            handleRemoveColumn,
+            boardValues,
+            columnsErrorsList,
+            handleAddNewColumn,
+          }}
+        />
       </form>
       <button
         className="btn-sml btn-primary-color new-board__btn"

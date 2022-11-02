@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navbar, Board, Sidebar, Overlay } from "./components";
-
 
 function App() {
   const { isLightMode } = useSelector((store) => store.theme);
@@ -13,8 +12,8 @@ function App() {
   //
   return (
     <div className="App overall-layout">
-      <Overlay/>
-      <Sidebar/>
+      <Overlay />
+      <Sidebar />
       <div className="main-content-layout">
         <Navbar />
         <Board />
