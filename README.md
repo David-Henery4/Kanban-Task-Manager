@@ -42,7 +42,7 @@ Users should be able to:
 
 <!-- Links to be addedd!!!!!!!!!!!! -->
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [kanban-taskmanager](https://kanban-taskmanager.netlify.app)
 
 ## My process
 
