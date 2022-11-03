@@ -1,6 +1,7 @@
 .delete{
   @include absolute-center-pos;
   @include flex-cen-cen;
+  position: fixed;
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;

@@ -1,5 +1,6 @@
 .view-task {
   @include absolute-center-pos;
+  position: fixed;
   width: 95%;
   max-width: 480px;
   border-radius: 6px;

@@ -16,6 +16,21 @@
   &-content{
     overflow: auto;
     gap: 24px;
+    padding-bottom: 2rem;
+    &::-webkit-scrollbar{
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+      background: $nonActiveFontColor; 
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track{
+      box-shadow: inset 0 0 2px grey; 
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover{
+      background: $colorPrimary;
+    }
   }
   &-empty{
     text-align: center;

@@ -2,6 +2,7 @@
   position: absolute;
   @include absolute-center-pos;
   @include flex-cen-cen;
+  position: fixed;
   align-items: flex-start;
   flex-direction: column;
   gap: 24px;

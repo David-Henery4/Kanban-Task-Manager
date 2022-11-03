@@ -63,6 +63,9 @@
   &__drop-down-icon {
     position: relative;
     right: 8px;
+    &:hover{
+      cursor: pointer;
+    }
     @include respond(tab) {
       display: none;
     }
