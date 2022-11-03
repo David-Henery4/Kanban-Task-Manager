@@ -22,7 +22,7 @@ const NewColumn = () => {
         onClick={handleNewColumnClick}
       >
         <span className="new-column__btn--icon">+</span>
-        <p>New Column</p>
+        New Column
       </button>
     </div>
   );

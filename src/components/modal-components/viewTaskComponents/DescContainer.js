@@ -11,7 +11,9 @@ const DescContainer = ({descContainerData}) => {
   return (
     <div className="view-task-desc-container">
       <div className="view-task-heading">
-        <h4 className="view-task__title heading-l">{selectedTask.title}</h4>
+        <h4 className="view-task__title heading-l">
+          {selectedTask ? selectedTask.title : ""}
+        </h4> 
         <div className="view-task-heading__icon">
           <EditDeleteIcon
             className="view-task-heading__icon--icon"
