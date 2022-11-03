@@ -38,6 +38,10 @@ const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    updateTaskStatusToNewColTitle: (state, {payload}) => {
+      state.overallData[state.activeBoardIndex].columns.map(col => col.tasks.map(task => task.status = col.name))
+    },
+    //
     updateTaskTargetStatus: (state, { payload }) => {
       const { colIndex } = state.itemCoords;
       state.overallData[state.activeBoardIndex].columns.map((col, i) => {
@@ -236,7 +240,8 @@ export const {
   checkNode,
   changeToNewBoard,
   updateStatusFromViewTask,
-  updateTaskTargetStatus
+  updateTaskTargetStatus,
+  updateTaskStatusToNewColTitle,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

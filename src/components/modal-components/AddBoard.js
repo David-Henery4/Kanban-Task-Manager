@@ -10,6 +10,7 @@ import {
   editBoard,
   resetBoardInputValues,
   changeToNewBoard,
+  updateTaskStatusToNewColTitle,
 } from "../../features/data/dataSlice";
 import { closeAddNewBoardModal } from "../../features/modals/modalsSlice";
 import { closeOverlay } from "../../features/overlay/overlaySlice";
@@ -58,6 +59,7 @@ const AddBoard = () => {
       if (isEditBoardActive) {
         dispatch(deActivateEditBoard());
         dispatch(editBoard(boardValues));
+        dispatch(updateTaskStatusToNewColTitle());
       }
       if (!isEditBoardActive) {
         dispatch(changeToNewBoard());

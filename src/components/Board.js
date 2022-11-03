@@ -42,7 +42,6 @@ const Board = () => {
       //
       const columnsCopy = JSON.parse(JSON.stringify(activeBoardData.columns))
       columnsCopy.map((col,i) => col.tasks = newTasks[i])
-      console.log(columnsCopy)
       setActiveColumns(columnsCopy)
     }
   };
