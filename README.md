@@ -38,10 +38,7 @@ Users should be able to:
 
 ### Links
 
-<!-- LINKS TO BE ADDED -->
-
-<!-- Links to be addedd!!!!!!!!!!!! -->
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [Frontend-mentor-solution-page](https://www.frontendmentor.io/solutions/kanban-tasks-css-grid-flexbox-sass-reduxtoolkit-reduxpersist-q1F55MVFnl)
 - Live Site URL: [kanban-taskmanager](https://kanban-taskmanager.netlify.app)
 
 ## My process
