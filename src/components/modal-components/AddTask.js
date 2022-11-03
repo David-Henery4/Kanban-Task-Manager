@@ -135,7 +135,7 @@ const AddTask = () => {
       <h4 className="add-task__heading heading-l">
         {isEditTaskActive ? "Edit Task" : "Add New Task"}
       </h4>
-      <form name="add-todo" className="add-task-form">
+      <form id="add-todo" name="add-todo" className="add-task-form">
         {/* Title Input */}
         <TaskTitleInput taskTitleData={{ isTaskNameError, task, setTask }} />
         {/* Description Input */}

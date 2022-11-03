@@ -12,7 +12,7 @@ const DescContainer = ({descContainerData}) => {
     <div className="view-task-desc-container">
       <div className="view-task-heading">
         <h4 className="view-task__title heading-l">
-          {selectedTask ? selectedTask.title : ""}
+          {selectedTask ? selectedTask.title : "task heading"}
         </h4> 
         <div className="view-task-heading__icon">
           <EditDeleteIcon

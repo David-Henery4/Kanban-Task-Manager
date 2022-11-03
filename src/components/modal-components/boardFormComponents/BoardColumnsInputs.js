@@ -29,6 +29,7 @@ const BoardColumnsInputs = ({boardColumnsData}) => {
               <input
                 type="text"
                 name="board-columns-name"
+                id="board-columns-name"
                 className={
                   isErrorHere
                     ? "input-style-basic error-input-style"
