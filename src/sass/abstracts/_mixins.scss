@@ -16,6 +16,11 @@
 // MIXIN MEDIA QUERIES
 
 @mixin respond ($breakpoint) {
+  @if $breakpoint == mob {
+    @media (min-width: 20.93em){
+      @content
+    }
+  };
   @if $breakpoint == tab {
     @media (min-width: 48em) { //min 768px
       @content

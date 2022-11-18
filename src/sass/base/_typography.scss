@@ -22,8 +22,11 @@ body{
 
 .heading-l{
   font-weight: $fontWeightBold;
-  font-size: 18px;
   line-height: 23px;
+  font-size: 16px;
+  @include respond (mob){
+    font-size: 18px;
+  }
 }
 
 .heading-m{
